@@ -1,0 +1,39 @@
+/* ------ BD-ANIMATIONS — INITIAL STATE ------ */
+
+/*
+   FOUC prevention for the bd-animations scroll-reveal system (assets/js/bd-animations.js).
+
+   Elements that animate in start hidden so they don't flash before GSAP takes
+   over. Scoped to `.js` so that if JavaScript is disabled the content stays
+   fully visible (progressive enhancement).
+
+   REQUIRES: a `.js` class on the <html> element, set as early as possible.
+   In Webflow, add this to the page/site head custom code, BEFORE the stylesheet:
+
+     <script>document.documentElement.classList.add("js");</script>
+
+   LOAD ORDER (Webflow <head>, only on pages that use animations):
+     1. <script>…classList.add("js")</script>   ← inline, first
+     2. this stylesheet (bd-animations.css)
+     3. GSAP + ScrollTrigger + SplitText (Club GSAP CDN)
+     4. assets/js/bd-animations.js (self-inits on document.fonts.ready)
+
+   bd-animations.js self-initialises against document.body (no Barba required).
+   The `bd:intro-complete` / `studio:ready` hooks inside it are for coordinating a
+   loading-screen curtain — wire them to Stitchy's loading screen when that's built.
+*/
+
+.js [data-bd-animate],
+.js [data-text-animate] {
+  opacity: 0;
+}
+
+/* Always show animated content when printing. */
+@media print {
+  [data-bd-animate],
+  [data-text-animate],
+  [data-bd-leave] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
