@@ -1,0 +1,3422 @@
+/* ─────────────────────────────
+   STITCHY LONDON — STYLESHEET
+   ─────────────────────────────
+
+   Single combined stylesheet for this project:
+     • Part 1 — DESIGN SYSTEM FRAMEWORK (tokens, primitives, utilities, components)
+     • Part 2 — PROJECT STYLES (section-specific styles; see header further down)
+
+   Brand identity tokens live separately in brand-book/brand-book.css and are
+   read here via var(--brand-*, fallback). Token source of truth is the Webflow
+   project; values are mirrored here for the local preview.
+   ───────────────────────────── */
+
+
+/* ─────────────────────────────
+   PART 1 — DESIGN SYSTEM FRAMEWORK
+   ───────────────────────────── */
+
+
+/* ------ 1. BRAND MAPPING ------ */
+
+/*
+ * This section maps brand book tokens into the design system.
+ * The brand book (brand-book/brand-book.css) defines --brand-* tokens.
+ * The DS reads them here with fallback defaults.
+ *
+ * If no brand book is loaded, the defaults below are used.
+ * Load order does not matter — CSS custom property fallbacks handle it.
+ *
+ *   <link rel="stylesheet" href="brand-book/brand-book.css">
+ *   <link rel="stylesheet" href="assets/css/style.css">
+ */
+
+:root {
+  /* -- Fonts (from brand book) -- */
+  --font-primary: var(--brand-font-primary, "Mona Sans", sans-serif);
+  --font-secondary: var(--brand-font-secondary, "Mona Sans", sans-serif);
+  --font-tertiary: var(--brand-font-tertiary, "Mona Sans", sans-serif);
+
+  /* -- Brand colours (from brand book; fallbacks mirror Webflow) -- */
+  --brand-dark: var(--brand-color-dark, #171c17);
+  --brand-light: var(--brand-color-light, #f9fbfb);
+  --brand-accent: var(--brand-color-accent, #d3ff6b);
+  --brand-green: var(--brand-color-green, #d3ff6b);
+  --brand-orange: var(--brand-color-orange, #ff4800);
+  --brand-blue: var(--brand-color-blue, #98affe);
+  --brand-link: var(--brand-color-link, #96dd05);
+
+  /* -- Base font sizes (mirror Webflow Typography → Font Size) -- */
+  --font-2xs: 12px;
+  --font-xs: 14px;
+  --font-s: 16px;
+  --font-m: 18px;
+  --font-l: 22px;
+  --font-xl: 28px;
+  --font-2xl: 32px;
+  --font-3xl: 38px;
+  --font-4xl: 46px;
+  --font-5xl: 52px;
+  --font-6xl: 60px;
+  --font-7xl: 64px;
+
+  /* -- Headline sizes (oversized headlines beyond Webflow's scale;
+        fluid on desktop, fixed rem on tablet/mobile;
+        mirror in Webflow Typography → Font Size as font-headline-* when built) -- */
+  --font-headline-s: 3.5vw;
+  --font-headline-m: 7vw;
+  --font-headline-l: 8vw;
+
+  /* -- Body size (fluid vw on desktop; reverts to the type scale below — see Responsive) -- */
+  --font-body: 1vw;
+
+  /* -- UI font sizes -- */
+  --button-font-size: var(--font-xs);
+  --button-font-size-small: var(--font-2xs);
+
+  /* -- Line height tokens -- */
+  --line-height-s: 1;
+  --line-height-m: 1.2;
+  --line-height-l: 1.4;
+  --line-height-xl: 1.6;
+  --line-height-2xl: 1.8;
+
+  /* -- Font weight tokens -- */
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semi-bold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extra-bold: 800;
+  --font-weight-black: 900;
+
+  /* -- Letter spacing tokens (em-based for proportional scaling) -- */
+  --letter-spacing-s: 0.03em;
+  --letter-spacing-m: 0.06em;
+  --letter-spacing-l: 0.08em;
+  --letter-spacing-xl: 0.11em;
+}
+
+/* ------ 2. SYSTEM TOKENS - COLORS ------ */
+
+:root {
+  /* -- Neutrals (green-tinted ramp, mirrors Webflow Color → Neutral/*) -- */
+  --neutral-50: #f9fbfb;
+  --neutral-100: #f4f6f6;
+  --neutral-150: #ebefed;
+  --neutral-200: #e3e8e3;
+  --neutral-300: #d0d8d0;
+  --neutral-400: #9daa9d;
+  --neutral-500: #6b7b6b;
+  --neutral-600: #4c574e;
+  --neutral-700: #3b453c;
+  --neutral-800: #242a23;
+  --neutral-900: #171c17;
+  --neutral-950: #090c09;
+
+  /* -- Black & White Alpha Tokens -- */
+  --black: #000000;
+  --black-alpha-3: #00000008;
+  --black-alpha-5: #0000000d;
+  --black-alpha-7: #00000012;
+  --black-alpha-10: #0000001a;
+  --black-alpha-15: #00000026;
+  --black-alpha-20: #00000033;
+  --black-alpha-30: #0000004d;
+  --black-alpha-40: #00000066;
+  --black-alpha-50: #00000080;
+  --black-alpha-60: #00000099;
+  --black-alpha-70: #000000b3;
+  --black-alpha-80: #000000cc;
+  --black-alpha-90: #000000e6;
+  --black-alpha-95: #000000f2;
+
+  --white: #ffffff;
+  --white-alpha-3: #ffffff08;
+  --white-alpha-5: #ffffff0d;
+  --white-alpha-7: #ffffff12;
+  --white-alpha-10: #ffffff1a;
+  --white-alpha-15: #ffffff26;
+  --white-alpha-20: #ffffff33;
+  --white-alpha-30: #ffffff4d;
+  --white-alpha-40: #ffffff66;
+  --white-alpha-50: #ffffff80;
+  --white-alpha-60: #ffffff99;
+  --white-alpha-70: #ffffffb3;
+  --white-alpha-80: #ffffffcc;
+  --white-alpha-90: #ffffffe6;
+  --white-alpha-95: #fffffff2;
+
+  --transparent: transparent;
+
+  /* -- Color-Mix Alpha Scale -- */
+  /* Used as the second argument in color-mix() to tint any colour to N% opacity,
+     e.g. color-mix(in srgb, var(--text-accent), var(--alpha-10)) → 10% accent. */
+  --alpha-5: transparent 95%;
+  --alpha-10: transparent 90%;
+  --alpha-15: transparent 85%;
+  --alpha-20: transparent 80%;
+  --alpha-25: transparent 75%;
+  --alpha-30: transparent 70%;
+  --alpha-35: transparent 65%;
+  --alpha-40: transparent 60%;
+  --alpha-45: transparent 55%;
+  --alpha-50: transparent 50%;
+  --alpha-55: transparent 45%;
+  --alpha-60: transparent 40%;
+  --alpha-65: transparent 35%;
+  --alpha-70: transparent 30%;
+  --alpha-75: transparent 25%;
+  --alpha-80: transparent 20%;
+  --alpha-85: transparent 15%;
+  --alpha-90: transparent 10%;
+  --alpha-95: transparent 5%;
+
+  /* -- Semantic colours (mirror Webflow Semantic collection) -- */
+  --text-primary: var(--brand-dark);
+  --text-secondary: var(--neutral-800);
+  --text-plain: var(--black);
+  --text-faded: var(--black-alpha-50);
+  --text-accent: var(--brand-accent);
+  --text-link: var(--brand-link);
+  --text-inverted: var(--white);
+
+  /* -- Text with opacity (text-primary tinted via the alpha scale) -- */
+  --text-alpha-5: color-mix(in srgb, var(--text-primary), var(--alpha-5));
+  --text-alpha-10: color-mix(in srgb, var(--text-primary), var(--alpha-10));
+  --text-alpha-15: color-mix(in srgb, var(--text-primary), var(--alpha-15));
+  --text-alpha-20: color-mix(in srgb, var(--text-primary), var(--alpha-20));
+  --text-alpha-30: color-mix(in srgb, var(--text-primary), var(--alpha-30));
+  --text-alpha-40: color-mix(in srgb, var(--text-primary), var(--alpha-40));
+  --text-alpha-50: color-mix(in srgb, var(--text-primary), var(--alpha-50));
+
+  --background-primary: var(--neutral-50);
+  --background-secondary: var(--neutral-150);
+  --background-plain: var(--white);
+  --background-faded: var(--black-alpha-5);
+  --background-darker: var(--black-alpha-10);
+  --background-lighter: var(--white-alpha-10);
+  --bg-faded-3: var(--black-alpha-3);
+  --bg-faded-5: var(--black-alpha-5);
+  --bg-faded-7: var(--black-alpha-7);
+  --bg-faded-10: var(--black-alpha-10);
+  --bg-faded-15: var(--black-alpha-15);
+  --background-modal: rgba(0, 0, 0, 0.75);
+
+  /* -- Solid colour backgrounds — hero blocks, callouts, etc. -- */
+  --background-accent: var(--text-accent);
+  --background-black: var(--black);
+  --background-white: var(--white);
+
+  /* -- Brand surfaces — full-bleed coloured sections (mirror Webflow Brand/*) -- */
+  --background-green: var(--brand-green);
+  --background-orange: var(--brand-orange);
+  --background-blue: var(--brand-blue);
+  --background-dark: var(--brand-dark);
+
+  --border-primary: var(--black);
+  --border-secondary: var(--neutral-300);
+  --border-faded: var(--black-alpha-15);
+
+  --button-primary: var(--text-link);
+  --button-text: var(--white);
+  --button-faded: color-mix(in srgb, var(--button-primary), transparent 80%);
+
+  /* -- Status colours (from brand book or defaults) -- */
+  --status-info: var(--brand-color-info, var(--brand-accent));
+  --status-success: var(--brand-color-success, #1a7f37);
+  --status-warning: var(--brand-color-warning, #9a6700);
+  --status-danger: var(--brand-color-danger, #cf222e);
+  --status-accent: var(--brand-color-accent-alt, #8250df);
+
+  /* -- Status background tints (status colour at ~10% opacity) -- */
+  --status-info-bg: color-mix(in srgb, var(--status-info), var(--alpha-90));
+  --status-success-bg: color-mix(in srgb, var(--status-success), var(--alpha-90));
+  --status-warning-bg: color-mix(in srgb, var(--status-warning), var(--alpha-90));
+  --status-danger-bg: color-mix(in srgb, var(--status-danger), var(--alpha-90));
+
+  /* -- Callout semantic tokens -- */
+  --callout-info: var(--status-info);
+  --callout-info-bg: color-mix(in srgb, var(--status-info), transparent 90%);
+  --callout-success: var(--status-success);
+  --callout-success-bg: color-mix(in srgb, var(--status-success), transparent 90%);
+  --callout-warning: var(--status-warning);
+  --callout-warning-bg: color-mix(in srgb, var(--status-warning), transparent 90%);
+  --callout-danger: var(--status-danger);
+  --callout-danger-bg: color-mix(in srgb, var(--status-danger), transparent 90%);
+  --callout-accent: var(--status-accent);
+  --callout-accent-bg: color-mix(in srgb, var(--status-accent), transparent 90%);
+
+  /* -- Form semantic tokens -- */
+  --input-border: var(--border-secondary);
+  --input-background: var(--background-primary);
+  --input-text: var(--text-plain);
+  --input-placeholder: var(--text-faded);
+  --input-focus: var(--brand-accent);
+  --input-disabled-bg: var(--background-faded);
+  --input-disabled-text: var(--text-faded);
+  --checkbox-background: var(--neutral-100);
+  --checkbox-selected: var(--text-primary);
+  --checkbox-border: var(--border-faded);
+  --checkbox-checkmark: var(--white);
+
+  /* -- Selection highlight -- */
+  --selection-text: var(--background-primary);
+  --selection-background: var(--text-primary);
+
+  /* -- Component tokens -- */
+  --divider-color: var(--border-faded);
+  --dropdown-background: var(--background-primary);
+  --dropdown-border: var(--border-faded);
+  --dropdown-item-hover: var(--background-faded);
+  --dialog-max-width: 560px;
+
+}
+
+/* ------ 2b. THEME TOKENS - DARK MODE ------ */
+
+/*
+ * Set data-theme="dark" on <html> for page-level theming, or on any element
+ * for a scoped dark region. Only the tokens that need different values in the
+ * dark theme are overridden; accent and status colours inherit the light
+ * values (brand tokens read fine on dark). Reference-only for now — the
+ * styleguide exposes a toggle to exercise it.
+ */
+
+[data-theme="dark"] {
+  /* -- Text -- */
+  --text-primary: #e8e6e3;
+  --text-secondary: #a8a5a2;
+  --text-plain: #f0eeeb;
+  --text-faded: var(--white-alpha-50);
+  --text-inverted: var(--neutral-900);
+
+  /* -- Background -- */
+  --background-primary: var(--neutral-800);
+  --background-secondary: var(--neutral-900);
+  --background-plain: var(--neutral-900);
+  --background-faded: var(--white-alpha-5);
+  --background-darker: var(--white-alpha-10);
+  --background-modal: var(--black-alpha-50);
+  --bg-faded-3: var(--white-alpha-3);
+  --bg-faded-5: var(--white-alpha-5);
+  --bg-faded-7: var(--white-alpha-7);
+  --bg-faded-10: var(--white-alpha-10);
+  --bg-faded-15: var(--white-alpha-15);
+
+  /* -- Border -- */
+  --border-primary: #e8e6e3;
+  --border-secondary: var(--neutral-700);
+  --border-faded: var(--white-alpha-20);
+
+  /* -- Form -- */
+  --input-border: var(--neutral-700);
+  --input-background: var(--white-alpha-7);
+  --input-text: #f0eeeb;
+  --input-placeholder: var(--white-alpha-50);
+  --input-disabled-bg: var(--white-alpha-5);
+  --input-disabled-text: var(--white-alpha-30);
+  --checkbox-background: var(--neutral-700);
+  --checkbox-selected: #e8e6e3;
+  --checkbox-border: var(--neutral-600);
+  --checkbox-checkmark: var(--neutral-900);
+
+  /* -- Component -- */
+  --dropdown-background: var(--background-plain);
+
+  color-scheme: dark;
+}
+
+/* ------ 2c. SYSTEM PREFERENCE FALLBACK (no-JS) ------ */
+
+/* Applies the dark tokens when the OS prefers dark and no data-theme is set. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --text-primary: #e8e6e3;
+    --text-secondary: #a8a5a2;
+    --text-plain: #f0eeeb;
+    --text-faded: var(--white-alpha-50);
+    --text-inverted: var(--neutral-900);
+
+    --background-primary: var(--neutral-800);
+    --background-secondary: var(--neutral-900);
+    --background-plain: var(--neutral-900);
+    --background-faded: var(--white-alpha-5);
+    --background-darker: var(--white-alpha-10);
+    --background-modal: var(--black-alpha-50);
+    --bg-faded-3: var(--white-alpha-3);
+    --bg-faded-5: var(--white-alpha-5);
+    --bg-faded-7: var(--white-alpha-7);
+    --bg-faded-10: var(--white-alpha-10);
+    --bg-faded-15: var(--white-alpha-15);
+
+    --border-primary: #e8e6e3;
+    --border-secondary: var(--neutral-700);
+    --border-faded: var(--white-alpha-20);
+
+    --input-border: var(--neutral-700);
+    --input-background: var(--white-alpha-7);
+    --input-text: #f0eeeb;
+    --input-placeholder: var(--white-alpha-50);
+    --input-disabled-bg: var(--white-alpha-5);
+    --input-disabled-text: var(--white-alpha-30);
+    --checkbox-background: var(--neutral-700);
+    --checkbox-selected: #e8e6e3;
+    --checkbox-border: var(--neutral-600);
+    --checkbox-checkmark: var(--neutral-900);
+
+    --dropdown-background: var(--background-plain);
+
+    color-scheme: dark;
+  }
+}
+
+/* -- Selection highlight -- */
+::selection {
+  color: var(--selection-text);
+  background-color: var(--selection-background);
+}
+
+/* ------ 3. SYSTEM TOKENS - SPACING & TYPOGRAPHY ------ */
+
+:root {
+  /* -- Unit tokens -- */
+  --none: 0;
+  --2xs: 0.125rem;
+  /* 2px */
+  --xs: 0.25rem;
+  /* 4px */
+  --s: 0.5rem;
+  /* 8px */
+  --m: 0.75rem;
+  /* 12px */
+  --l: 1rem;
+  /* 16px */
+  --xl: 1.5rem;
+  /* 24px */
+  --2xl: 2rem;
+  /* 32px */
+  --3xl: 2.5rem;
+  /* 40px */
+  --4xl: 3rem;
+  /* 48px */
+  --5xl: 3.5rem;
+  /* 56px */
+  --6xl: 4rem;
+  /* 64px */
+  --7xl: 4.5rem;
+  /* 72px */
+  --8xl: 5rem;
+  /* 80px */
+  --9xl: 5.5rem;
+  /* 88px */
+  --10xl: 6rem;
+  /* 96px */
+  --11xl: 6.5rem;
+  /* 104px */
+  --12xl: 7rem;
+  /* 112px */
+  --13xl: 7.5rem;
+  /* 120px */
+  --14xl: 10rem;
+  /* 160px */
+
+  /* -- Spacing scale -- */
+  --space-none: var(--none);
+  --space-2xs: var(--2xs);
+  --space-xs: var(--xs);
+  --space-s: var(--s);
+  --space-m: var(--m);
+  --space-l: var(--l);
+  --space-xl: var(--xl);
+  --space-2xl: var(--2xl);
+  --space-3xl: var(--3xl);
+  --space-4xl: var(--4xl);
+  --space-5xl: var(--5xl);
+  --space-6xl: var(--6xl);
+  --space-7xl: var(--7xl);
+  --space-8xl: var(--8xl);
+  --space-9xl: var(--9xl);
+  --space-10xl: var(--10xl);
+  --space-11xl: var(--11xl);
+  --space-12xl: var(--12xl);
+  --space-13xl: var(--13xl);
+  --space-14xl: var(--14xl);
+
+  /* -- Section spacing variables -- */
+  --section-xs: var(--space-xl);
+  --section-s: var(--space-2xl);
+  --section-m: var(--space-6xl);
+  --section-l: var(--space-10xl);
+  --section-xl: var(--space-14xl);
+
+  /* -- Container widths -- */
+  --container-xs: 480px;
+  --container-s: 640px;
+  --container-m: 53vw;
+  --container-l: 60vw;
+  /* --container-xl: 1440px; */
+  --container-xl: 80vw;
+
+  /* -- Max-widths -- */
+  --max-width-xs: 480px;
+  --max-width-s: 640px;
+  --max-width-m: 960px;
+  --max-width-l: 1200px;
+  --max-width-xl: 1440px;
+
+  /* -- Line length (typographic readability, 45–75ch range) -- */
+  --line-length-headline: 22ch;
+  --line-length-body: 55ch;
+  --line-length-xsmall: 35ch;
+  --line-length-small: 45ch;
+  --line-length-medium: 65ch;
+  --line-length-wide: 75ch;
+
+  /* -- Accordion spacing variables -- */
+  --accordion-padding-x: var(--space-l);
+  --accordion-padding-y: var(--space-l);
+
+  /* -- Border width tokens -- */
+  --border-s: 1px;
+  --border-m: 2px;
+  --border-l: 4px;
+
+  /* -- Border composition variables -- */
+  --border-width: var(--border-s);
+  --border-style: solid;
+  --border-color: var(--border-primary);
+
+  /* -- Border radius tokens -- */
+  --radius-2xs: 2px;
+  --radius-xs: 4px;
+  --radius-s: 6px;
+  --radius-m: 10px;
+  --radius-l: 16px;
+  --radius-xl: 24px;
+  --radius-pill: 999px;
+
+
+}
+
+/* ------ 3b. SYSTEM TOKENS - MOTION ------ */
+
+/*
+ * Two layers, same model as colour and spacing:
+ *   1. Primitives (--ease-*, --duration-*) — raw building blocks. Easing names
+ *      match the CSS keywords (in / out / in-out); the cubic-beziers are refined
+ *      replacements for the browser defaults.
+ *   2. Semantic tokens (--motion-*) — named by intent; compose the primitives.
+ *      Components and JS read the semantic layer.
+ */
+
+:root {
+  /* -- Easing primitives -- */
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* -- Duration primitives -- */
+  --duration-2xs: 100ms;
+  --duration-xs: 200ms;
+  --duration-s: 400ms;
+  --duration-m: 600ms;
+  --duration-l: 800ms;
+  --duration-xl: 1200ms;
+  --duration-2xl: 1500ms;
+  --duration-3xl: 1800ms;
+  --duration-4xl: 2000ms;
+
+  /* -- Page-level semantic motion -- */
+  --motion-page-open-duration: var(--duration-xl);
+  --motion-page-open-easing: var(--ease-in-out);
+  --motion-page-close-duration: var(--duration-xl);
+  --motion-page-close-easing: var(--ease-in-out);
+  --motion-page-fade-duration: var(--duration-m);
+  --motion-page-fade-easing: var(--ease-in-out);
+}
+
+/* ------ 4. BASE STYLES ------ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-primary);
+  color: var(--text-primary);
+  font-size: var(--font-body);
+  font-weight: var(--font-weight-regular);
+  background: var(--background-primary);
+  line-height: var(--line-height-l);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* -- Page layout structure -- */
+.page-wrapper {
+  width: 100%;
+}
+
+.page-content {
+  width: 100%;
+}
+
+/* -- Headings -- */
+h1 {
+  font-size: var(--font-4xl);
+  line-height: var(--line-height-s);
+}
+
+h2 {
+  font-size: var(--font-2xl);
+  line-height: var(--line-height-s);
+}
+
+h3 {
+  font-size: var(--font-xl);
+  line-height: var(--line-height-m);
+}
+
+h4 {
+  font-size: var(--font-l);
+  line-height: var(--line-height-m);
+}
+
+h5 {
+  font-size: var(--font-m);
+  line-height: var(--line-height-m);
+}
+
+h6 {
+  font-size: var(--font-s);
+  line-height: var(--line-height-m);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: var(--font-weight-semi-bold);
+  margin-top: var(--space-xl);
+  margin-bottom: var(--space-l);
+}
+
+/* -- Paragraphs -- */
+p {
+  margin-top: 0;
+  margin-bottom: var(--space-m);
+}
+
+/* -- Links -- */
+a {
+  color: var(--text-plain);
+  text-underline-offset: 2.5px;
+  text-decoration: underline;
+  -webkit-text-decoration-color: var(--text-link);
+  text-decoration-color: var(--text-link);
+  text-decoration-thickness: 1.5px;
+  transition: all 0.3s;
+}
+
+a:hover {
+  color: var(--text-link);
+  text-underline-offset: 4px;
+}
+
+/* -- Lists -- */
+ul,
+ol {
+  margin-top: 0;
+  margin-bottom: var(--space-m);
+  padding-left: var(--space-2xl);
+}
+
+li {
+  margin-top: var(--space-s);
+  margin-bottom: 0;
+}
+
+li:first-child {
+  margin-top: 0;
+}
+
+/* Nested lists */
+ul ul,
+ul ol,
+ol ul,
+ol ol {
+  margin-top: var(--space-s);
+  margin-bottom: 0;
+}
+
+/* List items with paragraphs */
+li > p {
+  margin-top: var(--space-l);
+  margin-bottom: 0;
+}
+
+li > p:first-child {
+  margin-top: 0;
+}
+
+/* -- Blockquotes -- */
+blockquote {
+  margin: var(--space-xl) 0;
+  padding-left: var(--space-l);
+  border-left: var(--border-m) solid var(--border-secondary);
+  color: var(--text-secondary);
+  font-size: var(--font-m);
+  font-style: italic;
+}
+
+blockquote p {
+  margin-top: 0;
+  margin-bottom: var(--space-m);
+}
+
+blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* -- Horizontal rules -- */
+hr {
+  margin: var(--space-2xl) 0;
+  border: 0;
+  border-top: var(--border-s) solid var(--border-secondary);
+  height: 0;
+}
+
+/* ------ 5. LAYOUT PRIMITIVES ------ */
+
+/* -- Global horizontal padding -- */
+.padding-global {
+  padding-left: var(--space-l);
+  padding-right: var(--space-l);
+}
+
+/* -- Padding utilities -- */
+.padding-s {
+  padding: var(--space-s);
+}
+
+.padding-m {
+  padding: var(--space-m);
+}
+
+.padding-l {
+  padding: var(--space-l);
+}
+
+.padding-xl {
+  padding: var(--space-xl);
+}
+
+.padding-2xl {
+  padding: var(--space-2xl);
+}
+
+.padding-3xl {
+  padding: var(--space-3xl);
+}
+
+/* -- Containers (5-size scale; word-named aliases kept for compatibility) -- */
+.container-xs,
+.container-s,
+.container-m,
+.container-l,
+.container-xl,
+.container-small,
+.container-medium,
+.container-large {
+  display: block;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.container-xs { max-width: var(--container-xs); }
+.container-s,
+.container-small { max-width: var(--container-s); }
+.container-m,
+.container-medium { max-width: var(--container-m); }
+.container-l,
+.container-large { max-width: var(--container-l); }
+.container-xl { max-width: var(--container-xl); }
+
+/* -- Max-width utilities (5-size scale; word-named aliases kept) -- */
+.max-width-xs { max-width: var(--max-width-xs); }
+.max-width-s,
+.max-width-small { max-width: var(--max-width-s); }
+.max-width-m,
+.max-width-medium { max-width: var(--max-width-m); }
+.max-width-l,
+.max-width-large { max-width: var(--max-width-l); }
+.max-width-xl { max-width: var(--max-width-xl); }
+.max-width-full { max-width: 100%; }
+
+/* -- Section spacing -- */
+
+section {
+  display: block;
+}
+
+.padding-section {
+  display: block;
+}
+
+/* -- Top spacing combo classes -- */
+.top-small {
+  padding-top: var(--section-s);
+}
+
+.top-medium {
+  padding-top: var(--section-m);
+}
+
+.top-large {
+  padding-top: var(--section-l);
+}
+
+.top-xl {
+  padding-top: var(--section-xl);
+}
+
+/* -- Bottom spacing combo classes -- */
+.bottom-small {
+  padding-bottom: var(--section-s);
+}
+
+.bottom-medium {
+  padding-bottom: var(--section-m);
+}
+
+.bottom-large {
+  padding-bottom: var(--section-l);
+}
+
+.bottom-xl {
+  padding-bottom: var(--section-xl);
+}
+
+/* ------ 6. BLOCKS ------ */
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+}
+
+/* -- Gap modifiers -- */
+.gap-none {
+  gap: var(--space-none);
+}
+
+.gap-xs {
+  gap: var(--space-xs) !important;
+}
+
+.gap-s {
+  gap: var(--space-s) !important;
+}
+
+.gap-m {
+  gap: var(--space-m) !important;
+}
+
+.gap-l {
+  gap: var(--space-l) !important;
+}
+
+.gap-xl {
+  gap: var(--space-xl) !important;
+}
+
+.gap-2xl {
+  gap: var(--space-2xl) !important;
+}
+
+.gap-3xl {
+  gap: var(--space-3xl) !important;
+}
+
+
+/* -- Layout modifiers -- */
+.row {
+  flex-direction: row;
+}
+
+.row-reverse {
+  flex-direction: row-reverse;
+}
+
+.align-start {
+  align-items: flex-start;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.align-end {
+  align-items: flex-end;
+}
+
+.justify-start {
+  justify-content: flex-start;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.color-block {
+  border: var(--border-s) solid var(--border-faded);
+  aspect-ratio: 1/1;
+  height: 100%;
+  width: fit-content;
+  max-height: 100px;
+}
+
+/* ------ 7. GRID ------ */
+
+/* -- Grid -- */
+.grid {
+  display: grid;
+  gap: var(--space-m);
+  grid-template-columns: 1fr 1fr;
+  grid-auto-columns: 1fr;
+}
+
+/* -- Grid column modifiers -- */
+.cols-3 {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.cols-4 {
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.token-col {
+  grid-template-columns: 1fr auto;
+  padding: var(--space-m);
+}
+
+/* -- Grid item width modifiers -- */
+.fit-content {
+  width: fit-content;
+}
+
+/* -- 12-column data-grid (opt-in via the data-grid attribute) -- */
+
+/*
+ * Add `data-grid` to any container for a 12-column grid. Children declare
+ * `data-col-span` / `data-col-start`, or the parent declares a `data-layout`
+ * preset and children get positions via :nth-child. `container-type` lets
+ * `--col-unit` (one column's width) resolve against the grid's own width, so
+ * children can compose padding/margin equal to a grid column. Collapses to a
+ * single column below 960px. Adapted from the By Default studio system —
+ * uses plain media queries (no sidebar/content container on this site).
+ */
+[data-grid] {
+  display: grid;
+  container-type: inline-size;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--grid-gap);
+  row-gap: var(--space-xl);
+  --grid-gap: var(--space-xl);
+  --col-unit: calc((100cqi - 11 * var(--grid-gap)) / 12);
+}
+
+[data-grid] > * {
+  grid-column: 1 / -1;
+}
+
+[data-grid] > [data-col-span="1"]  { grid-column-end: span 1; }
+[data-grid] > [data-col-span="2"]  { grid-column-end: span 2; }
+[data-grid] > [data-col-span="3"]  { grid-column-end: span 3; }
+[data-grid] > [data-col-span="4"]  { grid-column-end: span 4; }
+[data-grid] > [data-col-span="5"]  { grid-column-end: span 5; }
+[data-grid] > [data-col-span="6"]  { grid-column-end: span 6; }
+[data-grid] > [data-col-span="7"]  { grid-column-end: span 7; }
+[data-grid] > [data-col-span="8"]  { grid-column-end: span 8; }
+[data-grid] > [data-col-span="9"]  { grid-column-end: span 9; }
+[data-grid] > [data-col-span="10"] { grid-column-end: span 10; }
+[data-grid] > [data-col-span="11"] { grid-column-end: span 11; }
+[data-grid] > [data-col-span="12"] { grid-column-end: span 12; }
+
+[data-grid] > [data-col-start="1"]  { grid-column-start: 1; }
+[data-grid] > [data-col-start="2"]  { grid-column-start: 2; }
+[data-grid] > [data-col-start="3"]  { grid-column-start: 3; }
+[data-grid] > [data-col-start="4"]  { grid-column-start: 4; }
+[data-grid] > [data-col-start="5"]  { grid-column-start: 5; }
+[data-grid] > [data-col-start="6"]  { grid-column-start: 6; }
+[data-grid] > [data-col-start="7"]  { grid-column-start: 7; }
+[data-grid] > [data-col-start="8"]  { grid-column-start: 8; }
+[data-grid] > [data-col-start="9"]  { grid-column-start: 9; }
+[data-grid] > [data-col-start="10"] { grid-column-start: 10; }
+[data-grid] > [data-col-start="11"] { grid-column-start: 11; }
+[data-grid] > [data-col-start="12"] { grid-column-start: 12; }
+
+/* Named layout patterns — :nth-child column placement on a data-grid.
+   Apply data-layout="split|feature|feature-alt|headline|thirds|masthead|spotlight"
+   to the parent; children stay content-agnostic. */
+@media (min-width: 960px) {
+  /* split: 6 · 6 — two equal halves */
+  [data-grid][data-layout="split"]       > :nth-child(1) { grid-column: 1 / span 6; }
+  [data-grid][data-layout="split"]       > :nth-child(2) { grid-column: 7 / span 6; }
+
+  /* feature: 4 · 8 — minor left, major right */
+  [data-grid][data-layout="feature"]     > :nth-child(1) { grid-column: 1 / span 4; }
+  [data-grid][data-layout="feature"]     > :nth-child(2) { grid-column: 5 / span 8; }
+
+  /* feature-alt / headline: 8 · 4 — major left, minor right */
+  [data-grid][data-layout="feature-alt"] > :nth-child(1),
+  [data-grid][data-layout="headline"]    > :nth-child(1) { grid-column: 1 / span 8; }
+  [data-grid][data-layout="feature-alt"] > :nth-child(2),
+  [data-grid][data-layout="headline"]    > :nth-child(2) { grid-column: 9 / span 4; }
+
+  /* thirds: 4 · 4 · 4 — three equal columns */
+  [data-grid][data-layout="thirds"]      > :nth-child(1) { grid-column: 1 / span 4; }
+  [data-grid][data-layout="thirds"]      > :nth-child(2) { grid-column: 5 / span 4; }
+  [data-grid][data-layout="thirds"]      > :nth-child(3) { grid-column: 9 / span 4; }
+
+  /* masthead / spotlight: 3 · 6 · 3 — centre-dominant with symmetric flankers */
+  [data-grid][data-layout="masthead"]    > :nth-child(1),
+  [data-grid][data-layout="spotlight"]   > :nth-child(1) { grid-column: 1 / span 3; }
+  [data-grid][data-layout="masthead"]    > :nth-child(2),
+  [data-grid][data-layout="spotlight"]   > :nth-child(2) { grid-column: 4 / span 6; }
+  [data-grid][data-layout="masthead"]    > :nth-child(3),
+  [data-grid][data-layout="spotlight"]   > :nth-child(3) { grid-column: 10 / span 3; }
+}
+
+/* Mobile collapse: below 960px every data-grid becomes a single column.
+   Spans, starts, and named layouts all stack in source order; --col-unit
+   resets to 0 so column-derived padding/margin goes away. data-stack-order
+   optionally promotes a child earlier (visual only — apply only to children
+   with no interactive elements; DOM/tab order is unchanged). */
+@media (max-width: 959.98px) {
+  [data-grid] {
+    grid-template-columns: 1fr;
+    --col-unit: 0px;
+  }
+  [data-grid] > [data-stack-order="1"] { order: -3; }
+  [data-grid] > [data-stack-order="2"] { order: -2; }
+  [data-grid] > [data-stack-order="3"] { order: -1; }
+}
+
+/* ------ 8. BORDER UTILITIES ------ */
+
+/* -- Structural classes -- */
+.border {
+  border: var(--border-width) var(--border-style) var(--border-color);
+}
+
+.border-top {
+  border-top: var(--border-width) var(--border-style) var(--border-color);
+}
+
+.border-bottom {
+  border-bottom: var(--border-width) var(--border-style) var(--border-color);
+}
+
+.border-left {
+  border-left: var(--border-width) var(--border-style) var(--border-color);
+}
+
+.border-right {
+  border-right: var(--border-width) var(--border-style) var(--border-color);
+}
+
+/* -- Width combo classes -- */
+.border-s {
+  --border-width: var(--border-s);
+}
+
+.border-m {
+  --border-width: var(--border-m);
+}
+
+.border-l {
+  --border-width: var(--border-l);
+}
+
+/* -- Style combo classes -- */
+.border-solid {
+  --border-style: solid;
+}
+
+.border-dashed {
+  --border-style: dashed;
+}
+
+.border-dotted {
+  --border-style: dotted;
+}
+
+/* -- Color combo classes -- */
+.border-primary {
+  --border-color: var(--border-primary);
+}
+
+.border-secondary {
+  --border-color: var(--border-secondary);
+}
+
+.border-faded {
+  --border-color: var(--border-faded);
+}
+
+/* ------ 9. TYPOGRAPHY UTILITIES ------ */
+
+/* -- Font size utilities -- */
+.font-2xs {
+  font-size: var(--font-2xs);
+}
+
+.font-xs {
+  font-size: var(--font-xs);
+}
+
+.font-s {
+  font-size: var(--font-s);
+}
+
+.font-m {
+  font-size: var(--font-m);
+}
+
+.font-l {
+  font-size: var(--font-l);
+}
+
+.font-xl {
+  font-size: var(--font-xl);
+}
+
+.font-2xl {
+  font-size: var(--font-2xl);
+}
+
+.font-3xl {
+  font-size: var(--font-3xl);
+}
+
+.font-4xl {
+  font-size: var(--font-4xl);
+}
+
+.font-5xl {
+  font-size: var(--font-5xl);
+}
+
+.font-6xl {
+  font-size: var(--font-6xl);
+}
+
+/* -- Headline utilities (oversized headlines; uppercase, tight, heavy) -- */
+.headline-l {
+  font-weight: var(--font-weight-black);
+  line-height: var(--line-height-s);
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.headline-m,
+.headline-s {
+  font-weight: var(--font-weight-extra-bold);
+  line-height: var(--line-height-s);
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+
+.headline-l {
+  font-size: var(--font-headline-l);
+}
+
+.headline-m {
+  font-size: var(--font-headline-m);
+}
+
+.headline-s {
+  font-size: var(--font-headline-s);
+}
+
+.ticker-headline {
+  font-size: var(--font-headline-m);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-s);
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+/* -- Text size utilities -- */
+.text-size-large {
+  font-size: var(--font-l);
+}
+
+.text-size-medium {
+  font-size: var(--font-m);
+}
+
+.text-size-small {
+  font-size: var(--font-s);
+  line-height: var(--line-height-xl);
+}
+
+.text-size-xsmall {
+  font-size: var(--font-xs);
+  line-height: var(--line-height-xl);
+}
+
+/* -- Body text (responsive; matches the base body size) -- */
+.body-text {
+  font-size: var(--font-body);
+  line-height: var(--line-height-l);
+}
+
+/* -- Token labels -- */
+.token-tag {
+  display: inline-block;
+  font-size: var(--font-2xs);
+  font-family: var(--font-tertiary);
+  color: var(--text-plain);
+  background-color: var(--background-faded);
+  padding: var(--2xs) var(--s);
+  align-self: flex-start;
+  margin-bottom: var(--space-m);
+}
+
+.token-block {
+  padding: var(--space-s) 0;
+}
+
+/* -- Eyebrow text -- */
+.eyebrow {
+  font-family: var(--font-primary);
+  font-size: var(--font-s);
+  line-height: var(--line-height-m);
+  font-weight: var(--font-weight-extra-bold);
+  letter-spacing: var(--letter-spacing-xl);
+  text-transform: uppercase;
+}
+
+/* -- Text alignment -- */
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+/* -- Visually hidden (accessible; screen-reader only) -- */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Reveal a visually-hidden element when it receives focus (e.g. skip link). */
+.visually-hidden:focus,
+.visually-hidden:focus-within {
+  position: static;
+  width: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* -- Button -- */
+
+/*
+ * Token-driven button (ported from the By Default studio system). All tokens
+ * live at component level; data-* exceptions override them. --button-color
+ * drives background, border, and the faded fill automatically. Scoped to
+ * `.button` so bare <button> elements (accordion headers, tabs, dropdown
+ * items, etc.) are NOT styled as buttons.
+ *
+ * API: data-variant="outline|faded|outline-faded|transparent|text"
+ *      data-size="small|xsmall"  data-color="danger|success"
+ *      data-icon-only  data-full-width
+ * Legacy .is-* classes are aliased at the end for backward compatibility.
+ */
+.button,
+button.button {
+  /* -- Component tokens (overridable by exceptions + role classes) -- */
+  --button-color: var(--text-primary);
+  --button-faded: color-mix(in srgb, var(--button-color), var(--alpha-10));
+  --button-bg: var(--button-color);
+  --button-border: var(--button-color);
+  --button-text-color: var(--text-inverted);
+  --button-font: var(--font-primary);
+  --button-text-size: var(--font-m);
+  --button-padding-y: var(--space-l);
+  --button-padding-x: var(--space-xl);
+  --button-gap: var(--space-s);
+
+  /* -- Layout -- */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--button-gap);
+
+  /* -- Box model -- */
+  padding: var(--button-padding-y) var(--button-padding-x);
+
+  /* -- Visual -- */
+  background-color: var(--button-bg);
+  border: var(--border-s) solid var(--button-border);
+  border-radius: var(--radius-s);
+
+  /* -- Typography -- */
+  font-family: var(--button-font);
+  font-size: var(--button-text-size);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-s);
+  text-transform: none;
+  text-decoration: none;
+  color: var(--button-text-color);
+
+  /* -- Icon -- */
+  --icon-size: 0.8em;
+
+  /* -- Other -- */
+  cursor: pointer;
+  transition: background-color var(--duration-m) var(--ease-out), color var(--duration-2xs) var(--ease-out), border-color var(--duration-2xs) var(--ease-out), opacity var(--duration-2xs) var(--ease-out), transform var(--duration-2xs) var(--ease-out);
+}
+
+/* -- Hover / active -- */
+.button:hover {
+  --button-color: color-mix(in srgb, var(--text-primary), var(--background-primary) 10%);
+}
+
+.button:active {
+  transform: scale(0.98);
+}
+
+/* -- Variant exceptions -- */
+.button[data-variant="outline"] {
+  --button-bg: transparent;
+  --button-text-color: var(--button-color);
+}
+
+.button[data-variant="faded"] {
+  --button-bg: var(--button-faded);
+  --button-border: transparent;
+  --button-text-color: var(--button-color);
+}
+
+.button[data-variant="outline-faded"] {
+  --button-bg: transparent;
+  --button-border: var(--button-faded);
+  --button-text-color: var(--button-color);
+}
+
+.button[data-variant="transparent"] {
+  --button-bg: transparent;
+  --button-border: transparent;
+  --button-text-color: var(--button-color);
+}
+
+.button[data-variant="text"] {
+  --button-bg: transparent;
+  --button-border: transparent;
+  --button-text-color: var(--button-color);
+  --button-padding-x: 0;
+  --button-padding-y: 0;
+}
+
+.button[data-variant="text"]:hover {
+  text-decoration: underline;
+  text-underline-offset: 2.5px;
+}
+
+.button[data-variant="text"]:active {
+  transform: none;
+}
+
+/* Unfilled variants: subtle fill on hover instead of darkening transparent */
+.button[data-variant="outline"]:hover,
+.button[data-variant="faded"]:hover,
+.button[data-variant="outline-faded"]:hover,
+.button[data-variant="transparent"]:hover {
+  background-color: color-mix(in srgb, var(--button-color), var(--alpha-5));
+}
+
+/* -- Size exceptions -- */
+.button[data-size="small"] {
+  --button-padding-y: var(--space-s);
+  --button-padding-x: var(--space-m);
+  --button-text-size: var(--font-xs);
+}
+
+.button[data-size="xsmall"] {
+  --button-padding-y: var(--space-xs);
+  --button-padding-x: var(--space-s);
+  --button-text-size: var(--font-2xs);
+}
+
+/* -- Boolean modifiers -- */
+.button[data-icon-only] {
+  --button-padding-x: var(--button-padding-y);
+  --icon-size: 1.3rem;
+}
+
+.button[data-full-width] {
+  width: 100%;
+}
+
+/* -- Colour exceptions (--button-color drives bg, border, and faded) -- */
+.button[data-color="danger"] {
+  --button-color: var(--status-danger);
+  --button-text-color: var(--text-inverted);
+}
+
+.button[data-color="danger"]:hover {
+  --button-color: color-mix(in srgb, var(--status-danger), var(--text-primary) 15%);
+}
+
+.button[data-color="success"] {
+  --button-color: var(--status-success);
+  --button-text-color: var(--text-inverted);
+}
+
+.button[data-color="success"]:hover {
+  --button-color: color-mix(in srgb, var(--status-success), var(--text-primary) 15%);
+}
+
+/* -- Dark mode: faded alpha adjusts for dark backgrounds -- */
+[data-theme="dark"] .button {
+  --button-faded: color-mix(in srgb, var(--button-color), var(--alpha-80));
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .button {
+    --button-faded: color-mix(in srgb, var(--button-color), var(--alpha-80));
+  }
+}
+
+/* -- States -- */
+.button:disabled,
+.button.is-disabled {
+  opacity: 0.4;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.button.is-loading {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* -- Reduced motion -- */
+@media (prefers-reduced-motion: reduce) {
+  .button:active {
+    transform: none;
+  }
+}
+
+/* -- Legacy class aliases (map old .is-* API onto the token model) -- */
+.button.is-faded {
+  --button-bg: var(--button-faded);
+  --button-border: transparent;
+  --button-text-color: var(--button-color);
+}
+
+.button.is-outline {
+  --button-bg: transparent;
+  --button-text-color: var(--button-color);
+}
+
+.button.is-outline.is-faded {
+  --button-bg: transparent;
+  --button-border: var(--button-faded);
+  --button-text-color: var(--button-color);
+}
+
+.button.is-small {
+  --button-padding-y: var(--space-s);
+  --button-padding-x: var(--space-m);
+  --button-text-size: var(--font-xs);
+}
+
+.button.is-icon {
+  --button-padding-x: var(--button-padding-y);
+  --icon-size: 1.3rem;
+}
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  grid-column-gap: var(--space-m);
+  grid-row-gap: var(--space-m);
+}
+
+/* -- Demo specific styles -- */
+.type-demo > h1,
+.type-demo > h2,
+.type-demo > h3,
+.type-demo > h4,
+.type-demo > h5,
+.type-demo > h6 {
+  margin-top: var(--space-none);
+  margin-bottom: var(--space-xl);
+}
+
+.button-demo > button {
+  margin-top: var(--space-none);
+  margin-bottom: var(--space-l);
+}
+
+.button-demo > .token-tag {
+  margin-top: var(--space-none);
+  margin-bottom: var(--space-none);
+}
+
+
+/* ------ 10. BACKGROUND UTILITIES ------ */
+
+/* -- Background utilities -- */
+.bg-primary {
+  background-color: var(--background-primary);
+}
+
+.bg-secondary {
+  background-color: var(--background-secondary);
+}
+
+.bg-plain {
+  background-color: var(--background-plain);
+}
+
+.bg-faded {
+  background-color: var(--background-faded);
+}
+
+/* -- Brand surfaces — full-bleed coloured sections.
+      Lime/orange/off-white read on dark-green text; dark surface inverts text. -- */
+.bg-green {
+  background-color: var(--background-green);
+  color: var(--text-primary);
+}
+
+.bg-orange {
+  background-color: var(--background-orange);
+  color: var(--text-primary);
+}
+
+.bg-blue {
+  background-color: var(--background-blue);
+  color: var(--text-primary);
+}
+
+.bg-dark {
+  background-color: var(--background-dark);
+  color: var(--text-inverted);
+}
+
+/* ------ 11. CALLOUTS & ALERTS ------ */
+
+/* -- Base callout -- */
+.callout {
+  padding: var(--space-m) var(--space-l);
+  margin-top: var(--space-l);
+  margin-bottom: var(--space-l);
+  border-left: var(--border-l) solid var(--border-secondary);
+  background-color: var(--background-faded);
+}
+
+.callout > *:first-child {
+  margin-top: 0;
+}
+
+.callout > *:last-child {
+  margin-bottom: 0;
+}
+
+/* -- Callout title -- */
+.callout-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  font-weight: var(--font-weight-semi-bold);
+  font-size: var(--font-s);
+  line-height: var(--line-height-s);
+  margin-bottom: var(--space-s);
+}
+
+/* -- Callout variants -- */
+.callout-note {
+  border-left-color: var(--callout-info);
+  background-color: var(--callout-info-bg);
+}
+
+.callout-note .callout-title {
+  color: var(--callout-info);
+}
+
+.callout-tip {
+  border-left-color: var(--callout-success);
+  background-color: var(--callout-success-bg);
+}
+
+.callout-tip .callout-title {
+  color: var(--callout-success);
+}
+
+.callout-warning {
+  border-left-color: var(--callout-warning);
+  background-color: var(--callout-warning-bg);
+}
+
+.callout-warning .callout-title {
+  color: var(--callout-warning);
+}
+
+.callout-caution {
+  border-left-color: var(--callout-danger);
+  background-color: var(--callout-danger-bg);
+}
+
+.callout-caution .callout-title {
+  color: var(--callout-danger);
+}
+
+.callout-important {
+  border-left-color: var(--callout-accent);
+  background-color: var(--callout-accent-bg);
+}
+
+.callout-important .callout-title {
+  color: var(--callout-accent);
+}
+
+/* ------ 12. FORM ELEMENTS ------ */
+
+/* -- Labels -- */
+label {
+  display: block;
+  font-size: var(--font-s);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-primary);
+  margin-bottom: var(--space-xs);
+}
+
+/* -- Text inputs & textarea -- */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="search"],
+input[type="url"],
+input[type="tel"],
+textarea,
+select {
+  font-family: var(--font-primary);
+  font-size: var(--font-s);
+  line-height: var(--line-height-l);
+  color: var(--input-text);
+  background-color: var(--input-background);
+  border: var(--border-s) solid var(--input-border);
+  padding: var(--space-s) var(--space-m);
+  width: 100%;
+  display: block;
+  transition: border-color 0.2s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+input[type="search"]:focus,
+input[type="url"]:focus,
+input[type="tel"]:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--input-focus);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--input-focus), transparent 75%);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--input-placeholder);
+}
+
+/* -- Textarea -- */
+textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+/* -- Select -- */
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23666' d='M1.41 0L6 4.58 10.59 0 12 1.41l-6 6-6-6z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--space-m) center;
+  padding-right: var(--space-2xl);
+  cursor: pointer;
+}
+
+/* -- Disabled states -- */
+input:disabled,
+textarea:disabled,
+select:disabled {
+  background-color: var(--input-disabled-bg);
+  color: var(--input-disabled-text);
+  cursor: not-allowed;
+}
+
+/* -- Fieldset & legend -- */
+fieldset {
+  border: var(--border-s) solid var(--border-secondary);
+  padding: var(--space-l);
+  margin: 0 0 var(--space-l) 0;
+}
+
+legend {
+  font-size: var(--font-s);
+  font-weight: var(--font-weight-semi-bold);
+  padding: 0 var(--space-s);
+  color: var(--text-primary);
+}
+
+/* -- Checkbox & radio -- */
+input[type="checkbox"],
+input[type="radio"] {
+  width: var(--space-l);
+  height: var(--space-l);
+  margin: 0;
+  cursor: pointer;
+  accent-color: var(--input-focus);
+}
+
+/* -- Inline label + checkbox/radio pattern -- */
+.form-check {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+}
+
+.form-check label {
+  display: inline;
+  margin-bottom: 0;
+  font-weight: var(--font-weight-regular);
+  cursor: pointer;
+}
+
+/* -- Form group (label + input pair) -- */
+.form-group {
+  margin-bottom: var(--space-l);
+}
+
+/* ------ 13. COMPONENTS ------ */
+
+/*
+ * Component library ported from the By Default studio design system, scoped to
+ * what this project needs. Each component composes the semantic + motion tokens
+ * above; status variants reuse --status-* / --status-*-bg. Tokens that don't
+ * exist here (fluid type roles) were remapped to the static --font-* scale.
+ */
+
+/* -- SVG icon utility (used by several components below) -- */
+.svg-icn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--icon-size, 1.25rem);
+  height: var(--icon-size, 1.25rem);
+  flex-shrink: 0;
+}
+
+.svg-icn svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+/* -- Disclosure (details / summary) -- */
+summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-m);
+  font-family: var(--font-primary);
+  font-size: var(--font-s);
+  color: var(--text-primary);
+  padding: var(--space-s) var(--space-m);
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+summary::before {
+  content: "";
+  width: 0.5em;
+  height: 0.5em;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform var(--duration-xs) var(--ease-in-out);
+  flex-shrink: 0;
+}
+
+details[open] > summary::before {
+  transform: rotate(45deg);
+}
+
+summary:hover {
+  color: var(--text-secondary);
+}
+
+summary:focus-visible {
+  outline: 2px solid var(--input-focus);
+  outline-offset: -2px;
+}
+
+details .disclosure-content {
+  padding: var(--space-s) var(--space-m) var(--space-m) calc(0.5em + var(--space-s) + var(--space-m));
+  font-family: var(--font-primary);
+  font-size: var(--font-s);
+  line-height: var(--line-height-xl);
+  color: var(--text-secondary);
+}
+
+.disclosure-table {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-2xs) var(--space-l);
+  align-items: baseline;
+  margin: 0;
+}
+
+.disclosure-table dt {
+  color: var(--text-faded);
+  white-space: nowrap;
+}
+
+.disclosure-table dd {
+  color: var(--text-primary);
+  margin: 0;
+}
+
+/* -- Accordion -- */
+.accordion {
+  border-top: var(--border-s) solid var(--border-faded);
+}
+
+.accordion-item {
+  border-bottom: var(--border-s) solid var(--border-faded);
+}
+
+.accordion-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  text-align: left;
+  gap: var(--space-m);
+  padding: var(--accordion-padding-y) var(--accordion-padding-x);
+  color: var(--text-primary);
+  position: relative;
+  z-index: 10;
+}
+
+.accordion-header .svg-icn {
+  width: 24px;
+  height: 24px;
+  transition: transform var(--duration-m) var(--ease-out);
+}
+
+.accordion-item.is-open > .accordion-header .svg-icn {
+  transform: rotate(180deg);
+}
+
+.accordion-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--duration-m) var(--ease-out);
+  position: relative;
+  z-index: 5;
+}
+
+.accordion-item.is-open > .accordion-content {
+  grid-template-rows: 1fr;
+}
+
+.accordion-header:focus:not(:focus-visible) {
+  outline: solid 1px transparent;
+}
+
+.accordion-header:focus-visible {
+  outline: 2px solid var(--status-info);
+  outline-offset: -2px;
+}
+
+.accordion-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.accordion-body {
+  padding: 0 var(--accordion-padding-x) var(--accordion-padding-y) var(--accordion-padding-x);
+}
+
+/* -- Tabs -- */
+.tabs {
+  display: flex;
+  border-bottom: var(--border-s) solid var(--border-faded);
+  gap: var(--space-none);
+}
+
+.tab {
+  position: relative;
+  background: none;
+  border: none;
+  padding: var(--space-m) var(--space-l);
+  color: var(--text-faded);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-s);
+  cursor: pointer;
+  transition: color var(--duration-2xs) var(--ease-in-out);
+}
+
+.tab:hover {
+  color: var(--text-secondary);
+}
+
+.tab.is-active {
+  color: var(--text-primary);
+}
+
+.tab.is-active::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--text-primary);
+}
+
+.tab:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--input-focus), var(--alpha-75));
+}
+
+.tab-panel {
+  padding-top: var(--space-m);
+}
+
+a.tab {
+  text-decoration: none;
+}
+
+a.tab:hover {
+  background-color: var(--background-faded);
+}
+
+/* -- Badge -- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-tertiary);
+  font-size: var(--font-2xs);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-l);
+  padding: var(--space-2xs) var(--space-s);
+  background-color: var(--background-darker);
+  color: var(--text-primary);
+  white-space: nowrap;
+  line-height: var(--line-height-m);
+}
+
+.badge[data-color="success"] { background-color: var(--status-success-bg); color: var(--status-success); }
+.badge[data-color="warning"] { background-color: var(--status-warning-bg); color: var(--status-warning); }
+.badge[data-color="danger"]  { background-color: var(--status-danger-bg);  color: var(--status-danger); }
+.badge[data-color="info"]    { background-color: var(--status-info-bg);    color: var(--status-info); }
+
+/* -- Tag (removable, status variants) -- */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-family: var(--font-primary);
+  font-size: var(--font-2xs);
+  font-weight: var(--font-weight-regular);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: var(--space-s) var(--space-s);
+  background-color: var(--bg-faded-5);
+  color: var(--text-secondary);
+  white-space: nowrap;
+  line-height: var(--line-height-s);
+  border-radius: 3px;
+}
+
+.tag[data-color="success"] { background-color: var(--status-success-bg); color: var(--status-success); }
+.tag[data-color="warning"] { background-color: var(--status-warning-bg); color: var(--status-warning); }
+.tag[data-color="danger"]  { background-color: var(--status-danger-bg);  color: var(--status-danger); }
+.tag[data-color="info"]    { background-color: var(--status-info-bg);    color: var(--status-info); }
+
+.tag-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.6;
+  padding: var(--space-2xs);
+  flex-shrink: 0;
+  border-radius: var(--radius-pill);
+  transition: opacity var(--duration-2xs) var(--ease-in-out), background-color var(--duration-2xs) var(--ease-in-out);
+}
+
+.tag-remove .svg-icn {
+  width: 0.625rem;
+  height: 0.625rem;
+}
+
+.tag-remove:hover {
+  opacity: 1;
+  background-color: var(--black-alpha-10);
+}
+
+.tag-remove:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--input-focus), var(--alpha-75));
+}
+
+.tag-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  align-items: center;
+}
+
+/* -- Card -- */
+.card {
+  background-color: var(--background-primary);
+  border: var(--border-s) solid var(--border-faded);
+  padding: var(--space-xl);
+  transition: border var(--duration-s), background-color var(--duration-s), box-shadow var(--duration-2xs);
+}
+
+.card--flush {
+  padding: 0;
+}
+
+.card--interactive {
+  display: block;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+.card--interactive:hover {
+  background-color: var(--background-faded);
+  box-shadow: 0 4px 12px var(--black-alpha-10);
+}
+
+.card--interactive:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--input-focus), var(--alpha-75));
+}
+
+.card-title {
+  margin-top: 0;
+  margin-bottom: var(--space-s);
+  font-size: var(--font-3xl);
+  line-height: var(--line-height-m);
+}
+
+.card-description {
+  color: var(--text-secondary);
+  font-size: var(--font-s);
+  margin-bottom: 0;
+}
+
+.card-image {
+  border-radius: var(--radius-m) var(--radius-m) 0 0;
+}
+
+[data-theme="dark"] .card {
+  background-color: var(--background-secondary);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .card {
+    background-color: var(--background-secondary);
+  }
+}
+
+/* -- Table -- */
+.table-scroll {
+  position: relative;
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table-scroll.is-overflowing {
+  display: flex;
+}
+
+.table-scroll.is-overflowing::after {
+  content: "";
+  position: sticky;
+  right: 0;
+  flex-shrink: 0;
+  width: var(--space-2xl);
+  margin-left: calc(-1 * var(--space-2xl));
+  background: linear-gradient(to right, transparent, var(--background-primary));
+  pointer-events: none;
+}
+
+.table-scroll.is-scrolled-end::after {
+  display: none;
+}
+
+.table {
+  border-spacing: 0;
+  border-collapse: collapse;
+  width: fit-content;
+  max-width: 100%;
+  font-size: var(--font-s);
+  margin-bottom: var(--space-2xl);
+}
+
+.table th {
+  font-weight: var(--font-weight-bold);
+  text-align: left;
+  min-width: 130px;
+}
+
+.table th,
+.table td {
+  padding: var(--space-m) var(--space-l);
+  border: none;
+}
+
+.table thead {
+  background-color: transparent;
+}
+
+.table thead tr {
+  border-bottom: var(--border-s) solid var(--border-secondary);
+}
+
+.table tbody tr {
+  border-bottom: var(--border-s) solid var(--border-faded);
+}
+
+.table-full {
+  width: 100%;
+}
+
+.table-hover tbody tr:hover {
+  background-color: var(--background-faded);
+}
+
+.table-header-filled th {
+  background-color: var(--background-faded);
+  font-weight: var(--font-weight-semi-bold);
+  color: var(--text-primary);
+}
+
+.table tfoot tr {
+  border-top: var(--border-m) solid var(--border-primary);
+}
+
+.table tfoot th {
+  font-weight: var(--font-weight-bold);
+}
+
+.table tfoot td {
+  font-weight: var(--font-weight-semi-bold);
+}
+
+td .svg-icn {
+  display: inline-flex;
+}
+
+@media (max-width: 768px) {
+  .table th,
+  .table td {
+    padding: var(--space-s) var(--space-m);
+  }
+}
+
+/* -- Tooltip (inverted surface; adapts to theme via tokens) -- */
+[data-tooltip] {
+  position: relative;
+  cursor: help;
+}
+
+[data-tooltip]::before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + var(--space-xs));
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--text-primary);
+  color: var(--text-inverted);
+  font-size: var(--font-xs);
+  border-radius: var(--radius-s);
+  padding: var(--space-xs) var(--space-s);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--duration-2xs) var(--ease-in-out);
+  z-index: 800;
+}
+
+[data-tooltip]:hover::before,
+[data-tooltip]:focus-visible::before {
+  opacity: 1;
+}
+
+[data-tooltip-position="bottom"]::before {
+  bottom: auto;
+  top: calc(100% + var(--space-xs));
+}
+
+[data-tooltip-position="left"]::before {
+  bottom: auto;
+  top: 50%;
+  left: auto;
+  right: calc(100% + var(--space-xs));
+  transform: translateY(-50%);
+}
+
+[data-tooltip-position="right"]::before {
+  bottom: auto;
+  top: 50%;
+  left: calc(100% + var(--space-xs));
+  transform: translateY(-50%);
+}
+
+button[data-tooltip],
+a[data-tooltip],
+.button[data-tooltip] {
+  cursor: pointer;
+}
+
+/* -- Toast (inverted surface; status variants reuse status tokens) -- */
+.toast-container {
+  position: fixed;
+  bottom: var(--space-xl);
+  right: var(--space-xl);
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+  pointer-events: none;
+}
+
+.toast {
+  pointer-events: all;
+  background-color: var(--text-primary);
+  color: var(--text-inverted);
+  padding: var(--space-m) var(--space-l);
+  border: var(--border-s) solid var(--border-faded);
+  display: flex;
+  align-items: center;
+  gap: var(--space-m);
+  max-width: 360px;
+  font-size: var(--font-s);
+  transition: opacity var(--duration-s) var(--ease-in-out);
+}
+
+.toast[data-type="success"] { background: var(--status-success-bg); color: var(--status-success); }
+.toast[data-type="warning"] { background: var(--status-warning-bg); color: var(--status-warning); }
+.toast[data-type="danger"]  { background: var(--status-danger-bg);  color: var(--status-danger); }
+.toast[data-type="info"]    { background: var(--status-info-bg);    color: var(--status-info); }
+
+.toast-message {
+  flex: 1;
+}
+
+.toast-close {
+  color: inherit;
+  line-height: 1;
+  opacity: 0.7;
+  transition: opacity var(--duration-2xs) var(--ease-in-out);
+}
+
+.toast-close:hover {
+  opacity: 1;
+}
+
+/* -- Dropdown -- */
+.dropdown {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+}
+
+.dropdown-trigger {
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+  gap: var(--space-s);
+  padding: var(--space-l) var(--space-m);
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: var(--font-primary);
+  font-size: var(--font-s);
+  line-height: var(--line-height-m);
+  text-decoration: none;
+  transition: color var(--duration-2xs) var(--ease-in-out), background-color var(--duration-2xs) var(--ease-in-out);
+}
+
+.dropdown-trigger:hover {
+  background-color: var(--dropdown-item-hover);
+  color: var(--text-plain);
+}
+
+.dropdown-trigger .svg-icn {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.dropdown.is-open > .dropdown-trigger {
+  background-color: var(--background-faded);
+}
+
+.dropdown-chevron {
+  width: 1rem;
+  height: 1rem;
+  color: var(--text-faded);
+  transition: transform var(--duration-xs) var(--ease-in-out);
+  flex-shrink: 0;
+}
+
+.dropdown.is-open .dropdown-chevron {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 250px;
+  background-color: var(--dropdown-background);
+  border: var(--border-s) solid var(--dropdown-border);
+  border-top: none;
+  z-index: 1000;
+  flex-direction: column;
+}
+
+.dropdown-menu.is-right {
+  left: auto;
+  right: 0;
+}
+
+.dropdown.is-open .dropdown-menu {
+  display: flex;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+  padding: var(--space-l) var(--space-m);
+  font-size: var(--font-s);
+  color: var(--text-primary);
+  text-decoration: none;
+  background: none;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+  font-family: var(--font-primary);
+  line-height: var(--line-height-m);
+  text-align: left;
+  transition: background-color var(--duration-2xs) var(--ease-in-out);
+}
+
+.dropdown-item:hover {
+  background-color: var(--dropdown-item-hover);
+  color: var(--text-plain);
+}
+
+.dropdown-item:focus-visible {
+  outline: none;
+  background-color: var(--dropdown-item-hover);
+  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--input-focus), var(--alpha-75));
+}
+
+.dropdown-item .svg-icn {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.dropdown-item.is-disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.dropdown-item--danger {
+  color: var(--status-danger);
+}
+
+.dropdown-item--danger:hover {
+  background-color: color-mix(in srgb, var(--status-danger), var(--alpha-90));
+}
+
+.dropdown-divider {
+  border: none;
+  border-top: var(--border-s) solid var(--dropdown-border);
+  margin: 0;
+}
+
+.dropdown-label {
+  padding: var(--space-s) var(--space-m);
+  font-size: var(--font-2xs);
+  font-weight: var(--font-weight-semi-bold);
+  color: var(--text-faded);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.dropdown-desc {
+  font-size: var(--font-2xs);
+  color: var(--text-faded);
+  white-space: normal;
+}
+
+.dropdown-item-end {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  color: var(--text-faded);
+  flex-shrink: 0;
+  font-size: var(--font-2xs);
+}
+
+/* -- Dialog (native <dialog>) -- */
+.dialog {
+  background-color: var(--background-primary);
+  border: none;
+  box-shadow: 0 8px 32px var(--black-alpha-20);
+  padding: var(--space-2xl);
+  max-width: var(--dialog-max-width);
+  width: min(var(--dialog-max-width), calc(100vw - var(--space-2xl) * 2));
+  max-height: 85vh;
+  margin: auto;
+}
+
+.dialog::backdrop {
+  background-color: var(--background-modal);
+  backdrop-filter: blur(2px);
+}
+
+.dialog[open] {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-l);
+}
+
+.dialog-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-l);
+}
+
+.dialog-title {
+  font-family: var(--font-secondary);
+  font-size: var(--font-3xl);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-m);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.dialog-close {
+  flex-shrink: 0;
+  color: var(--text-faded);
+  transition: color var(--duration-2xs) var(--ease-in-out);
+}
+
+.dialog-close:hover {
+  color: var(--text-primary);
+}
+
+.dialog-close:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--input-focus), var(--alpha-75));
+}
+
+.dialog-body {
+  overflow-y: auto;
+  flex: 1;
+}
+
+.dialog-body > *:first-child {
+  margin-top: 0;
+}
+
+.dialog-body > *:last-child {
+  margin-bottom: 0;
+}
+
+.dialog-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-m);
+  flex-wrap: wrap;
+}
+
+[data-theme="dark"] .dialog {
+  background-color: var(--background-secondary);
+  box-shadow: 0 8px 40px var(--black-alpha-60);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .dialog {
+    background-color: var(--background-secondary);
+    box-shadow: 0 8px 40px var(--black-alpha-60);
+  }
+}
+
+/* -- Toggle / switch -- */
+.form-toggle {
+  --toggle-width: 44px;
+  --toggle-height: var(--space-xl);
+  --toggle-knob-size: 18px;
+  --toggle-knob-offset: 3px;
+
+  display: flex;
+  align-items: center;
+  gap: var(--space-s);
+}
+
+.form-toggle label {
+  display: inline;
+  margin-bottom: 0;
+  font-weight: var(--font-weight-regular);
+  cursor: pointer;
+  order: -1;
+  white-space: nowrap;
+}
+
+.form-toggle.is-label-right label {
+  order: 1;
+}
+
+.form-toggle input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: var(--toggle-width);
+  height: var(--toggle-height);
+  background-color: var(--bg-faded-5);
+  border: var(--border-s) solid var(--border-faded);
+  border-radius: var(--radius-pill);
+  position: relative;
+  cursor: pointer;
+  transition: background-color var(--duration-xs) var(--ease-in-out);
+}
+
+.form-toggle input[type="checkbox"]::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: var(--toggle-knob-offset);
+  transform: translateY(-50%);
+  width: var(--toggle-knob-size);
+  height: var(--toggle-knob-size);
+  border-radius: 50%;
+  background-color: var(--neutral-500);
+  transition: transform var(--duration-xs) var(--ease-in-out), background-color var(--duration-xs) var(--ease-in-out);
+}
+
+.form-toggle input[type="checkbox"]:checked {
+  background-color: var(--text-accent);
+}
+
+.form-toggle input[type="checkbox"]:checked::after {
+  transform: translateY(-50%) translateX(calc(var(--toggle-width) - var(--toggle-knob-size) - var(--toggle-knob-offset) * 2 - var(--border-s) * 2));
+  background-color: var(--white);
+}
+
+.form-toggle input[type="checkbox"]:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--input-focus), var(--alpha-75));
+}
+
+.form-toggle input[type="checkbox"]:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.form-toggle input[type="checkbox"]:disabled + label {
+  cursor: not-allowed;
+}
+
+/* ------ 14. RESPONSIVE ------ */
+
+/* Tablet */
+@media (max-width: 991px) {
+  :root {
+    /* -- Tablet headline sizes (fluid → fixed rem) -- */
+    --font-headline-s: 2.25rem; /* 36px */
+    --font-headline-m: 4rem;    /* 64px */
+    --font-headline-l: 4.75rem; /* 76px */
+
+    /* -- Tablet body size (drop vw, follow the type scale: 18px → 16px on mobile) -- */
+    --font-body: var(--font-m);
+
+    /* -- Tablet container (stop scaling; padding-global handles gutters) -- */
+    --container-xl: 100%;
+  }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  :root {
+    /* -- Mobile font sizes -- */
+    --font-2xs: 12px;
+    --font-xs: 12px;
+    --font-s: 14px;
+    --font-m: 16px;
+    --font-l: 18px;
+    --font-xl: 20px;
+    --font-2xl: 22px;
+    --font-3xl: 28px;
+    --font-4xl: 32px;
+    --font-5xl: 40px;
+    --font-6xl: 48px;
+
+    /* -- Mobile headline sizes -- */
+    --font-headline-s: 1.875rem; /* 30px */
+    --font-headline-m: 3rem;     /* 48px */
+    --font-headline-l: 3.5rem;   /* 56px */
+
+    /* -- Mobile section spacing -- */
+    --section-xs: var(--space-l);
+    --section-s: var(--space-xl);
+    --section-m: var(--space-2xl);
+    --section-l: var(--space-5xl);
+    --section-xl: var(--space-8xl);
+
+    /* -- Mobile responsive space tokens -- */
+    --space-xs: 0.25rem;
+    --space-s: 0.25rem;
+    --space-m: 0.5rem;
+    --space-l: 0.75rem;
+    --space-xl: 1rem;
+    --space-2xl: 1.5rem;
+    --space-3xl: 2rem;
+    --space-4xl: 2rem;
+    --space-6xl: 3rem;
+  }
+}/* ─────────────────────────────
+   PART 2 — PROJECT STYLES
+   ─────────────────────────────
+
+   Section-specific styles that the design system (Part 1 above) can't express
+   with existing utilities. Everything composes design system tokens — no
+   hardcoded colours, spacing, or type.
+   ───────────────────────────── */
+
+
+/* ------ NAVIGATION ------ */
+
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--background-primary);
+}
+
+.site-nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xl);
+  padding-top: var(--space-l);
+  padding-bottom: var(--space-l);
+}
+
+.site-nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xl);
+}
+
+.site-nav-links a {
+  text-decoration: none;
+  font-weight: var(--font-weight-medium);
+}
+
+.brand-wordmark {
+  display: inline-block;
+  height: var(--space-2xl);
+  width: auto;
+}
+
+
+/* ------ STICKERS ------ */
+
+/* Inline stickers: decorative graphics inside a heading, authored as a <span>
+   so no <img> sits inside a Webflow Heading. Two types, one family — a
+   per-sticker combo class (.sticker-<name>) sets the image (+ size); the base
+   class decides how it renders:
+
+     ADD  → image sits BESIDE the word (::before). Needs a pseudo-element, so it
+            lives here in CSS (not Designer-native).
+              <span class="sticker-add sticker-social">agency</span>
+
+     SWAP → image REPLACES a letter/word (glyph kept transparent in the DOM so it
+            still reads for SR/SEO and reveals with the word in SplitText).
+            Fully Webflow-Designer-native — PREFERRED where text can carry the
+            graphic. Select the letter → wrap in span → text colour transparent →
+            background image (Fit: Contain, Position: Center).
+              ag<span class="sticker-swap sticker-o">e</span>ncy
+
+   Sizing is class-based: the combo class sets --sticker-image and, if needed,
+   --sticker-size (add) or padding-inline / inline-block width (swap). */
+
+/* -- Type: add (image beside the word) -- */
+.sticker-add {
+  position: relative;
+  white-space: nowrap;   /* keep the word and its sticker together — never split across lines */
+}
+
+.sticker-add::before {
+  content: "";
+  display: inline-block;
+  width: var(--sticker-size, 0.9em);
+  height: var(--sticker-size, 0.9em);
+  margin-inline-start: 0.2em;
+  margin-inline-end: 0.2em;
+  vertical-align: baseline;
+  transform: translateY(0.08em);
+  background-image: var(--sticker-image);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* -- Type: swap (image replaces a letter/word) -- */
+.sticker-swap {
+  color: transparent;
+  background-image: var(--sticker-image);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* -- Box modifier (swap only): give the swap a fixed SQUARE box instead of
+      stretching to the word's natural width — for replacing a whole/wide word
+      with a square sticker. The word stays in the DOM (transparent) for
+      SR/SEO/SplitText; overflow clips it to the box. Size with --sticker-size.
+        <span class="sticker-swap sticker-box sticker-social">post-social</span> -- */
+.sticker-swap.sticker-box {
+  display: inline-block;
+  width: var(--sticker-size, 1em);
+  aspect-ratio: 1;           /* square, independent of the word's width */
+  overflow: hidden;          /* clip the wider transparent word to the box */
+  vertical-align: middle;    /* overflow:hidden re-bases the baseline to the box edge — re-centre on the line */
+}
+
+/* -- Per-sticker combo classes — each sets only the image (+ optional size).
+      One declaration = the single swap-point for the real asset later.
+      Works on either .sticker-add or .sticker-swap. -- */
+.sticker-about    { --sticker-image: url("https://bydefault.design/image/120x90"); }
+.sticker-founded-1 { --sticker-image: url("https://bydefault.design/image/90x90"); }
+.sticker-founded-2 { --sticker-image: url("https://bydefault.design/image/90x90"); }
+.sticker-slot     { --sticker-image: url("https://bydefault.design/image/120x90"); }
+.sticker-smiley   { --sticker-image: url("https://bydefault.design/image/130x130"); }
+.sticker-social   { --sticker-image: url("https://bydefault.design/image/180x108"); }
+.sticker-speaker   { --sticker-image: url("https://bydefault.design/image/180x108"); }
+.sticker-l {
+  --sticker-image: url("https://bydefault.design/image/300x150");
+  padding-inline: 0 0.8em;
+  margin-inline: .1em;
+}
+
+.hero-section {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.about-section {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.about-headline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+  width: 50%;
+  margin-right: 50%;
+}
+
+.about-body {
+  width: 50%;
+  margin-left: 50%;
+}
+
+.founded-section {
+  min-height: 80svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.define-section {
+  min-height: 80svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+}
+
+.define-headline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+  width: 50%;
+  margin-right: 50%;
+}
+
+.services-section {
+  overflow: clip; /* clip (not hidden) trims rotated panels without scoping the sticky stack */
+  padding-top: var(--5xl);
+}
+
+
+.slot-section {
+  min-height: 80svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.slot-headline {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-m);
+  width: 50%;
+  margin-right: 50%;
+}
+
+.slot-body {
+  width: 50%;
+  margin-left: 50%;
+}
+
+/* ------ TICKER ------ */
+
+/* Edge-to-edge scrolling marquee. The track holds two identical runs so the
+   loop is seamless; pure CSS, no JS. */
+.ticker {
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.ticker-track {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3xl);
+  padding-left: var(--space-3xl);
+  will-change: transform;
+  animation: ticker-scroll 45s linear infinite;
+}
+
+.ticker-item {
+  flex-shrink: 0;
+  margin-right: 0.3em;
+}
+
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track {
+    animation: none;
+  }
+}
+
+
+/* ------ MEDIA ------ */
+
+.media-fluid {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+
+/* ------ SERVICES ------ */
+
+/* Full-bleed numbered rows; each row is its own brand surface. */
+.service-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: var(--space-xl);
+  padding-top: var(--space-4xl);
+  padding-bottom: 200px;
+  max-width: 90vw;
+}
+
+.service-row + .service-row {
+  /* rows meet edge-to-edge — colour change is the divider */
+}
+
+.service-number {
+  flex-shrink: 0;
+  font-size: var(--font-m);
+  font-weight: var(--font-weight-bold);
+  font-feature-settings: "tnum";
+}
+
+.service-title {
+  margin: 0;
+  /* font-size: var(--font-4xl); */
+  font-size: 3vw;
+  font-weight: var(--font-weight-semi-bold);
+  line-height: var(--line-height-s);
+  text-align: center;
+}
+
+.services-section[data-bd-stack] {
+  --bd-stack-overlap: 150px; /* resting overlap — single source of truth; JS reads this too. Tune here. */
+}
+
+/* Overlapping tilt — motion-safe, all devices. The negative margin is the REAL
+   resting overlap, so the section height is compact (no bottom gap); bd-animations.js
+   animates each panel from a non-overlapped start INTO this rest, tilting + scaling
+   in. The section uses overflow: clip so rotated/scaled corners are trimmed.
+   Reduced-motion: plain stacked blocks. */
+@media (prefers-reduced-motion: no-preference) {
+  .services-section[data-bd-stack] .service-block {
+    padding-bottom: 0;    /* compact: panels meet edge-to-edge before the overlap margin */
+    position: relative;   /* later DOM panel paints over the previous one */
+  }
+  .services-section[data-bd-stack] .service-block:not(:first-child) {
+    margin-top: calc(-1 * var(--bd-stack-overlap));
+  }
+}
+
+
+/* ------ TEAM ------ */
+
+/* Polaroid grid: 3x2 cells. Each cell holds a flip card. The cell carries a
+   stable subtle CSS tilt; the inner .team-card owns the rotateY flip so the
+   tilt survives the flip state. Perspective lives on the cell so each card
+   gets its own 3D depth. */
+
+.team-section {
+  min-height: 80svh;
+  overflow: hidden;
+  gap: 0;
+}
+
+.team-grid {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+
+  width: 70%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-xl);
+
+}
+
+.team-info {
+  background-color: var(--background-green);
+}
+
+.team-intro {
+  font-size: 1.2vw;
+
+}
+
+
+.team-info-container {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.team-grid-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: var(--background-dark);
+}
+
+.team-cell {
+  position: relative;
+  aspect-ratio: 229 / 267;
+  perspective: 1200px;
+  will-change: transform;
+}
+
+/* Stable subtle tilts — same six angles every load, no JS randomisation. */
+.team-cell:nth-child(1) { transform: rotate(-1.5deg); }
+.team-cell:nth-child(2) { transform: rotate(1.2deg); }
+.team-cell:nth-child(3) { transform: rotate(-0.8deg); }
+.team-cell:nth-child(4) { transform: rotate(1.6deg); }
+.team-cell:nth-child(5) { transform: rotate(-1.2deg); }
+.team-cell:nth-child(6) { transform: rotate(0.9deg); }
+
+.team-card {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: transform 600ms ease;
+}
+
+.team-card:focus-visible {
+  outline: 2px solid var(--text-link, var(--text-primary));
+  outline-offset: 4px;
+}
+
+.team-face {
+  position: absolute;
+  inset: 0;
+  display: block;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+}
+
+.team-face-front {
+  background: var(--background-faded);
+}
+
+/* Back face is a single-cell grid. The slot's [data-position] rule below sets
+   where that cell anchors — vertical via align-items, horizontal via
+   text-align. Same slot, same look, no matter which content lands in it.
+   Stickers opt out (margin: auto centres them in any slot). */
+.team-face-back {
+  display: grid;
+  padding: var(--space-l);
+  background: var(--background-primary);
+  color: var(--text-primary);
+  transform: rotateY(180deg);
+}
+
+/* Photo stacking: main + hover share the cell; hover cross-fades in. */
+.team-photo {
+  display: block;
+  width: 100%;
+  aspect-ratio: 229 / 267;
+  object-fit: cover;
+}
+
+.team-photo-main,
+.team-photo-hover {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto;
+}
+
+.team-photo-hover {
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+
+/* Hover swap in browse state, AND on the active cell while open (so the
+   open card stays on its alternate-pose photo). Flipped inactive cells
+   show content, not hover photos, so the rule excludes them implicitly. */
+.team-grid:not(.is-open) .team-card:hover .team-photo-hover,
+.team-grid:not(.is-open) .team-card:focus-visible .team-photo-hover,
+.team-cell.is-active .team-photo-hover {
+  opacity: 1;
+}
+
+/* Flip state — the rotateY is applied by JS via GSAP, but a CSS class is also
+   kept as a fallback / source of truth for the resting flipped state. */
+.team-cell.is-flipped .team-card {
+  transform: rotateY(180deg);
+}
+
+/* Back-face content — typography only. Each type owns its size/weight; the
+   SLOT owns where it sits. So a name in slot 1 and a name in slot 4 look
+   identical typographically but anchor to different corners. */
+.team-back-name,
+.team-back-role,
+.team-back-fact {
+  margin: 0;
+}
+
+.team-back-name {
+  font-size: var(--font-l);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-s, 1.1);
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+
+.team-back-role {
+  font-size: var(--font-m);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-s, 1.1);
+  text-transform: uppercase;
+}
+
+.team-back-fact {
+  font-size: var(--font-s);
+  line-height: var(--line-height-m, 1.3);
+}
+
+/* Stickers are slot-independent — always centered. margin: auto on a grid
+   item overrides the slot's align-items/text-align. */
+.team-back-sticker {
+  display: block;
+  width: 60%;
+  height: auto;
+  margin: auto;
+  aspect-ratio: auto;
+}
+
+/* ─── Slot anchors — desktop 3x2 ─────────────────────────────────────────
+   Each cell's content radiates toward its OUTER corner (away from the grid
+   centre). One line per slot; the same anchoring is applied no matter which
+   content type lands there. align-items handles vertical; text-align handles
+   horizontal (since the back face has only one child, text-align doubles as
+   horizontal block alignment via the element's content width).            */
+.team-cell[data-position="1"] .team-face-back { align-items: start; text-align: left;   }
+.team-cell[data-position="2"] .team-face-back { align-items: start; text-align: center; }
+.team-cell[data-position="3"] .team-face-back { align-items: start; text-align: right;  }
+.team-cell[data-position="4"] .team-face-back { align-items: end;   text-align: left;   }
+.team-cell[data-position="5"] .team-face-back { align-items: end;   text-align: center; }
+.team-cell[data-position="6"] .team-face-back { align-items: end;   text-align: right;  }
+
+/* Close button — one per cell, top-right INSIDE the polaroid. Only visible
+   on the active cell; sits above the card faces (z-index) so the click lands
+   on it, not the underlying button. */
+.team-cell-close {
+  position: absolute;
+  top: var(--space-s);
+  right: var(--space-s);
+  width: var(--space-2xl);
+  height: var(--space-2xl);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--background-dark, var(--text-primary));
+  color: var(--background-primary);
+  font-size: var(--font-l);
+  line-height: 1;
+  cursor: pointer;
+  display: none;
+  z-index: 3;
+}
+
+.team-cell.is-active .team-cell-close {
+  display: block;
+}
+
+.team-cell-close:focus-visible {
+  outline: 2px solid var(--text-link, var(--text-primary));
+  outline-offset: 2px;
+}
+
+/* Tablet & mobile: drop from 3x2 to 2x3. The TEAM_LAYOUTS pattern still maps
+   positions 1-6 to cells; they just flow into the narrower grid (1-2 in
+   row 1, 3-4 in row 2, 5-6 in row 3). Same "radiate outward" anchoring
+   re-mapped to the new visual positions. Webflow's 991px tablet break-point. */
+@media (max-width: 991px) {
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .team-cell[data-position="1"] .team-face-back { align-items: start;  text-align: left;  }
+  .team-cell[data-position="2"] .team-face-back { align-items: start;  text-align: right; }
+  .team-cell[data-position="3"] .team-face-back { align-items: center; text-align: left;  }
+  .team-cell[data-position="4"] .team-face-back { align-items: center; text-align: right; }
+  .team-cell[data-position="5"] .team-face-back { align-items: end;    text-align: left;  }
+  .team-cell[data-position="6"] .team-face-back { align-items: end;    text-align: right; }
+}
+
+/* Reduced motion: no 3D, no flip — cross-fade faces with opacity instead. */
+@media (prefers-reduced-motion: reduce) {
+  .team-cell { perspective: none; }
+  .team-card { transform-style: flat; transition: none; }
+  .team-card,
+  .team-cell.is-flipped .team-card { transform: none; }
+  .team-face { backface-visibility: visible; -webkit-backface-visibility: visible; }
+  .team-face-back {
+    transform: none;
+    opacity: 0;
+    transition: opacity 220ms ease;
+    pointer-events: none;
+  }
+  .team-cell.is-flipped .team-face-back { opacity: 1; pointer-events: auto; }
+  .team-cell.is-flipped .team-face-front { opacity: 0; }
+  .team-photo-hover { transition: none; }
+}
+
+
+/* ------ CTA ------ */
+
+.cta-email {
+  display: inline-block;
+  font-size: var(--font-5xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-s);
+  text-decoration: none;
+}
+
+.cta-email:hover {
+  color: var(--text-link);
+}
+
+
+/* ------ FOOTER ------ */
+
+.site-footer .brand-wordmark {
+  height: var(--space-6xl);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: var(--space-2xl);
+  align-items: start;
+}
+
+.footer-col-title {
+  font-size: var(--font-s);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--letter-spacing-l);
+  margin-bottom: var(--space-m);
+}
+
+.footer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-s);
+}
+
+.footer-nav a {
+  text-decoration: none;
+}
+
+.newsletter-form {
+  display: flex;
+  gap: var(--space-s);
+  align-items: stretch;
+}
+
+.newsletter-form input[type="email"] {
+  flex: 1;
+}
+
+
+/* ------ STANDOUT REVEAL ------ */
+
+/*
+   Full-viewport, pinned + scroll-scrubbed reveal (assets/js/homepage.js).
+   Generic scene-wrapper architecture: the stage holds N .standout-scene divs
+   plus a sibling .standout-balls overlay. Scene 1 is revealed by the balls
+   parting; subsequent scenes cross-fade in over the previous in sequence.
+   GSAP doesn't target scene contents — drop any HTML inside a scene and it
+   cross-fades with the wrapper.
+
+   Layout strategy:
+   - Default (no JS): scenes stack in normal flow as readable blocks. No balls.
+   - With JS (.js on <html>): stage becomes a grid; scenes overlap in one cell.
+     Non-first scenes start at opacity 0 (see bd-animations.css FOUC rule).
+   - Reduced motion (.is-static added by JS): override .js back to flow.
+
+   --text-primary is locally pinned to brand-dark so this section never flips
+   dark — the stage is forced white and inherited light text would vanish.
+*/
+
+.section-standout {
+  position: relative;
+  background-color: var(--background-white); /* shows through as the balls part */
+  --text-primary: var(--brand-dark);
+  margin-top: -50px;
+}
+
+/* Default (no JS): scenes flow as readable blocks. */
+.standout-stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-l);
+  padding-block: var(--space-5xl);
+}
+
+/* With JS: overlap scenes in one grid cell, fixed viewport height. */
+.js .standout-stage {
+  display: grid;
+  place-items: center;
+  height: 100svh;
+  padding-block: 0;
+  overflow: hidden;
+}
+
+/* Scenes — each is a generic wrapper holding any content. With .js they share
+   grid cell 1/1 so they stack centred; without .js they sit in flow. */
+.standout-scene {
+  position: relative;
+  padding-inline: var(--space-l);
+  color: var(--text-primary);
+  text-align: center;
+  width: 100%;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-m);
+}
+
+.js .standout-scene {
+  grid-area: 1 / 1;
+  z-index: 1;
+}
+
+/* Balls overlay: between scene 1 and any later scenes (sibling combinator). */
+.standout-balls {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.js .standout-balls {
+  grid-area: 1 / 1;
+  align-self: stretch;
+  justify-self: stretch;
+  z-index: 2;
+}
+
+/* Scenes after the balls (scene 2+) sit on top of the balls' layer. */
+.js .standout-balls ~ .standout-scene {
+  z-index: 3;
+}
+
+/* Ball element — size + position applied at runtime by GSAP. */
+.standout-ball {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  background-color: var(--background-green);
+}
+
+/* Promote balls to their own compositor layers only while the reveal is on
+   screen (homepage.js toggles .is-active on the ball layer). */
+.standout-balls.is-active .standout-ball {
+  will-change: transform;
+}
+
+/* Reduced-motion fallback: override .js back to flow, no pin, no balls. */
+.section-standout.is-static .standout-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-l);
+  padding-block: var(--space-5xl);
+  height: auto;
+  overflow: visible;
+}
+
+.section-standout.is-static .standout-scene {
+  position: static;
+  grid-area: auto;
+  z-index: auto;
+}
+
+.section-standout.is-static .standout-balls {
+  display: none;
+}
+
+
+/* ------ RESPONSIVE ------ */
+
+@media (max-width: 768px) {
+  .site-nav-links {
+    gap: var(--space-l);
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .service-title {
+    font-size: var(--font-xl);
+  }
+
+  .cta-email {
+    font-size: var(--font-3xl);
+  }
+}

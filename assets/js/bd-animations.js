@@ -1,9 +1,9 @@
 /**
  * Script Purpose: ByDefault Animations (Studio)
  * Author: Erlen Masson
- * Version: 3.0.0
+ * Version: 3.2.3
  * Created: 5 Feb 2025
- * Last Updated: 23 April 2026
+ * Last Updated: 27 May 2026
  *
  * Refactored for Barba.js integration using gsap.context().
  * All animations are scoped to a container and cleaned up
@@ -22,7 +22,7 @@
     return;
   }
 
-  console.log("Script - Animations v3.0.0 (Studio)");
+  console.log("Script - Animations v3.2.3 (Studio)");
 
   // Register plugins once — survives ctx.revert()
   gsap.registerPlugin(ScrollTrigger, SplitText);
@@ -60,9 +60,28 @@
     return window.innerWidth < 768 ? "top 50%" : "bottom 75%";
   }
 
-  // Headline settings
-  var headlineWordStagger = 0.3;
-  var headlineFromOpacity = 0.1;
+  // Headline animation — rise + drift + tumble. Two modes share the same
+  // motion design, animated at either word or character granularity. Flip
+  // headlineMode to switch globally; each mode has its own tuning bag so
+  // the stagger (and anything else) can differ — chars need a much faster
+  // stagger than words or the animation drags on forever.
+  var headlineMode = "words"; // "words" or "chars"
+
+  var headlineWordsConfig = {
+    stagger: 0.3,
+    riseMin: 10,   // yPercent — closest each unit starts below rest
+    riseMax: 40,   // yPercent — furthest each unit starts below rest
+    drift: 5,     // ±xPercent — subtle lateral sway. Set 0 for pure vertical.
+    rotation: 5    // ±degrees — the tumble
+  };
+
+  var headlineCharsConfig = {
+    stagger: 0.04, // chars: ~10× tighter — 40 chars at 0.3 would be 12s
+    riseMin: 10,
+    riseMax: 40,
+    drift: 25,
+    rotation: 5
+  };
 
 
   function headlineStart() {
@@ -489,21 +508,80 @@
     });
   }
 
-  // Headline-only word fade. Independent from fadeWords so the home hero
-  // can be tuned without affecting case-study card titles or any future
-  // [data-text-animate='words'] usage. Tuning knobs live at the top of
-  // the file: headlineWordStagger, headlineFromOpacity, headlineStart(),
-  // headlineEnd().
+  // Headline rise — each unit (word OR character, depending on headlineMode)
+  // starts below its rest position by a random distance, with a subtle lateral
+  // drift and random rotation, then tumbles up into place. Scroll axis IS the
+  // arrival axis (vertical); X drift is organic sway, not scatter. Independent
+  // from fadeWords so the home hero can be tuned without affecting other
+  // [data-text-animate='words'] usage. Tuning lives at the top of the file:
+  // headlineMode, headlineWordsConfig, headlineCharsConfig, headlineStart/End.
+  //
+  // The wordsClass/charsClass naming pairs with scoped CSS rules in
+  // assets/css/bd-animations.css that give the split spans display: inline-block.
+  // Without inline-block, transforms (yPercent/xPercent/rotation) are silently
+  // ignored on inline boxes and only opacity animates.
   function fadeWordHeadline(self) {
+    var isChars = headlineMode === "chars";
+    var config = isChars ? headlineCharsConfig : headlineWordsConfig;
+
     self.selector("[data-text-animate='word-headline']").forEach(function (element) {
-      var split = new SplitText(element, { type: "words", tag: "span" });
-      gsap.set(split.words, { opacity: headlineFromOpacity });
+      // Chars mode also splits words — keeps chars from breaking across lines
+      // mid-word at narrow viewports. We animate the chars; the word wrappers
+      // just preserve typographic flow.
+      //
+      // `ignore` keeps SplitText out of the sticker spans entirely: their inner
+      // text isn't fragmented (critical in chars mode so "led" doesn't tumble
+      // letter-by-letter across the sticker graphic), and the stickers stay as
+      // atomic units we can target ourselves below.
+      var splitOptions = isChars
+        ? {
+            type: "chars, words",
+            tag: "span",
+            charsClass: "split-char",
+            wordsClass: "split-word",
+            ignore: ".sticker-add, .sticker-swap"
+          }
+        : {
+            type: "words",
+            tag: "span",
+            wordsClass: "split-word",
+            ignore: ".sticker-add, .sticker-swap"
+          };
+      var split = new SplitText(element, splitOptions);
+
+      // SplitText doesn't add pre-existing inline children (the sticker spans)
+      // to its .words/.chars arrays, so we query the headline for the union of
+      // SplitText output + stickers. querySelectorAll returns nodes in document
+      // order — stagger naturally rides reading order without manual array math.
+      var targets = element.querySelectorAll(
+        isChars
+          ? ".split-char, .sticker-add, .sticker-swap"
+          : ".split-word, .sticker-add, .sticker-swap"
+      );
+
+      gsap.set(targets, {
+        opacity: 0,
+        yPercent: "random(" + config.riseMin + ", " + config.riseMax + ")",
+        xPercent: "random(-" + config.drift + ", " + config.drift + ")",
+        rotation: "random(-" + config.rotation + ", " + config.rotation + ")",
+        transformOrigin: "50% 100%"
+      });
       gsap.set(element, { opacity: 1 });
 
-      gsap.to(split.words, {
+      // back.out's overshoot reads as a bounce in real-time playback, but under
+      // scrub it becomes a scroll-driven drift past zero — looks like a glitch.
+      // Use a clean ease for the scrubbed (desktop) path, keep the bounce on mobile.
+      var scrubValue = getScrubValue(element);
+      var willScrub = shouldScrub() && scrubValue !== undefined;
+      var ease = willScrub ? "power1.out" : "back.out(1.2)";
+
+      gsap.to(targets, {
         opacity: 1,
-        ease: "power1.inOut",
-        stagger: headlineWordStagger,
+        yPercent: 0,
+        xPercent: 0,
+        rotation: 0,
+        ease: ease,
+        stagger: config.stagger,
         scrollTrigger: splitScrollConfig(element, headlineEnd, headlineStart)
       });
     });

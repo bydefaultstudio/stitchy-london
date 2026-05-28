@@ -28,11 +28,46 @@
   opacity: 0;
 }
 
+/* Standout reveal — scene 1 is revealed by the balls parting (stays visible).
+   Scene 2+ start hidden so they don't flash before homepage.js cross-fades them
+   in. Class-based (not data-attr) so the section rebuilds cleanly in Webflow. */
+.js .standout-scene:not(:first-of-type) {
+  opacity: 0;
+}
+
+/* ------ WORD-HEADLINE — make spans transformable ------ */
+
+/*
+   SplitText word/char spans inside [data-text-animate="word-headline"] must
+   be inline-block so the yPercent/xPercent/rotation animations apply. Inline
+   elements silently ignore CSS transforms.
+
+   .split-word and .split-char cover both animation modes (headlineMode in
+   bd-animations.js — set to "words" or "chars"). Both rules are always on
+   so flipping the mode requires no CSS change.
+
+   The .sticker-add and .sticker-swap classes are included because SplitText
+   treats pre-existing inline children as words — they end up in split.words
+   and ride along with the same rise/drift/tumble tween, so they need the
+   same display rule to render the transforms.
+
+   Scoped to [data-text-animate="word-headline"] so we don't change the layout
+   of any other SplitText animation (chars/words/lines/etc. animate opacity
+   only) or any sticker that might appear outside an animated headline.
+*/
+[data-text-animate="word-headline"] .split-word,
+[data-text-animate="word-headline"] .split-char,
+[data-text-animate="word-headline"] .sticker-add,
+[data-text-animate="word-headline"] .sticker-swap {
+  display: inline-block;
+}
+
 /* Always show animated content when printing. */
 @media print {
   [data-bd-animate],
   [data-text-animate],
-  [data-bd-leave] {
+  [data-bd-leave],
+  .standout-scene {
     opacity: 1 !important;
     transform: none !important;
   }
