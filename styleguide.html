@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Essential -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Design System</title>
+  <meta name="description"
+    content="Interactive design system showcasing typography, colors, components, and layout primitives." />
+
+  <!-- Robots -->
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- Combined stylesheet (design system + project styles) -->
+  <link rel="stylesheet" href="assets/css/style.css" />
+
+  <!-- Google Fonts: Mona Sans (brand primary) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <div class="page-wrapper">
+    <div class="page-content">
+
+      <!-- Header -->
+      <section class="top-medium bottom-medium border-bottom border-secondary">
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="block gap-small">
+              <p class="eyebrow">Design System</p>
+              <h1>Design System</h1>
+              <p class="text-size-small">All design system components rendered with <strong>default tokens</strong>. Load a brand book to see branded output.</p>
+              <p class="text-size-small"><a href="brand-book/index.html">Brand Book</a> · <a href="docs/site/index.html">Documentation</a></p>
+              <button class="button is-outline is-small" id="theme-toggle" type="button" aria-pressed="false">Toggle dark mode</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Colors -->
+      <section class="top-medium bottom-medium border-bottom border-secondary">
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="block gap-large">
+              <h2 class="eyebrow">Colors</h2>
+
+              <!-- Brand Colors -->
+              <div class="block gap-medium">
+                <h3>Brand Colors</h3>
+                <div class="grid token-col border border-secondary ">
+                  <div class="token-block"><span class="token-tag">brand-dark</span></div>
+                  <div class="color-block" style="background-color: var(--brand-dark);"></div>
+                  <div class="token-block"><span class="token-tag">brand-light</span></div>
+                  <div class="color-block" style="background-color: var(--brand-light);"></div>
+                  <div class="token-block"><span class="token-tag">brand-accent</span></div>
+                  <div class="color-block" style="background-color: var(--brand-accent);"></div>
+                </div>
+              </div>
+
+              <!-- Base Colors -->
+              <div class="color-collection grid cols-3 gap-medium">
+                <!-- Base Colors - White -->
+                <div class="color-group block gap-medium">
+                  <h3>Base Colors - White</h3>
+                  <div class="grid token-col border border-secondary ">
+                    <div class="token-block"><span class="token-tag">white</span></div>
+                    <div class="color-block" style="background-color: var(--white);"></div>
+                    <div class="token-block"><span class="token-tag">white-alpha-5</span></div>
+                    <div class="color-block" style="background-color: var(--white-alpha-5);"></div>
+                    <div class="token-block"><span class="token-tag">white-alpha-10</span></div>
+                    <div class="color-block" style="background-color: var(--white-alpha-10);"></div>
+                    <div class="token-block"><span class="token-tag">white-alpha-15</span></div>
+                    <div class="color-block" style="background-color: var(--white-alpha-15);"></div>
+                    <div class="token-block"><span class="token-tag">white-alpha-20</span></div>
+                    <div class="color-block" style="background-color: var(--white-alpha-20);"></div>
+                    <div class="token-block"><span class="token-tag">white-alpha-30</span></div>
+                    <div class="color-block" style="background-color: var(--white-alpha-30);"></div>
+                    <div class="token-block"><span class="token-tag">white-alpha-40</span></div>
+                    <div class="color-block" style="background-color: var(--white-alpha-40);"></div>
+                    <div class="token-block"><span class="token-tag">white-alpha-50</span></div>
+                    <div class="color-block" style="background-color: var(--white-alpha-50);"></div>
+                  </div>
+                </div>
+                <!-- Base Colors - Black -->
+                <div class="color-group block gap-medium">
+                  <h3>Base Colors - Black</h3>
+                  <div class="grid token-col border border-secondary ">
+                    <div class="token-block"><span class="token-tag">black</span></div>
+                    <div class="color-block" style="background-color: var(--black);"></div>
+                    <div class="token-block"><span class="token-tag">black-alpha-5</span></div>
+                    <div class="color-block" style="background-color: var(--black-alpha-5);"></div>
+                    <div class="token-block"><span class="token-tag">black-alpha-10</span></div>
+                    <div class="color-block" style="background-color: var(--black-alpha-10);"></div>
+                    <div class="token-block"><span class="token-tag">black-alpha-15</span></div>
+                    <div class="color-block" style="background-color: var(--black-alpha-15);"></div>
+                    <div class="token-block"><span class="token-tag">black-alpha-20</span></div>
+                    <div class="color-block" style="background-color: var(--black-alpha-20);"></div>
+                    <div class="token-block"><span class="token-tag">black-alpha-30</span></div>
+                    <div class="color-block" style="background-color: var(--black-alpha-30);"></div>
+                    <div class="token-block"><span class="token-tag">black-alpha-40</span></div>
+                    <div class="color-block" style="background-color: var(--black-alpha-40);"></div>
+                    <div class="token-block"><span class="token-tag">black-alpha-50</span></div>
+                    <div class="color-block" style="background-color: var(--black-alpha-50);"></div>
+                  </div>
+                </div>
+                <!-- Neutral Colors -->
+                <div class="color-group block gap-medium">
+                  <h3>Neutral Colors</h3>
+                  <div class="grid token-col border border-secondary ">
+                    <div class="token-block"><span class="token-tag">neutral-50</span></div>
+                    <div class="color-block" style="background-color: var(--neutral-50);"></div>
+                    <div class="token-block"><span class="token-tag">neutral-100</span></div>
+                    <div class="color-block" style="background-color: var(--neutral-100);"></div>
+                    <div class="token-block"><span class="token-tag">neutral-150</span></div>
+                    <div class="color-block" style="background-color: var(--neutral-150);"></div>
+                    <div class="token-block"><span class="token-tag">neutral-200</span></div>
+                    <div class="color-block" style="background-color: var(--neutral-200);"></div>
+                    <div class="token-block"><span class="token-tag">neutral-300</span></div>
+                    <div class="color-block" style="background-color: var(--neutral-300);"></div>
+                    <div class="token-block"><span class="token-tag">neutral-400</span></div>
+                    <div class="color-block" style="background-color: var(--neutral-400);"></div>
+                    <div class="token-block"><span class="token-tag">neutral-500</span></div>
+                    <div class="color-block" style="background-color: var(--neutral-500);"></div>
+                    <div class="token-block"><span class="token-tag">neutral-600</span></div>
+                    <div class="color-block" style="background-color: var(--neutral-600);"></div>
+                    <div class="token-block"><span class="token-tag">neutral-700</span></div>
+                    <div class="color-block" style="background-color: var(--neutral-700);"></div>
+                    <div class="token-block"><span class="token-tag">neutral-800</span></div>
+                    <div class="color-block" style="background-color: var(--neutral-800);"></div>
+                    <div class="token-block"><span class="token-tag">neutral-900</span></div>
+                    <div class="color-block" style="background-color: var(--neutral-900);"></div>
+                    <div class="token-block"><span class="token-tag">neutral-950</span></div>
+                    <div class="color-block" style="background-color: var(--neutral-950);"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="color-collection grid gap-medium">
+                <!-- Text Colors -->
+                <div class="block gap-medium">
+                  <h3>Text Colors</h3>
+                  <div class="grid token-col border border-secondary ">
+                    <div class="token-block"><span class="token-tag">text-primary</span></div>
+                    <div class="color-block" style="background-color: var(--text-primary);"></div>
+                    <div class="token-block"><span class="token-tag">text-secondary</span></div>
+                    <div class="color-block" style="background-color: var(--text-secondary);"></div>
+                    <div class="token-block"><span class="token-tag">text-plain</span></div>
+                    <div class="color-block" style="background-color: var(--text-plain);"></div>
+                    <div class="token-block"><span class="token-tag">text-faded</span></div>
+                    <div class="color-block" style="background-color: var(--text-faded);"></div>
+                    <div class="token-block"><span class="token-tag">text-accent</span></div>
+                    <div class="color-block" style="background-color: var(--text-accent);"></div>
+                    <div class="token-block"><span class="token-tag">text-link</span></div>
+                    <div class="color-block" style="background-color: var(--text-link);"></div>
+                  </div>
+                </div>
+
+                <!-- Background Colors -->
+                <div class="block gap-medium">
+                  <h3>Background Colors</h3>
+                  <div class="grid token-col border border-secondary ">
+                    <div class="token-block"><span class="token-tag">background-primary</span></div>
+                    <div class="color-block" style="background-color: var(--background-primary);"></div>
+                    <div class="token-block"><span class="token-tag">background-secondary</span></div>
+                    <div class="color-block" style="background-color: var(--background-secondary);"></div>
+                    <div class="token-block"><span class="token-tag">background-plain</span></div>
+                    <div class="color-block" style="background-color: var(--background-plain);"></div>
+                    <div class="token-block"><span class="token-tag">background-faded</span></div>
+                    <div class="color-block" style="background-color: var(--background-faded);"></div>
+                  </div>
+                </div>
+
+                <!-- Border Colors -->
+                <div class="color-group block gap-medium">
+                  <h3>Border Colors</h3>
+                  <div class="grid token-col border border-secondary ">
+                    <div class="token-block"><span class="token-tag">border-primary</span></div>
+                    <div class="color-block" style="background-color: var(--border-primary);"></div>
+                    <div class="token-block"><span class="token-tag">border-secondary</span></div>
+                    <div class="color-block" style="background-color: var(--border-secondary);"></div>
+                    <div class="token-block"><span class="token-tag">border-faded</span></div>
+                    <div class="color-block" style="background-color: var(--border-faded);"></div>
+                  </div>
+                </div>
+
+                <!-- Button Colors -->
+                <div class="color-group block gap-medium">
+                  <h3>Button Colors</h3>
+                  <div class="grid token-col border border-secondary ">
+                    <div class="token-block"><span class="token-tag">button-primary</span></div>
+                    <div class="color-block" style="background-color: var(--button-primary);"></div>
+                    <div class="token-block"><span class="token-tag">button-text</span></div>
+                    <div class="color-block" style="background-color: var(--button-text);"></div>
+                    <div class="token-block"><span class="token-tag">button-faded</span></div>
+                    <div class="color-block" style="background-color: var(--button-faded);"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Status Colors -->
+              <div class="block gap-medium">
+                <h3>Status Colors</h3>
+                <div class="grid token-col border border-secondary ">
+                  <div class="token-block"><span class="token-tag">status-info</span></div>
+                  <div class="color-block" style="background-color: var(--status-info);"></div>
+                  <div class="token-block"><span class="token-tag">status-success</span></div>
+                  <div class="color-block" style="background-color: var(--status-success);"></div>
+                  <div class="token-block"><span class="token-tag">status-warning</span></div>
+                  <div class="color-block" style="background-color: var(--status-warning);"></div>
+                  <div class="token-block"><span class="token-tag">status-danger</span></div>
+                  <div class="color-block" style="background-color: var(--status-danger);"></div>
+                  <div class="token-block"><span class="token-tag">status-accent</span></div>
+                  <div class="color-block" style="background-color: var(--status-accent);"></div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Typography -->
+      <section class="top-medium bottom-medium border-bottom border-secondary">
+        <div class="padding-global">
+          <div class="container-medium">
+            <article class="type-demo">
+              <h2 class="eyebrow">Typography</h2>
+              <span class="token-tag">Heading 1</span>
+              <h1>Your Primary Headline, Big, Bold, and Unmissable</h1>
+              <span class="token-tag">Heading 2</span>
+              <h2>Supporting Headline to Guide Your Content</h2>
+              <span class="token-tag">Heading 3</span>
+              <h3>Section Headings to Keep Content Organised</h3>
+              <span class="token-tag">Heading 4</span>
+              <h4>Smaller Subheading for Detailed Content Organisation</h4>
+              <span class="token-tag">Paragraph</span>
+              <p>
+                This paragraph demonstrates how body text will look across your layout. <strong>Bold text</strong>
+                adds emphasis, while <em>italics</em> offer a subtle highlight. You can also use
+                <del>strikethrough</del> to show edits. This is an entire paragraph to test readability and text flow.
+              </p>
+
+              <p>
+                This example paragraph demonstrates how hyperlinks appear within body text. When designing your
+                layout, consider how <a href="https://example.com">linked text</a> stands out from regular content.
+              </p>
+              <span class="token-tag">Small Text</span>
+              <p class="text-size-small">
+                Longer paragraphs help test how body text behaves over multiple lines and paragraphs in a real layout.
+                Use them to observe spacing, line height, and visual fatigue. <strong>Bold calls attention</strong>,
+                <em>italics guide the tone</em>, and clearly formatted links or buttons can suggest interactivity.
+                Clear, consistent styling ensures your message is readable and engaging at any length.
+              </p>
+              <span class="token-tag">XSmall Text</span>
+              <p class="text-size-xsmall">
+                Longer paragraphs help test how body text behaves over multiple lines and paragraphs in a real layout.
+                Use them to observe spacing, line height, and visual fatigue. <strong>Bold calls attention</strong>,
+                <em>italics guide the tone</em>, and clearly formatted links or buttons can suggest interactivity.
+                Clear, consistent styling ensures your message is readable and engaging at any length.
+              </p>
+              <span class="token-tag">Eyebrow</span>
+              <p class="eyebrow">Eyebrow Text</p>
+
+              <span class="token-tag">Blockquote</span>
+              <blockquote>
+                Words matter, but how those words are presented matters just as much. Typography transforms content from
+                mundane to magical, from ordinary to extraordinary.
+              </blockquote>
+
+              <span class="token-tag">Unordered List</span>
+              <ul>
+                <li>Unordered lists help organize related items without hierarchy</li>
+                <li>Perfect for showing features, benefits, or options</li>
+                <li>Allows readers to quickly scan through content</li>
+                <li>Keep items concise and parallel in structure</li>
+              </ul>
+              <span class="token-tag">Ordered List</span>
+              <ol>
+                <li>Use headings to create a visual hierarchy.</li>
+                <li>Structure content with clear lists.</li>
+                <li>Guide readers step-by-step with ordered items.</li>
+                <li>Keep everything neat and easy to follow.</li>
+              </ol>
+              <span class="token-tag">Link</span>
+              <p>For further information, check out <a href="#">this link</a>, which will take you to another page.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Buttons -->
+      <section class="top-medium bottom-medium border-bottom border-secondary">
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="block gap-none">
+              <div class="block gap-large button-demo">
+                <h2 class="eyebrow">Buttons</h2>
+
+                <p class="text-size-small">Token-driven button. Variants/sizes/colours are set with <code>data-*</code> attributes; <code>--button-color</code> drives background, border, and faded fill.</p>
+
+                <span class="token-tag">.button (default)</span>
+                <button class="button">Button</button>
+
+                <span class="token-tag">data-variant exceptions</span>
+                <div class="button-group">
+                  <button class="button" data-variant="outline">Outline</button>
+                  <button class="button" data-variant="faded">Faded</button>
+                  <button class="button" data-variant="outline-faded">Outline faded</button>
+                  <button class="button" data-variant="transparent">Transparent</button>
+                  <button class="button" data-variant="text">Text</button>
+                </div>
+
+                <span class="token-tag">data-color exceptions</span>
+                <div class="button-group">
+                  <button class="button" data-color="danger">Danger</button>
+                  <button class="button" data-color="success">Success</button>
+                  <button class="button" data-variant="outline" data-color="danger">Danger outline</button>
+                </div>
+
+                <span class="token-tag">data-size</span>
+                <div class="button-group">
+                  <button class="button">Default</button>
+                  <button class="button" data-size="small">Small</button>
+                  <button class="button" data-size="xsmall">X-small</button>
+                </div>
+
+                <span class="token-tag">data-icon-only</span>
+                <button class="button" data-icon-only aria-label="Add">
+                  <span class="svg-icn">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M11 15C11 13.8954 10.1046 13 9 13H4V11H9C10.1046 11 11 10.1046 11 9V4H13V9C13 10.1046 13.8954 11 15 11H20V13H15C13.8954 13 13 13.8954 13 15V20H11V15Z" fill="currentColor" />
+                    </svg>
+                  </span>
+                </button>
+
+                <span class="token-tag">states: disabled / loading</span>
+                <div class="button-group">
+                  <button class="button" disabled>Disabled</button>
+                  <button class="button is-loading">Loading</button>
+                </div>
+
+                <span class="token-tag">data-full-width</span>
+                <button class="button" data-full-width>Full width</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Form Elements -->
+      <section class="top-medium bottom-medium border-bottom border-secondary">
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="block gap-large">
+              <h2 class="eyebrow">Form Elements</h2>
+
+              <div class="block gap-small">
+                <span class="token-tag">label + input[type="text"]</span>
+                <div class="form-group">
+                  <label for="demo-text">Text input</label>
+                  <input type="text" id="demo-text" placeholder="Placeholder text">
+                </div>
+              </div>
+
+              <div class="block gap-small">
+                <span class="token-tag">label + input[type="email"]</span>
+                <div class="form-group">
+                  <label for="demo-email">Email input</label>
+                  <input type="email" id="demo-email" placeholder="name@example.com">
+                </div>
+              </div>
+
+              <div class="block gap-small">
+                <span class="token-tag">label + textarea</span>
+                <div class="form-group">
+                  <label for="demo-textarea">Textarea</label>
+                  <textarea id="demo-textarea" placeholder="Enter longer text here..."></textarea>
+                </div>
+              </div>
+
+              <div class="block gap-small">
+                <span class="token-tag">label + select</span>
+                <div class="form-group">
+                  <label for="demo-select">Select</label>
+                  <select id="demo-select">
+                    <option value="" disabled selected>Choose an option</option>
+                    <option value="1">Option 1</option>
+                    <option value="2">Option 2</option>
+                    <option value="3">Option 3</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="block gap-small">
+                <span class="token-tag">input:disabled</span>
+                <div class="form-group">
+                  <label for="demo-disabled">Disabled input</label>
+                  <input type="text" id="demo-disabled" value="Cannot edit this" disabled>
+                </div>
+              </div>
+
+              <div class="block gap-small">
+                <span class="token-tag">.form-check (checkbox)</span>
+                <div class="form-check">
+                  <input type="checkbox" id="demo-check">
+                  <label for="demo-check">Checkbox label</label>
+                </div>
+              </div>
+
+              <div class="block gap-small">
+                <span class="token-tag">.form-check (radio)</span>
+                <div class="form-check">
+                  <input type="radio" name="demo-radio" id="demo-radio-1">
+                  <label for="demo-radio-1">Radio option 1</label>
+                </div>
+                <div class="form-check">
+                  <input type="radio" name="demo-radio" id="demo-radio-2">
+                  <label for="demo-radio-2">Radio option 2</label>
+                </div>
+              </div>
+
+              <div class="block gap-small">
+                <span class="token-tag">fieldset + legend</span>
+                <fieldset>
+                  <legend>Fieldset legend</legend>
+                  <div class="form-group">
+                    <label for="demo-fieldset-input">Input inside fieldset</label>
+                    <input type="text" id="demo-fieldset-input" placeholder="Grouped input">
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Callouts & Alerts -->
+      <section class="top-medium bottom-medium border-bottom border-secondary">
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="block gap-large">
+              <h2 class="eyebrow">Callouts & Alerts</h2>
+
+              <span class="token-tag">.callout</span>
+              <div class="callout">
+                <p>This is a base callout with no variant. Use it for general-purpose highlighted content.</p>
+              </div>
+
+              <span class="token-tag">.callout .callout-note</span>
+              <div class="callout callout-note">
+                <div class="callout-title">Note</div>
+                <p>Useful information that users should know, even when skimming content.</p>
+              </div>
+
+              <span class="token-tag">.callout .callout-tip</span>
+              <div class="callout callout-tip">
+                <div class="callout-title">Tip</div>
+                <p>Helpful advice for doing things better or more easily.</p>
+              </div>
+
+              <span class="token-tag">.callout .callout-warning</span>
+              <div class="callout callout-warning">
+                <div class="callout-title">Warning</div>
+                <p>Urgent information that needs immediate attention to avoid problems.</p>
+              </div>
+
+              <span class="token-tag">.callout .callout-caution</span>
+              <div class="callout callout-caution">
+                <div class="callout-title">Caution</div>
+                <p>Advises about risks or negative outcomes of certain actions.</p>
+              </div>
+
+              <span class="token-tag">.callout .callout-important</span>
+              <div class="callout callout-important">
+                <div class="callout-title">Important</div>
+                <p>Key information users need to know to achieve their goal.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Blocks & Gaps -->
+      <section class="top-medium bottom-medium border-bottom border-secondary">
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="block gap-large">
+              <h2 class="eyebrow">Blocks & Gaps</h2>
+
+              <span class="token-tag">block</span>
+              <div class="block border border-secondary" style="padding: 1rem;">
+                <p>First item</p>
+                <p>Second item</p>
+                <p>Third item</p>
+              </div>
+
+              <span class="token-tag">block gap-none</span>
+              <div class="block gap-none border border-secondary" style="padding: 1rem;">
+                <p>First item</p>
+                <p>Second item</p>
+                <p>Third item</p>
+              </div>
+
+              <span class="token-tag">block gap-xsmall</span>
+              <div class="block gap-xsmall border border-secondary" style="padding: 1rem;">
+                <p>First item</p>
+                <p>Second item</p>
+                <p>Third item</p>
+              </div>
+
+              <span class="token-tag">block gap-large</span>
+              <div class="block gap-large border border-secondary" style="padding: 1rem;">
+                <p>First item</p>
+                <p>Second item</p>
+                <p>Third item</p>
+              </div>
+
+              <span class="token-tag">block gap-xlarge</span>
+              <div class="block gap-xlarge border border-secondary" style="padding: 1rem;">
+                <p>First item</p>
+                <p>Second item</p>
+                <p>Third item</p>
+              </div>
+
+              <span class="token-tag">block row gap-xlarge</span>
+              <div class="block row gap-xlarge border border-secondary" style="padding: 1rem;">
+                <p>Left</p>
+                <p>Right</p>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Grid -->
+      <section class="top-medium bottom-medium border-bottom border-secondary">
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="block gap-large">
+              <h2 class="eyebrow">Grid</h2>
+
+              <span class="token-tag">grid</span>
+              <div class="grid border border-secondary border-dashed padding-large">
+                <div class="background-color-faded padding-medium">Item 1</div>
+                <div class="background-color-faded padding-medium">Item 2</div>
+                <div class="background-color-faded padding-medium">Item 3</div>
+                <div class="background-color-faded padding-medium">Item 4</div>
+              </div>
+
+              <span class="token-tag">grid cols-3</span>
+              <div class="grid cols-3 border border-secondary border-dashed padding-large">
+                <div class="background-color-faded padding-medium">Item 1</div>
+                <div class="background-color-faded padding-medium">Item 2</div>
+                <div class="background-color-faded padding-medium">Item 3</div>
+                <div class="background-color-faded padding-medium">Item 4</div>
+                <div class="background-color-faded padding-medium">Item 5</div>
+                <div class="background-color-faded padding-medium">Item 6</div>
+              </div>
+
+              <span class="token-tag">grid cols-4</span>
+              <div class="grid cols-4 border border-secondary border-dashed padding-large">
+                <div class="background-color-faded padding-medium">Item 1</div>
+                <div class="background-color-faded padding-medium">Item 2</div>
+                <div class="background-color-faded padding-medium">Item 3</div>
+                <div class="background-color-faded padding-medium">Item 4</div>
+                <div class="background-color-faded padding-medium">Item 5</div>
+                <div class="background-color-faded padding-medium">Item 6</div>
+                <div class="background-color-faded padding-medium">Item 7</div>
+                <div class="background-color-faded padding-medium">Item 8</div>
+              </div>
+
+              <span class="token-tag">grid cols-3 gap-xlarge</span>
+              <div class="grid cols-3 gap-xlarge border border-secondary border-dashed padding-large">
+                <div class="background-color-faded padding-medium">Item 1</div>
+                <div class="background-color-faded padding-medium">Item 2</div>
+                <div class="background-color-faded padding-medium">Item 3</div>
+                <div class="background-color-faded padding-medium">Item 4</div>
+                <div class="background-color-faded padding-medium">Item 5</div>
+                <div class="background-color-faded padding-medium">Item 6</div>
+              </div>
+
+              <span class="token-tag">grid cols-4 gap-small</span>
+              <div class="grid cols-4 gap-small border border-secondary border-dashed padding-large">
+                <div class="background-color-faded padding-medium">Item 1</div>
+                <div class="background-color-faded padding-medium">Item 2</div>
+                <div class="background-color-faded padding-medium">Item 3</div>
+                <div class="background-color-faded padding-medium">Item 4</div>
+                <div class="background-color-faded padding-medium">Item 5</div>
+                <div class="background-color-faded padding-medium">Item 6</div>
+                <div class="background-color-faded padding-medium">Item 7</div>
+                <div class="background-color-faded padding-medium">Item 8</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Borders -->
+      <section class="top-medium bottom-medium border-bottom border-secondary">
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="block gap-large">
+              <h2 class="eyebrow">Borders</h2>
+
+              <span class="token-tag">.border .border-primary</span>
+              <div class="border border-primary padding-large">Primary border</div>
+
+              <span class="token-tag">.border .border-secondary</span>
+              <div class="border border-secondary padding-large">Secondary border</div>
+
+              <span class="token-tag">.border .border-faded</span>
+              <div class="border border-faded padding-large">Faded border</div>
+
+              <span class="token-tag">.border-top .border-medium .border-dashed</span>
+              <div class="border-top border-medium border-dashed padding-large">Dashed top, medium width</div>
+
+              <span class="token-tag">.border .border-large .border-dotted</span>
+              <div class="border border-large border-dotted padding-large">Dotted, large width</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Containers -->
+      <section class="top-medium bottom-medium border-bottom border-secondary">
+        <div class="padding-global">
+          <div class="block gap-large">
+            <div class="container-medium">
+              <h2 class="eyebrow">Containers</h2>
+            </div>
+
+            <div class="container-small border border-dashed border-secondary padding-xlarge ">
+              <span class="token-tag">container-small</span>
+            </div>
+            <div class="container-medium align-center border border-dashed border-secondary padding-xlarge ">
+              <span class="token-tag">container-medium</span>
+            </div>
+            <div class="container-large border border-dashed border-secondary padding-xlarge ">
+              <span class="token-tag">container-large</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="max-width-full">
+          <div class="block gap-large">
+            <div class="container-medium">
+              <h2 class="eyebrow">Max Width</h2>
+            </div>
+
+            <div class="max-width-medium border border-dashed border-secondary padding-xlarge ">
+              <span class="token-tag">max-width-medium</span>
+            </div>
+
+            <div class="max-width-large border border-dashed border-secondary padding-xlarge ">
+              <span class="token-tag">max-width-large</span>
+            </div>
+
+            <div class="max-width-full border border-dashed border-secondary padding-xlarge ">
+              <span class="token-tag">max-width-full</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section Spacing -->
+      <section class="top-medium bottom-medium">
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="block gap-large">
+              <h2 class="eyebrow">Section Spacing</h2>
+
+              <p>
+                Section spacing is controlled using combo classes on the <code>&lt;section&gt;</code> element.
+                These classes apply vertical padding using the section spacing variables.
+              </p>
+
+              <div class="block gap-none border border-dashed border-secondary">
+                <div class="block top-small background-color-faded"></div>
+                <div class="block padding-xlarge">
+                  <span class="token-tag">top-small</span>
+                </div>
+              </div>
+
+              <div class="block gap-none border border-dashed border-secondary">
+                <div class="block top-medium background-color-faded"></div>
+                <div class="block padding-xlarge">
+                  <span class="token-tag">top-medium</span>
+                </div>
+              </div>
+
+              <div class="block gap-none border border-dashed border-secondary">
+                <div class="block top-large background-color-faded"></div>
+                <div class="block padding-xlarge">
+                  <span class="token-tag">top-large</span>
+                </div>
+              </div>
+
+              <div class="block gap-none border border-dashed border-secondary">
+                <div class="block padding-xlarge">
+                  <span class="token-tag">bottom-small</span>
+                </div>
+                <div class="block bottom-small background-color-faded"></div>
+              </div>
+
+              <div class="block gap-none border border-dashed border-secondary">
+                <div class="block padding-xlarge">
+                  <span class="token-tag">bottom-medium</span>
+                </div>
+                <div class="block bottom-medium background-color-faded"></div>
+              </div>
+
+              <div class="block gap-none border border-dashed border-secondary">
+                <div class="block padding-xlarge">
+                  <span class="token-tag">bottom-large</span>
+                </div>
+                <div class="block bottom-large background-color-faded"></div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Data Grid -->
+      <section class="top-medium bottom-medium border-bottom border-secondary">
+        <div class="padding-global">
+          <div class="container-large">
+            <div class="block gap-large">
+              <h2 class="eyebrow">Data Grid</h2>
+              <p class="text-size-small">12-column grid via the <code>data-grid</code> attribute. Children use <code>data-col-span</code>/<code>data-col-start</code>, or the parent declares a <code>data-layout</code> preset. Collapses to one column below 960px.</p>
+
+              <span class="token-tag">data-col-span (6 · 4@9 · full)</span>
+              <div data-grid>
+                <div class="padding-medium background-color-faded" data-col-span="6">span 6</div>
+                <div class="padding-medium background-color-faded" data-col-span="4" data-col-start="9">span 4 · start 9</div>
+                <div class="padding-medium background-color-faded">full width row</div>
+              </div>
+
+              <span class="token-tag">data-layout="split" (6 · 6)</span>
+              <div data-grid data-layout="split">
+                <div class="padding-medium background-color-faded">Left</div>
+                <div class="padding-medium background-color-faded">Right</div>
+              </div>
+
+              <span class="token-tag">data-layout="thirds" (4 · 4 · 4)</span>
+              <div data-grid data-layout="thirds">
+                <div class="padding-medium background-color-faded">One</div>
+                <div class="padding-medium background-color-faded">Two</div>
+                <div class="padding-medium background-color-faded">Three</div>
+              </div>
+
+              <span class="token-tag">data-layout="feature" (4 · 8)</span>
+              <div data-grid data-layout="feature">
+                <div class="padding-medium background-color-faded">Minor</div>
+                <div class="padding-medium background-color-faded">Major</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Components -->
+      <section class="top-medium bottom-medium border-bottom border-secondary">
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="block gap-xlarge">
+              <h2 class="eyebrow">Components</h2>
+
+              <span class="token-tag">Badges</span>
+              <div class="block gap-small" style="flex-direction: row; flex-wrap: wrap;">
+                <span class="badge">Default</span>
+                <span class="badge" data-color="success">Success</span>
+                <span class="badge" data-color="warning">Warning</span>
+                <span class="badge" data-color="danger">Danger</span>
+                <span class="badge" data-color="info">Info</span>
+              </div>
+
+              <span class="token-tag">Tags</span>
+              <div class="tag-group">
+                <span class="tag">Strategy</span>
+                <span class="tag" data-color="success">Live</span>
+                <span class="tag" data-color="danger">Archived</span>
+              </div>
+
+              <span class="token-tag">Card</span>
+              <div data-grid data-layout="split">
+                <div class="card">
+                  <h3 class="card-title">Card title</h3>
+                  <p class="card-description">A simple content card using semantic tokens, with a subtle border.</p>
+                </div>
+                <a class="card card--interactive" href="javascript:void(0)">
+                  <h3 class="card-title">Interactive card</h3>
+                  <p class="card-description">Hover for the lift + shadow; focusable with a visible ring.</p>
+                </a>
+              </div>
+
+              <span class="token-tag">Disclosure (details / summary)</span>
+              <details>
+                <summary>What is the post-social thesis?</summary>
+                <div class="disclosure-content">Native to the platform: full-stack marketing for a post-social world — systems, not slogans.</div>
+              </details>
+
+              <span class="token-tag">Accordion</span>
+              <div class="accordion js-accordion">
+                <div class="accordion-item">
+                  <button class="accordion-header" type="button">First item
+                    <span class="svg-icn"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" fill="none"/></svg></span>
+                  </button>
+                  <div class="accordion-content"><div class="accordion-inner"><div class="accordion-body">First panel content.</div></div></div>
+                </div>
+                <div class="accordion-item">
+                  <button class="accordion-header" type="button">Second item
+                    <span class="svg-icn"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" fill="none"/></svg></span>
+                  </button>
+                  <div class="accordion-content"><div class="accordion-inner"><div class="accordion-body">Second panel content.</div></div></div>
+                </div>
+              </div>
+
+              <span class="token-tag">Tabs</span>
+              <div class="js-tabs">
+                <div class="tabs" role="tablist">
+                  <button class="tab is-active" type="button">Overview</button>
+                  <button class="tab" type="button">Details</button>
+                  <button class="tab" type="button">Pricing</button>
+                </div>
+                <div class="tab-panel">Overview panel.</div>
+                <div class="tab-panel" hidden>Details panel.</div>
+                <div class="tab-panel" hidden>Pricing panel.</div>
+              </div>
+
+              <span class="token-tag">Table</span>
+              <div class="table-scroll">
+                <table class="table table-hover">
+                  <thead><tr><th>Client</th><th>Sector</th><th>Status</th></tr></thead>
+                  <tbody>
+                    <tr><td>Meta</td><td>Tech</td><td><span class="badge" data-color="success">Active</span></td></tr>
+                    <tr><td>Heal's</td><td>Retail</td><td><span class="badge" data-color="info">Pitch</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <span class="token-tag">Toggle / switch</span>
+              <div class="form-toggle">
+                <input type="checkbox" id="demo-toggle" checked>
+                <label for="demo-toggle">Enable feature</label>
+              </div>
+
+              <span class="token-tag">Tooltip</span>
+              <p><span data-tooltip="Earn attention today, compound memory tomorrow">Hover this phrase</span>.</p>
+
+              <span class="token-tag">Dropdown</span>
+              <div class="dropdown js-dropdown">
+                <button class="dropdown-trigger" type="button">Menu
+                  <span class="dropdown-chevron"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" fill="none"/></svg></span>
+                </button>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="javascript:void(0)">Edit</a>
+                  <a class="dropdown-item" href="javascript:void(0)">Duplicate</a>
+                  <hr class="dropdown-divider">
+                  <a class="dropdown-item dropdown-item--danger" href="javascript:void(0)">Delete</a>
+                </div>
+              </div>
+
+              <span class="token-tag">Dialog + Toast</span>
+              <div class="button-group">
+                <button class="button" type="button" id="demo-dialog-open">Open dialog</button>
+                <button class="button" data-variant="outline" type="button" id="demo-toast-show">Show toast</button>
+              </div>
+              <dialog class="dialog" id="demo-dialog">
+                <div class="dialog-header">
+                  <h3 class="dialog-title">Dialog title</h3>
+                  <button class="button" data-variant="text" type="button" id="demo-dialog-close" aria-label="Close">✕</button>
+                </div>
+                <div class="dialog-body"><p>A native &lt;dialog&gt; with a blurred backdrop.</p></div>
+                <div class="dialog-footer">
+                  <button class="button" data-variant="faded" type="button" id="demo-dialog-cancel">Cancel</button>
+                  <button class="button" type="button" id="demo-dialog-confirm">Confirm</button>
+                </div>
+              </dialog>
+              <div class="toast-container" id="demo-toast-container"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Styleguide demo interactions (not part of the design system) -->
+  <script>
+    // Theme toggle
+    var themeBtn = document.getElementById("theme-toggle");
+    themeBtn.addEventListener("click", function () {
+      var dark = document.documentElement.getAttribute("data-theme") === "dark";
+      document.documentElement.setAttribute("data-theme", dark ? "light" : "dark");
+      themeBtn.setAttribute("aria-pressed", String(!dark));
+    });
+
+    // Accordion
+    document.querySelectorAll(".js-accordion .accordion-header").forEach(function (header) {
+      header.addEventListener("click", function () {
+        header.closest(".accordion-item").classList.toggle("is-open");
+      });
+    });
+
+    // Tabs
+    document.querySelectorAll(".js-tabs").forEach(function (group) {
+      var tabs = group.querySelectorAll(".tab");
+      var panels = group.querySelectorAll(".tab-panel");
+      tabs.forEach(function (tab, i) {
+        tab.addEventListener("click", function () {
+          tabs.forEach(function (t) { t.classList.remove("is-active"); });
+          panels.forEach(function (p) { p.hidden = true; });
+          tab.classList.add("is-active");
+          if (panels[i]) panels[i].hidden = false;
+        });
+      });
+    });
+
+    // Dropdown
+    document.querySelectorAll(".js-dropdown .dropdown-trigger").forEach(function (trigger) {
+      trigger.addEventListener("click", function () {
+        trigger.closest(".dropdown").classList.toggle("is-open");
+      });
+    });
+
+    // Dialog
+    var dialog = document.getElementById("demo-dialog");
+    document.getElementById("demo-dialog-open").addEventListener("click", function () { dialog.showModal(); });
+    ["demo-dialog-close", "demo-dialog-cancel", "demo-dialog-confirm"].forEach(function (id) {
+      document.getElementById(id).addEventListener("click", function () { dialog.close(); });
+    });
+
+    // Toast
+    document.getElementById("demo-toast-show").addEventListener("click", function () {
+      var container = document.getElementById("demo-toast-container");
+      var toast = document.createElement("div");
+      toast.className = "toast";
+      toast.setAttribute("data-type", "success");
+      toast.innerHTML = '<span class="toast-message">Saved successfully</span>';
+      container.appendChild(toast);
+      setTimeout(function () { toast.remove(); }, 3000);
+    });
+  </script>
+
+</body>
+
+</html>

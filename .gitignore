@@ -1,26 +1,21 @@
 # ──────────────────────────────────────────────────────────────
-# Stitchy London — PUBLIC repo (GitHub + jsDelivr CDN for Webflow)
+# Stitchy London — PUBLIC repo (GitHub + Netlify + jsDelivr CDN)
 #
-# Whitelist strategy: ignore EVERYTHING, then commit only the files
-# that are served publicly. A .gitignore cannot hide files that are
-# already in git history, so this repo is kept clean from its first
-# commit. All private files (docs, design-system, brand-book,
-# briefs, templates, .claude) stay local only and are never tracked.
+# Default: everything is committed so Netlify can deploy the
+# prototype as a static site. Internal docs, briefs and local
+# tooling are kept out.
 # ──────────────────────────────────────────────────────────────
 
-# 1. Ignore everything by default
-*
-
-# 2. But allow git to descend into directories so nested
-#    whitelisted paths can be reached
-!*/
-
-# 3. Whitelist the public deliverables: CSS + JS served via jsDelivr,
-#    plus icons, images and other assets used on the live site
-!/assets/**
-
-# 4. Keep this file in the repo
-!/.gitignore
-
-# 5. Never commit OS cruft, even inside whitelisted folders
+# OS / editor cruft
 .DS_Store
+.vscode/
+
+# Local Claude Code config
+.claude/
+
+# Internal documentation (reference only, not for public repo)
+docs/
+CLAUDE.md
+PROJECT_BRIEF.md
+PROJECT_PROGRESS.md
+HANDOVER.md

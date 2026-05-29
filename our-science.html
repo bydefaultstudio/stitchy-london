@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<!--
+  ===========================================================================
+  WEBFLOW PORT PLAN — our-science.html
+  ===========================================================================
+  • HEAD: per-page meta goes in Webflow Page Settings → SEO + Custom Code.
+    Site-wide head (JS-guard, fonts, bd-animations.css, style.css, theme bridge)
+    is in templates/webflow-header-code.html.
+  • COMPONENTS reused from homepage: site-nav, site-footer, cta-email, skip-link.
+  • PAGE-SPECIFIC: science-hero, science-intro, science-body, six-things-section,
+    science-longgame. All static for Phase 1.
+  • CMS-ATTACHABLE Phase-2: six-things — collection slug `science-facts`,
+    fields: id (number), title (plain-text), body (rich-text), order (number).
+    The hidden [data-six-source] list and the orb buttons render from the same
+    Collection List. Comment in §4 already calls this out.
+  • NATIVE WEBFLOW: footer newsletter → Webflow Form Block. Six Things physics
+    canvas stays custom (Matter.js + GSAP, beyond Designer interactions).
+  • JS HOOKS: data-bd-* / data-text-* / data-grid / data-layout / data-six-* /
+    data-orb-id / data-active / data-fact-* — every one must be set via the
+    Designer's "+ Add custom attribute" UI.
+  • SCRIPTS: page-only modules (matter.js + our-science.js) go in Page Settings
+    → Custom Code (footer). Site-wide GSAP + bd-animations stay site-level.
+  ===========================================================================
+-->
+<html lang="en">
+<head>
+  <!-- WF:SITE-HEAD — JS-available guard. Site Settings (head). MUST be first. -->
+  <script>document.documentElement.classList.add("js");</script>
+
+  <!-- WF:PAGE-HEAD — per-page meta. Webflow auto-emits <title>, description, and
+       OG title/description from Page Settings → SEO. The extended OG tags +
+       theme-color need the Custom Code (head) block.
+       SEO FIX: canonical / og:url / twitter:url drop the .html extension —
+       Webflow URLs are extensionless. -->
+  <!-- Essential -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Our Science — Stitchy London</title>
+  <meta name="description" content="Lessons in marketing science from Stitchy London. A better way to understand what actually drives growth — distinctiveness, consistency and the long game." />
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://stitchylondon.com/our-science" />
+
+  <!-- Robots -->
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://stitchylondon.com/our-science" />
+  <meta property="og:title" content="Our Science — Stitchy London" />
+  <meta property="og:description" content="Lessons in marketing science. A better way to understand what actually drives growth." />
+  <meta property="og:image" content="https://stitchylondon.com/assets/images/og-default.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Stitchy London — Lessons in marketing science" />
+  <meta property="og:site_name" content="Stitchy London" />
+  <meta property="og:locale" content="en_GB" />
+
+  <!-- X (formerly Twitter) -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://stitchylondon.com/our-science" />
+  <meta name="twitter:title" content="Our Science — Stitchy London" />
+  <meta name="twitter:description" content="Lessons in marketing science." />
+  <meta name="twitter:image" content="https://stitchylondon.com/assets/images/og-default.jpg" />
+  <meta name="twitter:image:alt" content="Stitchy London — Lessons in marketing science" />
+
+  <!-- Theme Color -->
+  <meta name="theme-color" content="#d3ff6b" />
+
+  <!-- Favicons -->
+  <link rel="icon" href="assets/icons/favicon.ico">
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+
+  <!-- Fonts: Mona Sans (variable) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+
+  <!-- WF:SITE-HEAD — stylesheets. brand-book.css is local-only (Webflow holds
+       the token system). Only bd-animations.css + style.css ship to Webflow,
+       via jsDelivr URLs in templates/webflow-header-code.html. -->
+  <link rel="stylesheet" href="brand-book/brand-book.css" />
+  <!-- Animation FOUC rules (scoped to .js) -->
+  <link rel="stylesheet" href="assets/css/bd-animations.css" />
+  <!-- Combined stylesheet (design system + project styles) -->
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body class="is-intro-loading">
+
+  <!-- WF:COMPONENT name="site-loader" — see homepage WF:* for full spec.
+       Same Component instance, site-wide; lottie-web + site-loader.js are in
+       the Site Settings footer custom code so this just needs the markup. -->
+  <div class="site-loader" data-site-loader data-lottie-path="assets/images/logo-line-svg.json" data-lottie-speed="1.5" aria-hidden="true">
+    <div class="site-loader-logo" data-site-loader-logo></div>
+  </div>
+
+  <!-- WF:COMPONENT name="skip-link" — see homepage WF:* for full spec -->
+  <a href="#main" class="button visually-hidden" data-size="small">Skip to content</a>
+
+  <div class="page-wrapper">
+
+    <!-- WF:COMPONENT name="site-nav" props="active-page=Our Science"
+         Same Component instance as homepage; this page's active-page prop = "Our Science".
+         Webflow's "Current" state on the Collection / static-page link adds aria-current="page"
+         automatically when the prop matches. -->
+    <header class="site-nav">
+      <div class="padding-global">
+        <div class="container-large">
+          <nav class="site-nav-inner" aria-label="Primary">
+            <a href="/">
+              <img class="brand-wordmark" src="https://bydefault.design/image/180x40" alt="Stitchy London" width="180" height="40" />
+            </a>
+            <div class="site-nav-links">
+              <a href="/#about">About us</a>
+              <a href="/our-science.html" aria-current="page">Our Science</a>
+              <a href="/#services">Our Services</a>
+              <a href="/#contact" class="button" data-size="small">Contact</a>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </header>
+    <!-- /WF:COMPONENT site-nav -->
+
+    <main id="main" class="page-content" tabindex="-1">
+
+      <!-- 1. Hero -->
+      <!-- WF:STATIC | JS-HOOK module="bd-animations" + bespoke Professor Skittles motion
+           PROJECT_BRIEF.md §9 signature motion: Professor Skittles is the page's
+           interactive moment. Imagery dropping in late; markup will need new
+           data-* hooks when the motion module lands (e.g. data-skittles-track). -->
+      <section class="science-hero background-color-dark top-huge bottom-huge">
+        <div class="block">
+          <div class="science-hero-container">
+            <div class="science-hero-content">
+              <h1 class="headline-xlarge science-hero-title" data-text-animate="headline-reveal">
+                Lessons in marketing <span class="sticker-add sticker-science">science</span>
+              </h1>
+              <p class="science-hero-byline" data-bd-animate="fade" data-bd-delay="1.0">by Prof. Colin Skittles</p>
+            </div>
+            <div class="science-hero-portrait" data-bd-animate="fade" data-bd-delay="1.5">
+              <img src="https://bydefault.design/image/400x500" alt="Prof. Colin Skittles" width="400" height="500" />
+            </div>
+          </div>
+          <p class="eyebrow science-hero-tag" data-bd-animate="fade" data-bd-delay="1.3">Marketing Science</p>
+        </div>
+      </section>
+
+      <!-- 2. Intro — nerd out on marketing science -->
+      <!-- WF:STATIC -->
+      <section class="science-intro background-color-primary top-huge bottom-huge">
+        <div class="padding-global">
+          <div class="container-xl">
+            <div class="block gap-2xlarge">
+              <p class="eyebrow" data-bd-animate="fade" data-bd-scrub>Marketing Science</p>
+              <div class="science-intro-headline">
+                <h2 class="headline-small" data-text-animate="headline-reveal" data-bd-scrub>
+                  If there&rsquo;s 01 thing we nerd <span class="sticker-add sticker-out">out</span> on, it&rsquo;s marketing science. Social is the other thing.
+                  <br><br>
+                  At Stitchy the two share a desk and probably a <span class="sticker-add sticker-science-coffee">coffee</span>. Let&rsquo;s dig in.
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Brand memory body — 4 paragraphs, right-column layout -->
+      <!-- WF:STATIC | Rich-text-friendly
+           If Stitchy want to edit this body without touching the Designer in Phase 2,
+           swap the four <p> for a single Webflow Rich Text Element. Custom CSS that
+           targets `h2`/`p`/`strong` inside this block would then need a `.w-richtext`
+           parent selector — see PAIN PATTERNS in the webflow-expert agent. -->
+      <section class="science-body background-color-primary top-huge bottom-huge">
+        <div class="padding-global">
+          <div class="container-xl">
+            <div class="science-body-grid">
+              <div class="block gap-xlarge">
+                <p class="body-text-medium" data-text-animate="words" data-bd-faded data-bd-scrub>
+                  A brand is a collection of memories living rent-free in people&rsquo;s heads. Without attention, those memories fade and the brand withers. But with it, they compound.
+                <br><br> 
+                  Most marketing gets this wrong. It chases shiny new things. Focuses too much on what&rsquo;s pretty. It shifts constantly, optimising for the moment &ndash; until ultimately nothing sticks.
+                <br><br>
+                  Growth comes from being easy to notice and easy to remember. And that means reaching more people &ndash; not just the fans you&rsquo;ve already got.
+                <br><br>
+                <strong>This is what marketing science gives you &ndash; a better way to understand what actually drives growth.</strong>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Six things — physics-driven fact picker. Orbs drop into the
+           canvas, collide, and are draggable; click any orb to swap the
+           right-side fact. -->
+      <!-- WF:STATIC for Phase 1 | CMS-ATTACHABLE collection="science-facts" note="phase-2"
+           Phase-1: ship the six hand-authored <li>s and matching orb buttons.
+           Phase-2 CMS plan (when needed):
+             collection slug: science-facts
+             fields: id (number, required, sort key) · title (plain-text, required) ·
+                     body (rich-text, required)
+           In Webflow the Collection List renders BOTH the visible orbs AND
+           the hidden [data-six-source] list (two Collection Lists bound to the
+           same collection, sorted by id ascending).
+           JS-HOOK module="our-science.js" attrs="data-six-things, data-six-orbs,
+             data-orb-id, data-active, data-six-panel, data-six-panel-title,
+             data-six-panel-body, data-six-panel-number, data-six-source, data-fact-*"
+           A11Y: orb aria-label MUST be bound to the CMS title field
+             ("Fact {{id}}: {{title}}") not hardcoded — see a11y audit #20. -->
+      <section class="six-things-section" aria-labelledby="six-things-title" data-grid data-layout="split" data-six-things>
+
+        <!-- Left: physics canvas with overlaid title -->
+        <div class="six-things-left">
+          <div class="six-things-left-content padding-global">
+            <h2 id="six-things-title" class="science-six-title" data-text-animate="headline-reveal" data-bd-scrub>
+              If you remember nothing else, remember these six things
+            </h2>
+          </div>
+          <ul class="six-things-canvas" role="list" data-six-orbs>
+            <li class="six-things-orb-item">
+              <button type="button" class="science-orb" data-orb-id="1" data-active="true" aria-pressed="true" aria-controls="six-panel" aria-label="Fact 1: Most people aren&rsquo;t thinking about you.">
+                <span aria-hidden="true">1</span>
+              </button>
+            </li>
+            <li class="six-things-orb-item">
+              <button type="button" class="science-orb" data-orb-id="2" data-active="false" aria-pressed="false" aria-controls="six-panel" aria-label="Fact 2: Brains remember fragments, not arguments.">
+                <span aria-hidden="true">2</span>
+              </button>
+            </li>
+            <li class="six-things-orb-item">
+              <button type="button" class="science-orb" data-orb-id="3" data-active="false" aria-pressed="false" aria-controls="six-panel" aria-label="Fact 3: Reach is rented. Memory is owned.">
+                <span aria-hidden="true">3</span>
+              </button>
+            </li>
+            <li class="six-things-orb-item">
+              <button type="button" class="science-orb" data-orb-id="4" data-active="false" aria-pressed="false" aria-controls="six-panel" aria-label="Fact 4: Penetration eats loyalty for breakfast.">
+                <span aria-hidden="true">4</span>
+              </button>
+            </li>
+            <li class="six-things-orb-item">
+              <button type="button" class="science-orb" data-orb-id="5" data-active="false" aria-pressed="false" aria-controls="six-panel" aria-label="Fact 5: People feel first. Then they justify.">
+                <span aria-hidden="true">5</span>
+              </button>
+            </li>
+            <li class="six-things-orb-item">
+              <button type="button" class="science-orb" data-orb-id="6" data-active="false" aria-pressed="false" aria-controls="six-panel" aria-label="Fact 6">
+                <span aria-hidden="true">6</span>
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Right: live-region panel + giant corner numeral + hidden CMS source list -->
+        <div class="six-things-right">
+          <div id="six-panel" class="six-things-right-content padding-global" aria-live="polite" aria-atomic="true" data-six-panel>
+            <h3 class="science-six-title" data-six-panel-title>
+              Most people aren&rsquo;t thinking about you.
+            </h3>
+            <p class="science-six-body" data-six-panel-body>
+              That&rsquo;s the reality. Marketing isn&rsquo;t persuasion &ndash; it&rsquo;s being the brand that comes to mind when they&rsquo;re finally ready. Stop optimising for the people already shopping. Build for the 95% who aren&rsquo;t.
+            </p>
+          </div>
+          <span class="six-things-number" aria-hidden="true" data-six-panel-number>1</span>
+          <ul class="six-things-source" hidden data-six-source>
+            <li data-fact-id="1"
+                data-fact-title="Most people aren&rsquo;t thinking about you."
+                data-fact-body="That&rsquo;s the reality. Marketing isn&rsquo;t persuasion &ndash; it&rsquo;s being the brand that comes to mind when they&rsquo;re finally ready. Stop optimising for the people already shopping. Build for the 95% who aren&rsquo;t."></li>
+            <li data-fact-id="2"
+                data-fact-title="Brains remember fragments, not arguments."
+                data-fact-body="Cadbury purple. The swoosh. The arches. Distinctive assets get a brand into the room before anyone&rsquo;s even pulled up a chair. Brands with established assets grow share twice as efficiently as brands without. Pick yours. Protect them. Don&rsquo;t redesign your way out of recognition."></li>
+            <li data-fact-id="3"
+                data-fact-title="Reach is rented. Memory is owned."
+                data-fact-body="Anyone can get seen. Very few get remembered. Marketing doesn&rsquo;t work because it&rsquo;s seen. It works because it&rsquo;s recalled later. If it doesn&rsquo;t stick, it won&rsquo;t drive growth."></li>
+            <li data-fact-id="4"
+                data-fact-title="Penetration eats loyalty for breakfast."
+                data-fact-body="Your growth isn&rsquo;t waiting in the wings with your existing customers. It lies with the ones who&rsquo;ve never bought you &ndash; yet."></li>
+            <li data-fact-id="5"
+                data-fact-title="People feel first. Then they justify."
+                data-fact-body="Brands connect through emotion, not logic. Logic can stop a purchase, but it rarely starts one. Advertising works by making a brand easier to remember at the moment someone&rsquo;s actually buying. That&rsquo;s it."></li>
+            <li data-fact-id="6"
+                data-fact-title="Fact 6 &mdash; coming soon"
+                data-fact-body="Placeholder description for fact 6. Copy pending from Stitchy."></li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 5. Long game — branding is a system, built over years -->
+      <!-- WF:STATIC -->
+      <section class="science-longgame background-color-secondary top-huge bottom-huge">
+        <div class="padding-global">
+          <div class="container-xl">
+            <div class="block gap-2xlarge">
+              <div class="science-longgame-intro">
+                <p class="text-size-xlarge" data-bd-animate="slide-up" data-bd-scrub>
+                  Ultimately it&rsquo;s about building a system. More than a set of assets. One that works at scale, over years.
+                </p>
+              </div>
+              <div class="science-longgame-headline">
+                <h2 class="headline-small" data-text-animate="headline-reveal" data-bd-scrub>
+                  Branding is the l<span class="sticker-swap sticker-l">o</span>ng game.
+                  <br>
+                  Distinctiveness, consistency, repetition.
+                  <br>
+                  Nothing happens overnight.
+                </h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. CTA — chat to the GOAT -->
+      <!-- WF:COMPONENT name="cta-email" props="theme=green, lead-text, email-address"
+           Same Component as the homepage CTA (#contact). Theme prop drives bg-* class. -->
+      <section id="contact" class="cta-section background-color-primary top-huge bottom-huge">
+        <div class="padding-global">
+          <div class="container-xl">
+            <div class="block align-center text-align-center gap-2xlarge">
+              <p class="cta-text" data-bd-animate="slide-up" data-bd-scrub>
+                If you want to shoot the shit and dive deeper, you can chat to the GOAT on
+              </p>
+              <a class="cta-email" href="mailto:ProfessorSkittles@StitchyLondon.com" data-bd-animate="slide-up" data-bd-scrub>
+                ProfessorSkittles@StitchyLondon.com
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- WF:COMPONENT name="site-footer" — same instance as the homepage. -->
+    <footer class="site-footer background-color-dark top-large bottom-large">
+      <div class="padding-global">
+        <div class="container-xl">
+          <div class="block gap-2xlarge footer-stack">
+            <div class="footer-top">
+              <div class="footer-brand-cols">
+                <a class="footer-brand" href="/">
+                  <img class="footer-wordmark" src="https://bydefault.design/image/720x160" alt="Stitchy London" width="720" height="160" />
+                </a>
+                <div class="footer-cols">
+                  <div class="footer-col">
+                    <p class="footer-col-title">Social Media</p>
+                    <!-- WF:CMS-ATTACHABLE collection="social-links" note="phase-2" -->
+                    <ul class="footer-social" role="list">
+                      <li>
+                        <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">
+                          <svg class="footer-social-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12.0005 1C9.01319 1 8.63829 1.01306 7.46499 1.06646C6.29399 1.12008 5.49468 1.30548 4.79528 1.5775C4.07182 1.85846 3.45813 2.23429 2.84674 2.84594C2.23488 3.45735 1.85906 4.07106 1.57719 4.79431C1.30449 5.49396 1.11887 6.29352 1.06617 7.4641C1.01369 8.63743 0.999939 9.01258 0.999939 12C0.999939 14.9874 1.01323 15.3612 1.0664 16.5345C1.12025 17.7056 1.30564 18.5049 1.57742 19.2043C1.8586 19.9278 2.23442 20.5415 2.84605 21.1529C3.45722 21.7648 4.07091 22.1415 4.79391 22.4225C5.49376 22.6945 6.2933 22.8799 7.46407 22.9335C8.63737 22.9869 9.01205 23 11.9991 23C14.9867 23 15.3605 22.9869 16.5338 22.9335C17.7048 22.8799 18.505 22.6945 19.2048 22.4225C19.9281 22.1415 20.5408 21.7648 21.152 21.1529C21.7639 20.5415 22.1397 19.9278 22.4216 19.2045C22.692 18.5049 22.8776 17.7053 22.9326 16.5347C22.9853 15.3614 22.999 14.9874 22.999 12C22.999 9.01258 22.9853 8.63766 22.9326 7.46433C22.8776 6.29329 22.692 5.49396 22.4216 4.79454C22.1397 4.07106 21.7639 3.45735 21.152 2.84594C20.5402 2.23406 19.9283 1.85823 19.2042 1.5775C18.5029 1.30548 17.7032 1.12008 16.5322 1.06646C15.3589 1.01306 14.9853 1 11.9971 1H12.0005ZM11.0138 2.98229C11.3066 2.98183 11.6334 2.98229 12.0005 2.98229C14.9374 2.98229 15.2855 2.99283 16.4453 3.04554C17.5178 3.09458 18.0998 3.27379 18.4876 3.42435C19.0009 3.62373 19.3669 3.86206 19.7516 4.24706C20.1366 4.63206 20.3749 4.99873 20.5748 5.51206C20.7253 5.89935 20.9047 6.48144 20.9536 7.55393C21.0063 8.71352 21.0177 9.06185 21.0177 11.9975C21.0177 14.9331 21.0063 15.2814 20.9536 16.441C20.9045 17.5135 20.7253 18.0956 20.5748 18.4829C20.3754 18.9962 20.1366 19.3617 19.7516 19.7465C19.3666 20.1315 19.0011 20.3698 18.4876 20.5692C18.1003 20.7205 17.5178 20.8992 16.4453 20.9483C15.2858 21.001 14.9374 21.0124 12.0005 21.0124C9.06338 21.0124 8.71529 21.001 7.55574 20.9483C6.48327 20.8988 5.90121 20.7196 5.51324 20.569C4.99992 20.3696 4.63327 20.1313 4.24828 19.7463C3.86329 19.3613 3.62496 18.9955 3.42514 18.482C3.27458 18.0947 3.09515 17.5126 3.04633 16.4401C2.99363 15.2805 2.98309 14.9322 2.98309 11.9947C2.98309 9.05727 2.99363 8.71077 3.04633 7.55119C3.09538 6.47869 3.27458 5.8966 3.42514 5.50885C3.6245 4.99552 3.86329 4.62885 4.24828 4.24385C4.63327 3.85885 4.99992 3.62052 5.51324 3.42069C5.90098 3.26944 6.48327 3.09069 7.55574 3.04142C8.57046 2.99558 8.9637 2.98183 11.0138 2.97954V2.98229ZM17.872 4.80875C17.1433 4.80875 16.5521 5.39931 16.5521 6.12829C16.5521 6.85704 17.1433 7.44829 17.872 7.44829C18.6008 7.44829 19.192 6.85704 19.192 6.12829C19.192 5.39954 18.6008 4.80829 17.872 4.80829V4.80875ZM12.0005 6.35104C8.88097 6.35104 6.35173 8.88035 6.35173 12C6.35173 15.1196 8.88097 17.6478 12.0005 17.6478C15.1201 17.6478 17.6484 15.1196 17.6484 12C17.6484 8.88035 15.1198 6.35104 12.0003 6.35104H12.0005ZM12.0005 8.33333C14.0254 8.33333 15.6671 9.97485 15.6671 12C15.6671 14.0249 14.0254 15.6667 12.0005 15.6667C9.97544 15.6667 8.33397 14.0249 8.33397 12C8.33397 9.97485 9.97544 8.33333 12.0005 8.33333V8.33333Z" fill="currentColor"/></svg>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn">
+                          <svg class="footer-social-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill-rule="evenodd" clip-rule="evenodd" d="M19 2C20.6569 2 22 3.34315 22 5V19C22 20.6569 20.6569 22 19 22H5C3.34315 22 2 20.6569 2 19V5C2 3.34315 3.34315 2 5 2H19ZM4.97656 9.49316V19.0234H8.00195V9.49316H4.97656ZM15.5918 9.25C13.4688 9.25005 12.6885 10.8105 12.6885 10.8105V9.49316H9.81348V19.0234H12.8379V13.9717C12.838 13.1125 13.081 11.8916 14.4971 11.8916C15.1794 11.8917 16.0751 12.076 16.0752 13.7529V19.0234H19.0547V13.0264C19.0546 10.1829 17.4856 9.25 15.5918 9.25ZM6.48926 4.74121C5.53105 4.74121 4.75391 5.51835 4.75391 6.47656C4.75416 7.43455 5.53121 8.21094 6.48926 8.21094C7.44726 8.21088 8.22435 7.43452 8.22461 6.47656C8.22461 5.51839 7.44742 4.74127 6.48926 4.74121Z" fill="currentColor"/></svg>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="footer-col">
+                    <p class="footer-col-title">New Business</p>
+                    <a class="footer-link" href="mailto:hello@stitchylondon.com">hello@stitchylondon.com</a>
+                  </div>
+                  <div class="footer-col">
+                    <p class="footer-col-title">Careers</p>
+                    <a class="footer-link" href="mailto:careers@stitchylondon.com">careers@stitchylondon.com</a>
+                  </div>
+                </div>
+              </div>
+              <!-- WF:NATIVE-COMPONENT type="Form Block" — see homepage WF:* for full spec
+                   (persistent visible label, aria-live success/error, project-prefixed field id). -->
+              <div class="footer-newsletter">
+                <div class="block gap-small newsletter-intro">
+                  <h2 class="newsletter-title">Subscribe to Stitchy Sessions.</h2>
+                  <p class="newsletter-desc">Be the first to know what we&rsquo;re up to. Work, thinking, roles, case studies and more.</p>
+                </div>
+                <form class="newsletter-form" aria-label="Newsletter signup">
+                  <div class="newsletter-field">
+                    <label for="newsletter-email" class="visually-hidden">Email address</label>
+                    <input id="newsletter-email" type="email" name="email" placeholder="Type your email address" autocomplete="email" required />
+                  </div>
+                  <button type="submit" class="newsletter-submit">Get Stitchy Into Your Inbox</button>
+                  <p class="newsletter-privacy">We value and respect your privacy. Your data won&rsquo;t be shared or sold and is held securely. You can opt out at any time.</p>
+                </form>
+              </div>
+            </div>
+            <div class="footer-legal">
+              <p>&copy; 2026 Stitchy London</p>
+              <p>Company Number:&nbsp; 16007593</p>
+              <a href="/privacy-policy">Privacy Policy</a>
+              <a href="/cookie-policy">Cookie Policy</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- /WF:COMPONENT site-footer -->
+
+  </div>
+
+  <!-- WF:SITE-FOOTER-CODE — GSAP + bd-animations are site-wide. Already in
+       templates/webflow-footer-code.html. Site Settings → Custom Code (footer). -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/SplitText.min.js"></script>
+  <script src="assets/js/bd-animations.js"></script>
+
+  <!-- Site loader: lottie-web + controller. Site-wide. -->
+  <script src="https://cdn.jsdelivr.net/npm/lottie-web@5.12.2/build/player/lottie_light.min.js"></script>
+  <script src="assets/js/site-loader.js"></script>
+
+  <!-- WF:PAGE-FOOTER-CODE — Our-Science-only modules. Page Settings → Custom
+       Code (footer) on the Our Science page only. Matter.js must load BEFORE
+       our-science.js. Per-page-module rule (PROJECT_BRIEF.md §9): don't ship
+       Matter.js on pages that don't use it. -->
+  <script src="https://cdn.jsdelivr.net/npm/matter-js@0.20/build/matter.min.js"></script>
+  <script src="assets/js/our-science.js"></script>
+
+</body>
+</html>

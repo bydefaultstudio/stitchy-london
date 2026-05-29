@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Essential -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Page Title - Stitchy London</title>
+  <meta name="description" content="A concise, compelling description of the page (150-160 characters)." />
+  
+  <!-- Canonical -->
+  <link rel="canonical" href="https://stitchylondon.com/page/" />
+  
+  <!-- Robots -->
+  <meta name="robots" content="index, follow" />
+  
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://stitchylondon.com/page/" />
+  <meta property="og:title" content="Page Title - Stitchy London" />
+  <meta property="og:description" content="A concise, compelling description of the page." />
+  <meta property="og:image" content="https://stitchylondon.com/assets/images/og-default.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Descriptive alt text for the image" />
+  <meta property="og:site_name" content="Stitchy London" />
+  <meta property="og:locale" content="en_GB" />
+  
+  <!-- X (formerly Twitter) -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://stitchylondon.com/page/" />
+  <meta name="twitter:title" content="Page Title - Stitchy London" />
+  <meta name="twitter:description" content="A concise, compelling description of the page." />
+  <meta name="twitter:image" content="https://stitchylondon.com/assets/images/og-default.jpg" />
+  <meta name="twitter:image:alt" content="Descriptive alt text for the image" />
+  
+  <!-- Theme Color -->
+  <meta name="theme-color" content="#3485cd" />
+  
+  <!-- Favicons -->
+  <link rel="icon" href="../assets/icons/favicon.ico">
+  <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon.svg">
+  <link rel="apple-touch-icon" href="../assets/icons/apple-touch-icon.png">
+  
+  <!-- Google Fonts: Mona Sans (brand primary) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+
+  <!-- Brand Book (brand tokens) -->
+  <link rel="stylesheet" href="../brand-book/brand-book.css" />
+  <!-- Combined stylesheet (design system + project styles) -->
+  <link rel="stylesheet" href="../assets/css/style.css" />
+</head>
+<body class="is-intro-loading">
+
+  <!-- Site loader (animated gradient + line-draw Stitchy Lottie). Site-wide.
+       Lottie path is relative to the page; if this template lives in a
+       subdirectory, prefix with "../" or use the Webflow asset URL. -->
+  <div class="site-loader" data-site-loader data-lottie-path="../assets/images/logo-line-svg.json" data-lottie-speed="1.5" aria-hidden="true">
+    <div class="site-loader-logo" data-site-loader-logo></div>
+  </div>
+
+  <div class="page-wrapper">
+    <div class="page-content">
+      <section>
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="block">
+              <h1>Page Title</h1>
+              <p>Content</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Site loader scripts. Drop both into every page (or, in Webflow, put them
+       in Site Settings → Custom Code (footer) once and delete from here). -->
+  <script src="https://cdn.jsdelivr.net/npm/lottie-web@5.12.2/build/player/lottie_light.min.js"></script>
+  <script src="../assets/js/site-loader.js"></script>
+
+</body>
+</html>
+

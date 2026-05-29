@@ -1,0 +1,32 @@
+/* ─────────────────────────────
+   BRAND BOOK — Stitchy London
+   ─────────────────────────────
+
+   This file defines the brand identity tokens.
+   The design system framework reads these via var(--brand-*, fallback).
+
+   Source of truth: the Stitchy London Webflow project (Color + Typography
+   variable collections). Values here mirror Webflow so the local HTML
+   preview renders identically to what Webflow produces.
+   ───────────────────────────── */
+
+:root {
+  /* -- Typography (Webflow: all three families = Mona Sans) -- */
+  --brand-font-primary: "Mona Sans", sans-serif;
+  --brand-font-secondary: "Mona Sans", sans-serif;
+  --brand-font-tertiary: "Mona Sans", sans-serif;
+
+  /* -- Brand palette (mirrors Webflow Color → Brand/*) -- */
+  --brand-color-green: #d3ff6b;       /* lime — accent */
+  --brand-color-orange: #ff4800;      /* ticker / highlights */
+  --brand-color-blue: #98affe;        /* periwinkle */
+  --brand-color-dark-green: #171c17;  /* near-black green — primary text/dark surfaces */
+  --brand-color-off-white: #f9fbfb;   /* page background */
+  --brand-color-warm-black: #36312e;
+
+  /* -- Mapped onto the design system brand contract -- */
+  --brand-color-dark: var(--brand-color-dark-green);
+  --brand-color-light: var(--brand-color-off-white);
+  --brand-color-accent: var(--brand-color-green);
+  --brand-color-link: #96dd05;        /* Webflow green-500 */
+}

@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<!--
+  ===========================================================================
+  WEBFLOW PORT PLAN — index.html
+  ===========================================================================
+  • HEAD: per-page meta (title/desc/canonical/OG/Twitter/theme-color) goes in
+    Webflow Page Settings → Custom Code (head). Everything else (JS-guard,
+    fonts, bd-animations.css, style.css, theme bridge) lives in Site Settings
+    → Custom Code (head) — see templates/webflow-header-code.html.
+  • COMPONENTS (build once, reuse across pages): site-nav, site-footer,
+    cta-email, skip-link.
+  • CMS (Phase 1 in scope): Team collection only — see WF:CMS-LIST below.
+  • CMS-ATTACHABLE (Phase 2 candidates, ship as static for now): services
+    (4 blocks), social-links (footer), ticker copy.
+  • NATIVE WEBFLOW: footer newsletter → Webflow Form Block; team grid &
+    standout reveal stay custom (GSAP-driven, beyond Designer interactions).
+  • JS HOOKS: every `data-bd-*` / `data-text-*` / `data-team-*` attribute
+    listed below must be added in the Designer via "+ Add custom attribute".
+  • SCRIPTS at end-of-body live in Site Settings → Custom Code (footer) —
+    see templates/webflow-footer-code.html. Homepage-only modules (homepage.js)
+    go in Page Settings → Custom Code (footer).
+  ===========================================================================
+-->
+<html lang="en">
+<head>
+  <!-- WF:SITE-HEAD — JS-available guard belongs in Site Settings (head),
+       MUST be first so the FOUC stylesheet only hides content when JS can
+       animate it back in. Already present in templates/webflow-header-code.html. -->
+  <script>document.documentElement.classList.add("js");</script>
+
+  <!-- WF:PAGE-HEAD — per-page meta. In Webflow this goes in Page Settings
+       → SEO Settings + Page Settings → Custom Code (head).
+       Webflow auto-emits <title>, <meta name="description">, OG title/description
+       from the SEO panel; only OG image, twitter-image, theme-color and the
+       extended OG tags need the Custom Code block. -->
+  <!-- Essential -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Stitchy London — A strategy-led social agency</title>
+  <meta name="description" content="Stitchy London is a strategy-led social agency, shaped by social and grounded in marketing science. We build brands that are distinctive, consistent and remembered." />
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://stitchylondon.com/" />
+
+  <!-- Robots -->
+  <meta name="robots" content="index, follow" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://stitchylondon.com/" />
+  <meta property="og:title" content="Stitchy London — A strategy-led social agency" />
+  <meta property="og:description" content="Shaped by social and grounded in marketing science. We build brands that are distinctive, consistent and remembered." />
+  <meta property="og:image" content="https://stitchylondon.com/assets/images/og-default.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Stitchy London — a strategy-led social agency" />
+  <meta property="og:site_name" content="Stitchy London" />
+  <meta property="og:locale" content="en_GB" />
+
+  <!-- X (formerly Twitter) -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://stitchylondon.com/" />
+  <meta name="twitter:title" content="Stitchy London — A strategy-led social agency" />
+  <meta name="twitter:description" content="Shaped by social and grounded in marketing science." />
+  <meta name="twitter:image" content="https://stitchylondon.com/assets/images/og-default.jpg" />
+  <meta name="twitter:image:alt" content="Stitchy London — a strategy-led social agency" />
+
+  <!-- Theme Color -->
+  <meta name="theme-color" content="#d3ff6b" />
+
+  <!-- Favicons -->
+  <link rel="icon" href="assets/icons/favicon.ico">
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+
+  <!-- Fonts: Mona Sans (variable) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+
+  <!-- WF:SITE-HEAD — stylesheets. brand-book.css is local-only (Webflow holds
+       the token system; see memory: webflow-tokens-source-of-truth). In Webflow
+       only bd-animations.css + style.css ship, via jsDelivr URLs from
+       templates/webflow-header-code.html. -->
+  <link rel="stylesheet" href="brand-book/brand-book.css" />
+  <!-- Animation FOUC rules (scoped to .js) -->
+  <link rel="stylesheet" href="assets/css/bd-animations.css" />
+  <!-- Combined stylesheet (design system + project styles) -->
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body class="is-intro-loading">
+
+  <!-- The is-intro-loading body class is the bd-animations curtain handshake:
+       it tells bd-animations.js to set from-states and hold reveals until
+       site-loader.js dispatches studio:intro-complete + bd:intro-complete. -->
+
+  <!-- WF:COMPONENT name="site-loader"
+       Full-viewport opening screen: animated warm gradient + line-draw Stitchy
+       Lottie. Auto-dismisses when BOTH the Lottie completes AND window.load
+       fires (4s safety cap). Respects prefers-reduced-motion.
+       Webflow port:
+         1. Upload assets/images/logo-line-svg.json to Webflow Assets → use that
+            URL as data-lottie-path. (Or keep the jsDelivr GitHub URL.)
+         2. Author this block in the Designer as: a fixed full-screen div with
+            class .site-loader + custom attribute data-site-loader; inside it
+            an empty div .site-loader-logo + custom attribute data-site-loader-logo.
+         3. lottie-web + site-loader.js load in Site Settings → Custom Code
+            (footer) — see templates/webflow-footer-code.html.
+       A11Y: aria-hidden so the line-draw motion isn't announced; the loader
+       leaves the DOM after dismissal so it can't trap focus. -->
+  <div class="site-loader" data-site-loader data-lottie-path="assets/images/logo-line-svg.json" data-lottie-speed="1.5" aria-hidden="true">
+    <div class="site-loader-logo" data-site-loader-logo></div>
+  </div>
+
+  <!-- WF:COMPONENT name="skip-link" props="target-id"
+       Author once in the page template body wrapper. Always first focusable element. -->
+  <a href="#main" class="button visually-hidden" data-size="small">Skip to content</a>
+
+  <div class="page-wrapper">
+
+    <!-- WF:COMPONENT name="site-nav"
+         props="active-page (About us | Our Science | Our Services | Contact)"
+         notes="Reused on every page. Brand wordmark is a link; accessible name
+                comes from <img alt> (don't double up with aria-label on the <a>).
+                When the hand-drawn-logo→nav motion module lands, the <img>
+                becomes an inline <svg> with data-bd-logo-draw." -->
+    <header class="site-nav">
+      <div class="padding-global">
+        <div class="container-large">
+          <nav class="site-nav-inner" aria-label="Primary">
+            <a href="/">
+              <img class="brand-wordmark" src="https://bydefault.design/image/180x40" alt="Stitchy London" width="180" height="40" />
+            </a>
+            <div class="site-nav-links">
+              <a href="#about">About us</a>
+              <a href="/our-science.html">Our Science</a>
+              <a href="#services">Our Services</a>
+              <a href="#contact" class="button" data-size="small">Contact</a>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </header>
+    <!-- /WF:COMPONENT site-nav -->
+
+    <main id="main" class="page-content" tabindex="-1">
+
+      <!-- 1. Hero -->
+      <!-- WF:STATIC | JS-HOOK module="bd-animations" attrs="data-text-animate, data-bd-animate, data-bd-delay"
+           Future signature-motion candidate: cursor-following smiley overlay (PROJECT_BRIEF.md §9). -->
+      <section class="background-color-green hero-section top-huge bottom-huge">
+        <div class="padding-global">
+          <div class="container-xl">
+            <div class="block align-center text-align-center gap-xlarge">
+              <h1 class="headline-xlarge" data-text-animate="headline-reveal">We are a strategy <span class="sticker-add sticker-social">led</span><span class="sticker-add sticker-social">agency!</span></h1>
+              <p class="text-size-xlarge" data-bd-animate="fade" data-bd-delay="1.4">
+                Shaped by social and grounded in <strong>marketing science.</strong>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. About -->
+      <!-- WF:STATIC | nav anchor target #about -->
+      <section id="about" class="about-section background-color-primary top-huge bottom-huge">
+        <div class="padding-global">
+          <div class="container-xl">
+            <div class="block">
+              <p class="eyebrow" data-bd-animate="fade" data-bd-scrub>About us</p>
+            </div>
+            <div class="block gap-2xlarge">
+              <div class="about-headline">
+                <h2 class="headline-small" data-text-animate="headline-reveal" data-bd-scrub>
+                  Social <span class="sticker-add sticker-about">isn't</span> a channel anymore.<br><br> It's where brands are bui<span class="sticker-swap sticker-l">l</span>t.
+                </h2>
+              </div>
+              <div class="about-body top-huge grid gap-xlarge">
+                <p class="body-text" data-bd-animate="slide-up" data-bd-scrub>
+                  We don't separate social and strategy. We build them together. Because social doesn't sit on the edge of a brand. It shapes it.
+                </p>
+                <p class="body-text" data-bd-animate="slide-up" data-bd-delay="0.15" data-bd-scrub>
+                  Everything we do is grounded in marketing science and built for how platforms actually work. The result is work that's distinctive, consistent and designed to be remembered.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Founded in East London -->
+      <!-- WF:STATIC -->
+      <section class="founded-section background-color-secondary top-huge bottom-huge">
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="block align-center text-align-center">
+              <h2 class="headline-small" data-text-animate="headline-reveal" data-bd-scrub>
+                Founded in East London, a <span class="sticker-add sticker-founded-1">scrappy</span> team of strategists, <span class="sticker-add sticker-founded-2">creatives</span> &amp; <span class="sticker-add sticker-founded-2">social</span> experts.
+              </h2>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Ticker -->
+      <!-- WF:STATIC | CMS-ATTACHABLE collection="ticker-copy" note="phase-2 — if Stitchy want to rotate the line"
+           Currently aria-hidden as pure decoration. If repurposed as content,
+           remove aria-hidden and prefer CSS ::after duplication over a doubled DOM node. -->
+      <section class="ticker background-color-orange top-small bottom-small" aria-hidden="true">
+        <div class="ticker-track">
+          <span class="ticker-item ticker-headline">No egos, just high standards.</span>
+          <span class="ticker-item ticker-headline">No egos, just high standards.</span>
+        </div>
+      </section>
+
+      <!-- 5. What a brand stands for -->
+      <!-- WF:STATIC -->
+      <section class="define-section top-large bottom-large">
+        <div class="padding-global">
+          <div class="container-xl">
+            <div class="block">
+              <p class="eyebrow" data-bd-animate="fade">What we do</p>
+            </div>
+            <div class="define-headline">
+              <h2 class="headline-small" data-text-animate="headline-reveal" data-bd-scrub>
+                What a brand stands <span class="sticker-add sticker-speaker">for</span>, how it shows up, and how it reaches the people that matter on the platforms that matter.
+              </h2>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. Services -->
+      <!-- WF:STATIC | CMS-ATTACHABLE collection="services"
+           Phase-1: ship as 4 hand-authored .service-block divs in the Designer.
+           Phase-2 CMS plan (when needed):
+             collection slug: services
+             fields: number (number, required) · title (plain-text, required) ·
+                     theme (option: blue | orange | dark | green, required) · order (number, sort key)
+           BLOCKER (see gsap-expert audit): data-bd-stack is not handled by
+           bd-animations.js. Resolve before Webflow port — either implement
+           the stack module in bd-animations.js OR swap to
+           data-bd-scrub-group + data-bd-animate="slide-up" on each .service-block. -->
+      <section id="services" class="services-section" data-bd-stack>
+        <div class="service-block background-color-blue" >
+          <div class="padding-global">
+            <div class="container-xl">
+              <div class="service-row">
+                <span class="service-number">01</span>
+                <h3 class="service-title">Strategy — brand, comms, social and creator</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="service-block background-color-orange">
+          <div class="padding-global">
+            <div class="container-xl">
+              <div class="service-row">
+                <span class="service-number">02</span>
+                <h3 class="service-title">Identity and design</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="service-block background-color-dark">
+          <div class="padding-global">
+            <div class="container-xl">
+              <div class="service-row">
+                <span class="service-number">03</span>
+                <h3 class="service-title">Creative and content</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="service-block background-color-green">
+          <div class="padding-global">
+            <div class="container-xl">
+              <div class="service-row">
+                <span class="service-number">04</span>
+                <h3 class="service-title">Media planning and buying</h3>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. Standout Reveal -->
+      <!-- WF:STATIC | JS-HOOK module="homepage.js" notes="standout-balls overlay is JS-injected; .standout-scene cross-fade driven by GSAP"
+           Two `.standout-scene` children + a JS-injected `.standout-balls` overlay.
+           The Designer should author the two scenes; the balls overlay is created at runtime. -->
+      <section class="section-standout" aria-label="What Stitchy stands for">
+        <div class="standout-stage">
+
+          <!-- Scene 1 — revealed by the balls parting. Edit anything inside. -->
+          <div class="standout-scene padding-global">
+            <div class="container-xl">
+              <div class="block align-center text-align-center gap-xlarge">
+                <h2 class="headline-xlarge text-align-center">Stitchy isn't here to add to the noise</h2>
+              </div>
+            </div>
+          </div>
+
+          <!-- Decorative balls overlay (JS-injected; only present with JS). -->
+          <div class="standout-balls" aria-hidden="true"></div>
+
+          <!-- Scene 2 — cross-fades in over scene 1. Add CTAs/stickers/icons freely. -->
+          <div class="standout-scene padding-global">
+            <div class="container-xl">
+              <div class="block align-center text-align-center gap-xlarge">
+                <h2 class="headline-xlarge text-align-center">We are here to make you stand out from it</h2>
+              </div>
+            </div>
+
+
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 8. Meet the team -->
+      <!-- WF:CMS-LIST collection="team" sort="position-asc" limit="all"
+           wraps=".team-grid"
+           item-template=".team-cell (each Collection Item renders one cell)"
+           Each Collection Item is bound to ONE `.team-cell` template element.
+           Six `.team-cell` blocks below are prototype-only — in Webflow the
+           Designer renders ONE template inside a Collection List and CMS provides
+           the rest. See CMS plan in port-plan header above.
+           JS-HOOK module="homepage.js" attrs="data-team-grid, data-position,
+             data-name, data-role, data-fact, data-sticker"
+           A11Y: the .team-cell-close button needs `inert` (or display:none)
+           when the cell is closed — add to the Webflow Designer interaction state. -->
+      <section class="team-section background-color-dark top-huge bottom-huge">
+
+          <div class="team-container">
+            <div class="block padding-global">
+              <p class="eyebrow" data-bd-animate="fade">Meet the team</p>
+            </div>
+            <div class="team-content">
+              <div class="team-info padding-global">
+                <p class="team-intro" data-text-animate="words" data-bd-faded data-bd-scrub>Stitchy is proudly female-founded and on a mission to challenge the norm.<br><br>
+                We say what we think, back each other, and celebrate loudly (we're not subtle about it either).<br><br>
+                We care about the work, and especially the people making it. Hierarchy isn't the point. Doing great work together is.<br><br>
+                We're building something better. A place rooted in integrity, collaboration, and work that actually matters.</p>
+              </div>
+              <div class="team-body">
+                <div class="team-grid" data-team-grid data-bd-animate="fade" data-bd-scrub>
+                  <!-- WF:CMS-ITEM-TEMPLATE collection="team"
+                       In Webflow this <article> becomes the single Collection Item
+                       template. Bindings: data-position←position, data-name←name,
+                       data-role←role, data-fact←fact, data-sticker←sticker-image,
+                       team-photo-main src/alt ← photo-main, team-photo-hover src ← photo-hover.
+                       The aria-label on .team-card must be bound to the CMS name field
+                       ("View {{name}}") not hardcoded. -->
+                  <article class="team-cell" data-position="1"
+                            data-name="G Douglas Kilgannon"
+                            data-role="CEO"
+                            data-fact="Big time NERDDD"
+                            data-sticker="https://bydefault.design/image/240x280?text=Doug%20Sticker">
+                    <button class="team-card" type="button" aria-label="View G Douglas Kilgannon">
+                      <span class="team-face team-face-front">
+                        <img class="team-photo team-photo-main" src="https://bydefault.design/image/240x280?text=G%20Douglas%20Kilgannon" alt="G Douglas Kilgannon" />
+                        <img class="team-photo team-photo-hover" src="https://bydefault.design/image/240x280?text=G%20Douglas%20Kilgannon%20Hover" alt="" aria-hidden="true" />
+                      </span>
+                      <span class="team-face team-face-back" aria-hidden="true"></span>
+                    </button>
+                    <button class="team-cell-close" type="button" aria-label="Close team member">&times;</button>
+                  </article>
+                  <article class="team-cell" data-position="2"
+                            data-name="Ange D."
+                            data-role="Founder"
+                            data-fact="Can always be found in broadway market on a saturday afternoon"
+                            data-sticker="https://bydefault.design/image/240x280?text=Ange%20Sticker">
+                    <button class="team-card" type="button" aria-label="View Ange D.">
+                      <span class="team-face team-face-front">
+                        <img class="team-photo team-photo-main" src="https://bydefault.design/image/240x280?text=Ange%20D." alt="Ange D." />
+                        <img class="team-photo team-photo-hover" src="https://bydefault.design/image/240x280?text=Ange%20D.%20Hover" alt="" aria-hidden="true" />
+                      </span>
+                      <span class="team-face team-face-back" aria-hidden="true"></span>
+                    </button>
+                    <button class="team-cell-close" type="button" aria-label="Close team member">&times;</button>
+                  </article>
+                  <article class="team-cell" data-position="3"
+                            data-name="Stephanie Falkiner"
+                            data-role="Creative Account Director"
+                            data-fact="Always up for a hike!"
+                            data-sticker="https://bydefault.design/image/240x280?text=Stephanie%20Sticker">
+                    <button class="team-card" type="button" aria-label="View Stephanie Falkiner">
+                      <span class="team-face team-face-front">
+                        <img class="team-photo team-photo-main" src="https://bydefault.design/image/240x280?text=Stephanie%20Falkiner" alt="Stephanie Falkiner" />
+                        <img class="team-photo team-photo-hover" src="https://bydefault.design/image/240x280?text=Stephanie%20Falkiner%20Hover" alt="" aria-hidden="true" />
+                      </span>
+                      <span class="team-face team-face-back" aria-hidden="true"></span>
+                    </button>
+                    <button class="team-cell-close" type="button" aria-label="Close team member">&times;</button>
+                  </article>
+                  <article class="team-cell" data-position="4"
+                            data-name="Natalie Clark"
+                            data-role="Content Director"
+                            data-fact="Brings order to our creative chaos"
+                            data-sticker="https://bydefault.design/image/240x280?text=Natalie%20Sticker">
+                    <button class="team-card" type="button" aria-label="View Natalie Clark">
+                      <span class="team-face team-face-front">
+                        <img class="team-photo team-photo-main" src="https://bydefault.design/image/240x280?text=Natalie%20Clark" alt="Natalie Clark" />
+                        <img class="team-photo team-photo-hover" src="https://bydefault.design/image/240x280?text=Natalie%20Clark%20Hover" alt="" aria-hidden="true" />
+                      </span>
+                      <span class="team-face team-face-back" aria-hidden="true"></span>
+                    </button>
+                    <button class="team-cell-close" type="button" aria-label="Close team member">&times;</button>
+                  </article>
+                  <article class="team-cell" data-position="5"
+                            data-name="Ruth Nichols"
+                            data-role="CSO &amp; Partner"
+                            data-fact=""
+                            data-sticker="https://bydefault.design/image/240x280?text=Ruth%20Sticker">
+                    <button class="team-card" type="button" aria-label="View Ruth Nichols">
+                      <span class="team-face team-face-front">
+                        <img class="team-photo team-photo-main" src="https://bydefault.design/image/240x280?text=Ruth%20Nichols" alt="Ruth Nichols" />
+                        <img class="team-photo team-photo-hover" src="https://bydefault.design/image/240x280?text=Ruth%20Nichols%20Hover" alt="" aria-hidden="true" />
+                      </span>
+                      <span class="team-face team-face-back" aria-hidden="true"></span>
+                    </button>
+                    <button class="team-cell-close" type="button" aria-label="Close team member">&times;</button>
+                  </article>
+                  <article class="team-cell" data-position="6"
+                            data-name="Professor Colin Skittles"
+                            data-role="Professor of Marketing Science"
+                            data-fact="Makes us look smart"
+                            data-sticker="https://bydefault.design/image/240x280?text=Colin%20Sticker">
+                    <button class="team-card" type="button" aria-label="View Professor Colin Skittles">
+                      <span class="team-face team-face-front">
+                        <img class="team-photo team-photo-main" src="https://bydefault.design/image/240x280?text=Professor%20Colin%20Skittles" alt="Professor Colin Skittles" />
+                        <img class="team-photo team-photo-hover" src="https://bydefault.design/image/240x280?text=Professor%20Colin%20Skittles%20Hover" alt="" aria-hidden="true" />
+                      </span>
+                      <span class="team-face team-face-back" aria-hidden="true"></span>
+                    </button>
+                    <button class="team-cell-close" type="button" aria-label="Close team member">&times;</button>
+                  </article>
+                </div>
+              </div>
+            </div>
+
+        </div>
+      </section>
+
+      <!-- 9. Slot seamlessly -->
+      <!-- WF:STATIC -->
+      <section class="slot-section top-huge bottom-huge">
+        <div class="padding-global">
+          <div class="container-xl">
+            <div class="block gap-2xlarge">
+              <div class="slot-headline">
+                <h2 class="headline-small" data-text-animate="headline-reveal" data-bd-scrub>
+                  We <span class="sticker-add sticker-slot">slot</span> seamlessly into your team, bringing a <span class="sticker-add sticker-slot">bespoke</span> approach to the challenges that matter.
+                </h2>
+              </div>
+              <div class="slot-body top-huge grid gap-xlarge">
+                <p class="" data-bd-animate="slide-up" data-bd-scrub>Our team becomes an extension of yours, built to solve real problems and drive meaningful impact.</p>
+                <p class="body-text" data-bd-animate="slide-up" data-bd-delay="0.15" data-bd-scrub>Less like an add-on and more like part of the furniture – in the best way.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 10. CTA -->
+      <!-- WF:COMPONENT name="cta-email"
+           props="lead-text, email-address, theme:primary|green|dark"
+           Same shape on our-science.html (different lead + email + theme).
+           nav anchor target #contact — id changed from "email-us" so the
+           Contact link in the nav resolves on the homepage. -->
+      <section id="contact" class="cta-section background-color-primary top-huge bottom-huge">
+        <div class="padding-global">
+          <div class="container-xl">
+            <div class="block align-center text-align-center gap-medium">
+              <p class="cta-text" data-bd-animate="slide-up" data-bd-scrub>Hello, let's chat at</p>
+              <a class="cta-email" href="mailto:hello@stitchylondon.com" data-bd-animate="slide-up" data-bd-scrub>hello@stitchylondon.com</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- WF:COMPONENT name="site-footer"
+         props="copyright-year (or bind to today's year via Webflow)"
+         notes="Reused on every page. Single Webflow Component → one <label for>/<input id>
+                pair per page (avoids the duplicate-id risk the a11y audit flagged).
+                Newsletter form below is a separate sub-component / Webflow Form Block." -->
+    <footer class="site-footer background-color-dark top-large bottom-large">
+      <div class="padding-global">
+        <div class="container-xl">
+          <div class="block gap-2xlarge footer-stack">
+            <div class="footer-top">
+              <div class="footer-brand-cols">
+                <a class="footer-brand" href="/">
+                  <img class="footer-wordmark" src="https://bydefault.design/image/720x160" alt="Stitchy London" width="720" height="160" />
+                </a>
+                <div class="footer-cols">
+                  <div class="footer-col">
+                    <p class="footer-col-title">Social Media</p>
+                    <!-- WF:CMS-ATTACHABLE collection="social-links" note="phase-2 — keep as 2 hand-authored <li>s for Phase 1" -->
+                    <ul class="footer-social" role="list">
+                      <li>
+                        <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">
+                          <svg class="footer-social-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12.0005 1C9.01319 1 8.63829 1.01306 7.46499 1.06646C6.29399 1.12008 5.49468 1.30548 4.79528 1.5775C4.07182 1.85846 3.45813 2.23429 2.84674 2.84594C2.23488 3.45735 1.85906 4.07106 1.57719 4.79431C1.30449 5.49396 1.11887 6.29352 1.06617 7.4641C1.01369 8.63743 0.999939 9.01258 0.999939 12C0.999939 14.9874 1.01323 15.3612 1.0664 16.5345C1.12025 17.7056 1.30564 18.5049 1.57742 19.2043C1.8586 19.9278 2.23442 20.5415 2.84605 21.1529C3.45722 21.7648 4.07091 22.1415 4.79391 22.4225C5.49376 22.6945 6.2933 22.8799 7.46407 22.9335C8.63737 22.9869 9.01205 23 11.9991 23C14.9867 23 15.3605 22.9869 16.5338 22.9335C17.7048 22.8799 18.505 22.6945 19.2048 22.4225C19.9281 22.1415 20.5408 21.7648 21.152 21.1529C21.7639 20.5415 22.1397 19.9278 22.4216 19.2045C22.692 18.5049 22.8776 17.7053 22.9326 16.5347C22.9853 15.3614 22.999 14.9874 22.999 12C22.999 9.01258 22.9853 8.63766 22.9326 7.46433C22.8776 6.29329 22.692 5.49396 22.4216 4.79454C22.1397 4.07106 21.7639 3.45735 21.152 2.84594C20.5402 2.23406 19.9283 1.85823 19.2042 1.5775C18.5029 1.30548 17.7032 1.12008 16.5322 1.06646C15.3589 1.01306 14.9853 1 11.9971 1H12.0005ZM11.0138 2.98229C11.3066 2.98183 11.6334 2.98229 12.0005 2.98229C14.9374 2.98229 15.2855 2.99283 16.4453 3.04554C17.5178 3.09458 18.0998 3.27379 18.4876 3.42435C19.0009 3.62373 19.3669 3.86206 19.7516 4.24706C20.1366 4.63206 20.3749 4.99873 20.5748 5.51206C20.7253 5.89935 20.9047 6.48144 20.9536 7.55393C21.0063 8.71352 21.0177 9.06185 21.0177 11.9975C21.0177 14.9331 21.0063 15.2814 20.9536 16.441C20.9045 17.5135 20.7253 18.0956 20.5748 18.4829C20.3754 18.9962 20.1366 19.3617 19.7516 19.7465C19.3666 20.1315 19.0011 20.3698 18.4876 20.5692C18.1003 20.7205 17.5178 20.8992 16.4453 20.9483C15.2858 21.001 14.9374 21.0124 12.0005 21.0124C9.06338 21.0124 8.71529 21.001 7.55574 20.9483C6.48327 20.8988 5.90121 20.7196 5.51324 20.569C4.99992 20.3696 4.63327 20.1313 4.24828 19.7463C3.86329 19.3613 3.62496 18.9955 3.42514 18.482C3.27458 18.0947 3.09515 17.5126 3.04633 16.4401C2.99363 15.2805 2.98309 14.9322 2.98309 11.9947C2.98309 9.05727 2.99363 8.71077 3.04633 7.55119C3.09538 6.47869 3.27458 5.8966 3.42514 5.50885C3.6245 4.99552 3.86329 4.62885 4.24828 4.24385C4.63327 3.85885 4.99992 3.62052 5.51324 3.42069C5.90098 3.26944 6.48327 3.09069 7.55574 3.04142C8.57046 2.99558 8.9637 2.98183 11.0138 2.97954V2.98229ZM17.872 4.80875C17.1433 4.80875 16.5521 5.39931 16.5521 6.12829C16.5521 6.85704 17.1433 7.44829 17.872 7.44829C18.6008 7.44829 19.192 6.85704 19.192 6.12829C19.192 5.39954 18.6008 4.80829 17.872 4.80829V4.80875ZM12.0005 6.35104C8.88097 6.35104 6.35173 8.88035 6.35173 12C6.35173 15.1196 8.88097 17.6478 12.0005 17.6478C15.1201 17.6478 17.6484 15.1196 17.6484 12C17.6484 8.88035 15.1198 6.35104 12.0003 6.35104H12.0005ZM12.0005 8.33333C14.0254 8.33333 15.6671 9.97485 15.6671 12C15.6671 14.0249 14.0254 15.6667 12.0005 15.6667C9.97544 15.6667 8.33397 14.0249 8.33397 12C8.33397 9.97485 9.97544 8.33333 12.0005 8.33333V8.33333Z" fill="currentColor"/></svg>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn">
+                          <svg class="footer-social-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill-rule="evenodd" clip-rule="evenodd" d="M19 2C20.6569 2 22 3.34315 22 5V19C22 20.6569 20.6569 22 19 22H5C3.34315 22 2 20.6569 2 19V5C2 3.34315 3.34315 2 5 2H19ZM4.97656 9.49316V19.0234H8.00195V9.49316H4.97656ZM15.5918 9.25C13.4688 9.25005 12.6885 10.8105 12.6885 10.8105V9.49316H9.81348V19.0234H12.8379V13.9717C12.838 13.1125 13.081 11.8916 14.4971 11.8916C15.1794 11.8917 16.0751 12.076 16.0752 13.7529V19.0234H19.0547V13.0264C19.0546 10.1829 17.4856 9.25 15.5918 9.25ZM6.48926 4.74121C5.53105 4.74121 4.75391 5.51835 4.75391 6.47656C4.75416 7.43455 5.53121 8.21094 6.48926 8.21094C7.44726 8.21088 8.22435 7.43452 8.22461 6.47656C8.22461 5.51839 7.44742 4.74127 6.48926 4.74121Z" fill="currentColor"/></svg>
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="footer-col">
+                    <p class="footer-col-title">New Business</p>
+                    <a class="footer-link" href="mailto:hello@stitchylondon.com">hello@stitchylondon.com</a>
+                  </div>
+                  <div class="footer-col">
+                    <p class="footer-col-title">Careers</p>
+                    <a class="footer-link" href="mailto:careers@stitchylondon.com">careers@stitchylondon.com</a>
+                  </div>
+                </div>
+              </div>
+              <!-- WF:NATIVE-COMPONENT type="Form Block"
+                   Use Webflow's native Form Block + Form, Form Success, Form Error elements.
+                   A11Y carry-over: keep the visually-hidden <label>, but ALSO show a
+                   persistent visible "Email" label above the input (don't rely on placeholder
+                   alone — disappears on focus). Wire the Success/Error states into an
+                   aria-live="polite" status region. Use the project prefix on the field id
+                   (e.g. "newsletter-email") to avoid Webflow's default field-name collisions. -->
+              <div class="footer-newsletter">
+                <div class="block gap-small newsletter-intro">
+                  <h2 class="newsletter-title">Subscribe to Stitchy Sessions.</h2>
+                  <p class="newsletter-desc">Be the first to know what we&rsquo;re up to. Work, thinking, roles, case studies and more.</p>
+                </div>
+                <form class="newsletter-form" aria-label="Newsletter signup">
+                  <div class="newsletter-field">
+                    <label for="newsletter-email" class="visually-hidden">Email address</label>
+                    <input id="newsletter-email" type="email" name="email" placeholder="Type your email address" autocomplete="email" required />
+                  </div>
+                  <button type="submit" class="newsletter-submit">Get Stitchy Into Your Inbox</button>
+                  <p class="newsletter-privacy">We value and respect your privacy. Your data won&rsquo;t be shared or sold and is held securely. You can opt out at any time.</p>
+                </form>
+              </div>
+            </div>
+            <div class="footer-legal">
+              <p>&copy; 2026 Stitchy London</p>
+              <p>Company Number:&nbsp; 16007593</p>
+              <a href="/privacy-policy">Privacy Policy</a>
+              <a href="/cookie-policy">Cookie Policy</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!-- /WF:COMPONENT site-footer -->
+
+  </div>
+
+  <!-- WF:SITE-FOOTER-CODE — GSAP + bd-animations are site-wide; already in
+       templates/webflow-footer-code.html. Site Settings → Custom Code (footer). -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/SplitText.min.js"></script>
+  <script src="assets/js/bd-animations.js"></script>
+
+  <!-- Site loader: lottie-web from CDN + the loader controller. Site-wide.
+       Loader CSS lives in style.css under /* -- Site Loader -- */. -->
+  <script src="https://cdn.jsdelivr.net/npm/lottie-web@5.12.2/build/player/lottie_light.min.js"></script>
+  <script src="assets/js/site-loader.js"></script>
+
+  <!-- WF:PAGE-FOOTER-CODE — homepage-only module. Page Settings → Custom Code
+       (footer) on the Home page only. Must load AFTER GSAP. -->
+  <script src="assets/js/homepage.js"></script>
+
+</body>
+</html>

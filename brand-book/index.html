@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Essential -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brand Book</title>
+  <meta name="description" content="Brand identity reference — logo, colours, typography, and iconography." />
+
+  <!-- Robots -->
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- Combined stylesheet (design system + project styles) + Brand Book -->
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="brand-book.css" />
+
+  <!-- Google Fonts: Mona Sans (brand primary) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <div class="page-wrapper">
+    <div class="page-content">
+
+      <!-- Header -->
+      <section class="top-medium bottom-medium border-bottom border-secondary">
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="block gap-small">
+              <p class="eyebrow">Brand Book</p>
+              <h1>Brand Identity</h1>
+              <p class="text-size-small">Visual reference for logo, colours, typography, and iconography.</p>
+              <p class="text-size-small"><a href="../styleguide.html">Design System</a> · <a href="../docs/site/index.html">Documentation</a></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Logo -->
+      <section class="top-medium bottom-medium border-bottom border-secondary">
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="block gap-large">
+              <h2 class="eyebrow">Logo</h2>
+
+              <div class="grid gap-xlarge">
+                <div class="block gap-small">
+                  <span class="token-tag">Primary logo</span>
+                  <div class="border border-dashed border-secondary padding-huge" style="display: flex; align-items: center; justify-content: center; min-height: 200px;">
+                    <img src="../assets/images/logo.svg" alt="Logo" style="max-width: 300px; height: auto;">
+                  </div>
+                </div>
+                <div class="block gap-small">
+                  <span class="token-tag">Logo on dark background</span>
+                  <div class="padding-huge" style="display: flex; align-items: center; justify-content: center; min-height: 200px; background-color: var(--brand-dark);">
+                    <img src="../assets/images/logo.svg" alt="Logo" style="max-width: 300px; height: auto; filter: invert(1);">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Colours -->
+      <section class="top-medium bottom-medium border-bottom border-secondary">
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="block gap-large">
+              <h2 class="eyebrow">Colours</h2>
+
+              <span class="token-tag">Brand Colours</span>
+              <div class="grid cols-3 gap-medium">
+                <div class="block gap-xsmall">
+                  <div class="color-block" style="background-color: var(--brand-color-accent); max-height: none; width: 100%; aspect-ratio: auto; height: 120px;"></div>
+                  <span class="token-tag">--brand-color-accent</span>
+                </div>
+                <div class="block gap-xsmall">
+                  <div class="color-block" style="background-color: var(--brand-color-dark); max-height: none; width: 100%; aspect-ratio: auto; height: 120px;"></div>
+                  <span class="token-tag">--brand-color-dark</span>
+                </div>
+                <div class="block gap-xsmall">
+                  <div class="color-block" style="background-color: var(--brand-color-light); max-height: none; width: 100%; aspect-ratio: auto; height: 120px;"></div>
+                  <span class="token-tag">--brand-color-light</span>
+                </div>
+              </div>
+
+              <span class="token-tag">Semantic Usage (via Design System)</span>
+              <div class="grid cols-4 gap-medium">
+                <div class="block gap-xsmall">
+                  <div class="color-block" style="background-color: var(--text-primary); max-height: none; width: 100%; aspect-ratio: auto; height: 60px;"></div>
+                  <span class="token-tag">--text-primary</span>
+                </div>
+                <div class="block gap-xsmall">
+                  <div class="color-block" style="background-color: var(--text-link); max-height: none; width: 100%; aspect-ratio: auto; height: 60px;"></div>
+                  <span class="token-tag">--text-link</span>
+                </div>
+                <div class="block gap-xsmall">
+                  <div class="color-block" style="background-color: var(--background-secondary); max-height: none; width: 100%; aspect-ratio: auto; height: 60px;"></div>
+                  <span class="token-tag">--background-secondary</span>
+                </div>
+                <div class="block gap-xsmall">
+                  <div class="color-block" style="background-color: var(--button-primary); max-height: none; width: 100%; aspect-ratio: auto; height: 60px;"></div>
+                  <span class="token-tag">--button-primary</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Typography -->
+      <section class="top-medium bottom-medium border-bottom border-secondary">
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="block gap-large">
+              <h2 class="eyebrow">Typography</h2>
+
+              <div class="block gap-medium">
+                <span class="token-tag">--brand-font-primary</span>
+                <h3 style="font-family: var(--brand-font-primary); margin: 0;">The quick brown fox jumps over the lazy dog</h3>
+                <p style="font-family: var(--brand-font-primary);">
+                  ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>
+                  abcdefghijklmnopqrstuvwxyz<br>
+                  0123456789
+                </p>
+              </div>
+
+              <div class="block gap-medium">
+                <span class="token-tag">--brand-font-secondary</span>
+                <h3 style="font-family: var(--brand-font-secondary); margin: 0;">The quick brown fox jumps over the lazy dog</h3>
+                <p style="font-family: var(--brand-font-secondary);">
+                  ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>
+                  abcdefghijklmnopqrstuvwxyz<br>
+                  0123456789
+                </p>
+              </div>
+
+              <div class="block gap-medium">
+                <span class="token-tag">--brand-font-tertiary</span>
+                <h3 style="font-family: var(--brand-font-tertiary); margin: 0;">The quick brown fox jumps over the lazy dog</h3>
+                <p style="font-family: var(--brand-font-tertiary);">
+                  ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>
+                  abcdefghijklmnopqrstuvwxyz<br>
+                  0123456789
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Iconography -->
+      <section class="top-medium bottom-medium">
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="block gap-large">
+              <h2 class="eyebrow">Iconography</h2>
+
+              <p class="text-size-small">Add brand icons below. Place SVG files in <code>assets/icons/</code> and reference them here.</p>
+
+              <div class="grid cols-4 gap-medium">
+                <div class="block gap-xsmall border border-dashed border-secondary padding-xlarge" style="align-items: center; justify-content: center; min-height: 100px;">
+                  <p class="text-size-xsmall" style="color: var(--text-faded); text-align: center;">Icon 1</p>
+                </div>
+                <div class="block gap-xsmall border border-dashed border-secondary padding-xlarge" style="align-items: center; justify-content: center; min-height: 100px;">
+                  <p class="text-size-xsmall" style="color: var(--text-faded); text-align: center;">Icon 2</p>
+                </div>
+                <div class="block gap-xsmall border border-dashed border-secondary padding-xlarge" style="align-items: center; justify-content: center; min-height: 100px;">
+                  <p class="text-size-xsmall" style="color: var(--text-faded); text-align: center;">Icon 3</p>
+                </div>
+                <div class="block gap-xsmall border border-dashed border-secondary padding-xlarge" style="align-items: center; justify-content: center; min-height: 100px;">
+                  <p class="text-size-xsmall" style="color: var(--text-faded); text-align: center;">Icon 4</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+</body>
+
+</html>
