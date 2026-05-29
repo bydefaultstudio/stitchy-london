@@ -15,15 +15,19 @@
   status = 200
 
 # Bounce the .html versions to the clean URL so there's one canonical path.
+# force = true is required — without it Netlify serves the static .html file
+# before checking redirect rules.
 [[redirects]]
   from = "/our-science.html"
   to = "/our-science"
   status = 301
+  force = true
 
 [[redirects]]
   from = "/styleguide.html"
   to = "/styleguide"
   status = 301
+  force = true
 
 # Block search indexing while this is a client testing link.
 [[headers]]
