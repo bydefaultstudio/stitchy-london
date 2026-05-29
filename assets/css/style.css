@@ -2484,37 +2484,68 @@ a[data-tooltip],
 /* ------ PROJECT STYLES ------ */
 
 /* -- Site Loader --
-   Full-viewport opening screen: animated warm-gradient background with the
-   line-draw "Stitchy" Lottie centred on top. Dismissed by site-loader.js when
-   both the Lottie finishes drawing AND window.load fires (4s safety cap).
-   The gradient is built from layered radial-gradients whose background-position
-   drifts via @keyframes — kept under prefers-reduced-motion. */
+   Full-viewport opening screen: animated 5-colour gradient with the line-draw
+   "Stitchy" Lottie centred on top. Dismissed by site-loader.js when both the
+   Lottie finishes drawing AND window.load fires (4s safety cap).
+   Layout follows the reference: orange anchored top, yellow mid-left, lime
+   bottom-left, sage bottom-right, peach as the base wash + a soft right-edge
+   highlight. POSITIONS drift on a 22s loop; two warm layers gently breathe
+   between adjacent palette colours on a 26s loop so the composition feels
+   alive without any colour ever vanishing. All motion is killed under
+   prefers-reduced-motion. */
+
+/* Register the two cycling colour stops so they can interpolate in @keyframes. */
+@property --loader-warm-top { syntax: "<color>"; inherits: false; initial-value: #FF9E52; }
+@property --loader-warm-mid { syntax: "<color>"; inherits: false; initial-value: #FADB6F; }
+
 .site-loader {
   position: fixed;
   inset: 0;
   z-index: 9999;
   display: grid;
   place-items: center;
-  background-color: var(--brand-color-orange, #ff8a3d);
+  /* Start invisible — site-loader.js adds .is-visible on next frame so the
+     opacity transition runs as a fade-IN. .is-hidden runs the fade-OUT. */
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  --loader-warm-top: #FF9E52;
+  --loader-warm-mid: #FADB6F;
+  background-color: #F6C193;
   background-image:
-    radial-gradient(ellipse 70% 60% at 30% 110%, var(--brand-color-green, #d3ff6b) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 60% at 85% 105%, var(--brand-color-green, #d3ff6b) 0%, transparent 55%),
-    radial-gradient(ellipse 80% 70% at 70% -10%, #ff8a3d 0%, transparent 65%),
-    radial-gradient(ellipse 90% 80% at 50% 50%, #ffd58a 0%, transparent 70%);
-  background-size: 180% 180%, 180% 180%, 180% 180%, 200% 200%;
+    /* sage — bottom-right */
+    radial-gradient(ellipse 55% 50% at 95% 100%, #AFCDBE 0%, transparent 60%),
+    /* lime — bottom-left */
+    radial-gradient(ellipse 55% 55% at 5%  95%, #9DEE9C 0%, transparent 65%),
+    /* yellow — mid-left (cycles to lime-warm) */
+    radial-gradient(ellipse 50% 60% at 0%  55%, var(--loader-warm-mid) 0%, transparent 60%),
+    /* peach — right-edge highlight */
+    radial-gradient(ellipse 45% 70% at 105% 50%, #F6C193 0%, transparent 60%),
+    /* orange — top (cycles to peach-warm) */
+    radial-gradient(ellipse 70% 55% at 60% -5%, var(--loader-warm-top) 0%, transparent 65%);
+  background-size: 150% 150%, 160% 160%, 160% 160%, 150% 150%, 170% 170%;
   background-repeat: no-repeat;
-  animation: site-loader-drift 18s ease-in-out infinite alternate;
-  transition: opacity 0.6s ease, visibility 0s linear 0.6s;
+  animation:
+    site-loader-drift 22s ease-in-out infinite alternate,
+    site-loader-shift 26s ease-in-out infinite;
+}
+
+.site-loader.is-visible {
+  opacity: 1;
 }
 
 .site-loader.is-hidden {
   opacity: 0;
-  visibility: hidden;
   pointer-events: none;
 }
 
+/* Lock page scroll while the loader curtain is up. Removed by site-loader.js
+   the instant the fade-out completes, so reveals run against the real layout. */
+body.is-intro-loading {
+  overflow: hidden;
+}
+
 .site-loader-logo {
-  width: min(60vw, 720px);
+  width: 70vw;
   aspect-ratio: 1267 / 266;
   height: auto;
 }
@@ -2526,10 +2557,21 @@ a[data-tooltip],
   display: block;
 }
 
+/* 5 layers, in declaration order:
+   sage(BR), lime(BL), yellow(L-mid), peach(R-mid), orange(top). Each drifts a
+   small amount on its own axis so the composition slowly rearranges. */
 @keyframes site-loader-drift {
-  0%   { background-position:   0%   0%,   0%   0%,   0%   0%,   0%   0%; }
-  50%  { background-position:  20%  10%, -10%   5%,   5% -10%,  -5%   5%; }
-  100% { background-position: -10%  15%,  15%  -5%, -10%  10%,  10% -10%; }
+  0%   { background-position:   0%   0%,   0%   0%,   0%   0%,   0%   0%,   0%   0%; }
+  50%  { background-position:  -8%  -5%,   8%  -5%,  -5%  10%,   5%  -8%,   5%  10%; }
+  100% { background-position:   5% -10%,  -8%  10%,  10%  -5%,  -5%   8%,  -8%   5%; }
+}
+
+/* Two warm layers gently swap between adjacent palette colours so the warmth
+   subtly breathes without any colour disappearing from the composition. */
+@keyframes site-loader-shift {
+  0%,
+  100% { --loader-warm-top: #FF9E52; --loader-warm-mid: #FADB6F; }
+  50%  { --loader-warm-top: #F6C193; --loader-warm-mid: #9DEE9C; }
 }
 
 @media (max-width: 768px) {
