@@ -18,31 +18,26 @@
   --brand-blue: var(--brand-color-blue, #98affe);
   --brand-link: var(--brand-color-link, #96dd05);
 
-  /* -- Base font sizes (mirror Webflow Typography → Font Size) -- */
-  --font-2xs: 12px;
-  --font-xs: 14px;
-  --font-s: 16px;
-  --font-m: 18px;
-  --font-l: 22px;
-  --font-xl: 28px;
-  --font-2xl: 32px;
-  --font-3xl: 38px;
-  --font-4xl: 46px;
-  --font-5xl: 52px;
-  --font-6xl: 60px;
-  --font-7xl: 64px;
+  /* -- Base font sizes (fluid vw on desktop; rem at tablet/mobile — see Responsive. Mirror in Webflow Typography → Font Size.) -- */
+  --font-2xs: 0.85vw;  /* ≈12px @ 1440 */
+  --font-xs:  1vw;     /* ≈14.4px @ 1440 */
+  --font-s:   1.1vw;   /* ≈15.8px @ 1440 */
+  --font-m:   1.25vw;  /* 18px @ 1440 — body default */
+  --font-l:   1.5vw;   /* 21.6px @ 1440 */
+  --font-xl:  2vw;     /* 28.8px @ 1440 */
+  --font-2xl: 2.25vw;  /* 32.4px @ 1440 */
+  --font-3xl: 2.65vw;  /* ≈38px @ 1440 */
+  --font-4xl: 3.2vw;   /* ≈46px @ 1440 */
+  --font-5xl: 3.6vw;   /* ≈52px @ 1440 */
+  --font-6xl: 4.2vw;   /* ≈60px @ 1440 */
+  --font-7xl: 4.5vw;   /* ≈65px @ 1440 */
 
   /* -- Headline sizes (fluid vw on desktop; fixed rem at tablet/mobile — see Responsive. Mirror in Webflow Typography → Font Size.) -- */
   --font-headline-xs: 3vw;
-  --font-headline-s: 3.8vw;
+  --font-headline-s: 3.9vw;
   --font-headline-m: 4.5vw;
   --font-headline-l: 6.5vw;
   --font-headline-xl: 8vw;
-
-  /* -- Body size (fluid vw on desktop; reverts to the type scale at tablet/mobile) -- */
-  --font-body: 1vw;
-  --font-body-m: 1.25vw;
-  --font-body-l: 1.5vw;
 
   /* -- UI font sizes -- */
   --button-font-size: var(--font-xs);
@@ -177,7 +172,7 @@
   --background-modal: rgba(0, 0, 0, 0.75);
 
   /* -- Solid colour backgrounds — hero blocks, callouts, etc. -- */
-  --background-accent: var(--text-accent);
+  --background-accent: var(--brand-green);
   --background-black: var(--black);
   --background-white: var(--white);
 
@@ -379,7 +374,7 @@ body {
   margin: 0;
   font-family: var(--font-primary);
   color: var(--text-primary);
-  font-size: var(--font-body);
+  font-size: var(--font-m);
   font-weight: var(--font-weight-regular);
   background: var(--background-primary);
   line-height: var(--line-height-l);
@@ -881,37 +876,24 @@ section {
 
 /* ------ TYPOGRAPHY UTILITIES ------ */
 
-/* -- Font sizes -- */
-.text-size-small {
+/* -- Font sizes (fluid on desktop, rem on tablet/mobile via token cascade) -- */
+.text-size-s {
   font-size: var(--font-s);
-  line-height: var(--line-height-xl);
+  line-height: var(--line-height-xl); /* 1.6 — extra leading for smallest size */
 }
 
-.text-size-regular {
+.text-size-m {
   font-size: var(--font-m);
+  line-height: var(--line-height-l);  /* 1.4 */
 }
 
-.text-size-medium {
+.text-size-l {
   font-size: var(--font-l);
+  line-height: var(--line-height-l);
 }
 
-.text-size-large {
+.text-size-xl {
   font-size: var(--font-xl);
-}
-
-/* -- Body text (responsive; matches the base body size) -- */
-.body-text {
-  font-size: var(--font-body);
-  line-height: var(--line-height-l);
-}
-
-.body-text-medium {
-  font-size: var(--font-body-m);
-  line-height: var(--line-height-l);
-}
-
-.body-text-large {
-  font-size: var(--font-body-l);
   line-height: var(--line-height-l);
 }
 
@@ -922,6 +904,7 @@ section {
   line-height: var(--line-height-s);
   letter-spacing: -0.02em;
   text-transform: uppercase;
+  text-wrap: pretty;
 }
 
 .headline-xlarge {
@@ -933,7 +916,7 @@ section {
 }
 
 .ticker-headline {
-  font-size: var(--font-headline-l);
+  font-size: var(--font-headline-m);
   font-weight: var(--font-weight-medium);
   line-height: var(--line-height-s);
   letter-spacing: -0.02em;
@@ -961,12 +944,30 @@ section {
 /* -- Eyebrow -- */
 .eyebrow {
   font-family: var(--font-primary);
-  font-size: var(--font-l);
+  font-size: var(--font-s);
   line-height: var(--line-height-m);
   font-weight: var(--font-weight-medium);
   letter-spacing: var(--letter-spacing-xl);
   text-transform: uppercase;
   margin-bottom: var(--space-3xl);
+}
+
+.eyebrow::after {
+  content: "";
+  display: inline-block;
+  width: 1.1em;
+  height: 0.75em;
+  margin-left: var(--space-s);
+  vertical-align: baseline;
+  background-color: currentColor;
+  -webkit-mask-image: url('data:image/svg+xml,<svg width="19" height="13" viewBox="0 0 19 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.09766 0.84668H0.90918V12.1533H3.09766V13H0V0H3.09766V0.84668Z" fill="black"/><path d="M19 13H15.9023V12.1533H18.0908V0.84668H15.9023V0H19V13Z" fill="black"/><path d="M9.94043 6.46973H12.8955V7.3916H9.94043V10.5361H9.05957V7.3916H6.10449V6.46973H9.05957V3.31055H9.94043V6.46973Z" fill="black"/></svg>');
+  mask-image: url('data:image/svg+xml,<svg width="19" height="13" viewBox="0 0 19 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.09766 0.84668H0.90918V12.1533H3.09766V13H0V0H3.09766V0.84668Z" fill="black"/><path d="M19 13H15.9023V12.1533H18.0908V0.84668H15.9023V0H19V13Z" fill="black"/><path d="M9.94043 6.46973H12.8955V7.3916H9.94043V10.5361H9.05957V7.3916H6.10449V6.46973H9.05957V3.31055H9.94043V6.46973Z" fill="black"/></svg>');
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
 }
 
 /* -- Text alignment -- */
@@ -1220,6 +1221,14 @@ button.button {
 
 /* ------ BACKGROUND UTILITIES ------ */
 
+.text-primary {
+  color: var(--text-primary);
+}
+
+.text-accent {
+  color: var(--text-accent);
+}
+
 .background-color-primary {
   background-color: var(--background-primary);
 }
@@ -1467,33 +1476,44 @@ body.is-intro-loading {
   position: sticky;
   top: 0;
   z-index: 100;
-  background-color: var(--background-primary);
+  background-color: var(--background-dark);
 }
 
 .site-nav-inner {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: var(--space-xl);
-  padding-top: var(--space-l);
-  padding-bottom: var(--space-l);
+  height: 70px;
+  padding: 0  var(--space-2xl);
 }
 
 .site-nav-links {
   display: flex;
   align-items: center;
-  gap: var(--space-2xl);
+  gap: var(--space-4xl);
 }
 
 .site-nav-links a {
   text-decoration: none;
   font-weight: var(--font-weight-medium);
+  color: var(--text-accent);
+  font-size: 1.3rem;
+}
+
+/* Patch-style brand logo anchored to viewport top-left of the sticky header. */
+.site-nav-brand {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  display: block;
 }
 
 .brand-wordmark {
-  display: inline-block;
-  height: var(--space-2xl);
+  display: block;
   width: auto;
+  height: 100px;
 }
 
 /* -- Stickers (ADD: ::before beside word. SWAP: transparent glyph behind image — SR/SEO/SplitText-safe.) -- */
@@ -1502,71 +1522,72 @@ body.is-intro-loading {
   white-space: nowrap;
 }
 
+/* -- Defaults: per-sticker combos below override via compound selectors (higher specificity). -- */
 .sticker-add::before {
   content: "";
   display: inline-block;
-  height: var(--sticker-size, 0.9em);
-  aspect-ratio: var(--sticker-aspect, 1);
-  margin-inline-start: 0.2em;
-  margin-inline-end: 0.2em;
+  height: 0.9em;
+  aspect-ratio: 1;
   vertical-align: baseline;
   transform: translateY(0.08em);
-  background-image: var(--sticker-image);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
+  transform: scale(1.07);
 }
 
 .sticker-swap {
   color: transparent;
-  background-image: var(--sticker-image);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
 
-/* -- Box modifier (swap only): fixed box sized by --sticker-size + native --sticker-aspect. -- */
+/* -- Box modifier (swap only): fixed square box; per-sticker can override width + aspect-ratio. -- */
 .sticker-swap.sticker-box {
   display: inline-block;
-  width: var(--sticker-size, 1em);
-  aspect-ratio: var(--sticker-aspect, 1);
+  width: 1em;
+  aspect-ratio: 1;
   overflow: hidden;
   vertical-align: middle;
 }
 
-/* -- Per-sticker artwork: image + native aspect ratio from each SVG's viewBox. -- */
-.sticker-book         { --sticker-image: url("../images/stickers/sticker_book.svg");                 --sticker-aspect: 103 / 102; }
-.sticker-burrito      { --sticker-image: url("../images/stickers/sticker_burrito.svg");              --sticker-aspect: 72 / 108; }
-.sticker-coffee       { --sticker-image: url("../images/stickers/sticker_coffee%20cup.svg");         --sticker-aspect: 67 / 80; }
-.sticker-disco-ball   { --sticker-image: url("../images/stickers/sticker_disco-ball.svg");          --sticker-aspect: 1; }
-.sticker-eye          { --sticker-image: url("../images/stickers/sticker_eye.svg");                  --sticker-aspect: 1; }
-.sticker-heart        { --sticker-image: url("../images/stickers/sticker_heart.svg");                --sticker-aspect: 1; }
-.sticker-margarita    { --sticker-image: url("../images/stickers/sticker_Margarita.svg");            --sticker-aspect: 136 / 116; }
-.sticker-megaphone    { --sticker-image: url("../images/stickers/sticker_megaphone.svg");            --sticker-aspect: 1; }
-.sticker-phone        { --sticker-image: url("../images/stickers/sticker_phone.svg");                --sticker-aspect: 87 / 107; }
-.sticker-post-social  { --sticker-image: url("../images/stickers/sticker_post%20social.svg");        --sticker-aspect: 176 / 98; }
-.sticker-slot-machine { --sticker-image: url("../images/stickers/sticker_slot%20machine.svg");       --sticker-aspect: 167 / 70; }
-.sticker-slot-green   { --sticker-image: url("../images/stickers/sticker_slot%20machine-green.svg"); --sticker-aspect: 152 / 63; }
-.sticker-smiley       { --sticker-image: url("../images/stickers/sticker_smiley.svg");               --sticker-aspect: 104 / 105; }
-.sticker-smiley-side  { --sticker-image: url("../images/stickers/sticker_smiley-side.svg");          --sticker-aspect: 1; }
-.sticker-smiley-up    { --sticker-image: url("../images/stickers/sticker_smiley-up.svg");            --sticker-aspect: 1; }
-.sticker-sparkle      { --sticker-image: url("../images/stickers/sticker_sparkle.svg");              --sticker-aspect: 92 / 62; }
-.sticker-speech       { --sticker-image: url("../images/stickers/sticker_speech%20bubble.svg");      --sticker-aspect: 37 / 33; }
+/* -- Per-sticker artwork (.sticker-add mode). Each rule is self-contained: edit image, aspect, or any inherited property right here. -- */
+.sticker-add.sticker-book::before         { background-image: url("../images/stickers/sticker_book.svg");                 aspect-ratio: 103 / 102; }
+.sticker-add.sticker-burrito::before      { background-image: url("../images/stickers/sticker_burrito.svg");              aspect-ratio: 72 / 108; }
+.sticker-add.sticker-coffee::before       { background-image: url("../images/stickers/sticker_coffee%20cup.svg");         aspect-ratio: 67 / 80; }
+.sticker-add.sticker-disco-ball::before   { background-image: url("../images/stickers/sticker_disco-ball.svg"); }
+.sticker-add.sticker-eye::before          { background-image: url("../images/stickers/sticker_eye.svg"); }
+.sticker-add.sticker-heart::before        { background-image: url("../images/stickers/sticker_heart.svg"); transform: translateX(0.05em) translateY(0.1em) rotate(8deg) scale(1.05); }
+.sticker-add.sticker-margarita::before    { background-image: url("../images/stickers/sticker_Margarita.svg");            aspect-ratio: 136 / 116; }
+.sticker-add.sticker-megaphone::before    { background-image: url("../images/stickers/sticker_megaphone.svg"); }
+.sticker-add.sticker-phone::before        { background-image: url("../images/stickers/sticker_phone.svg");                aspect-ratio: 87 / 107; }
+.sticker-add.sticker-post-social::before  { background-image: url("../images/stickers/sticker_post%20social.svg");        aspect-ratio: 176 / 98;
+transform: translateX(0.1em) translateY(0.1em) rotate(3deg) scale(1.05); }
+.sticker-add.sticker-slot-machine::before { background-image: url("../images/stickers/sticker_slot%20machine.svg");       aspect-ratio: 167 / 70; }
+.sticker-add.sticker-slot-green::before   { background-image: url("../images/stickers/sticker_slot%20machine-green.svg"); aspect-ratio: 152 / 63; }
+.sticker-add.sticker-smiley::before       { background-image: url("../images/stickers/sticker_smiley.svg");               aspect-ratio: 104 / 105; }
+.sticker-add.sticker-smiley-side::before  { background-image: url("../images/stickers/sticker_smiley-side.svg"); }
+.sticker-add.sticker-smiley-up::before    { background-image: url("../images/stickers/sticker_smiley-up.svg"); }
+.sticker-add.sticker-sparkle::before      { background-image: url("../images/stickers/sticker_sparkle.svg");              aspect-ratio: 92 / 62; transform: translateX(0.08em) translateY(0.05em) rotate(-3deg) scale(1.05); }
+.sticker-add.sticker-speech::before       { background-image: url("../images/stickers/sticker_speech%20bubble.svg");      aspect-ratio: 37 / 33; }
 
-/* -- Legacy placeholder combos (prototype) — swap to artwork classes above in HTML, then remove. -- */
-.sticker-about     { --sticker-image: url("https://bydefault.design/image/120x90"); --sticker-aspect: 4 / 3; }
-.sticker-founded-1 { --sticker-image: url("https://bydefault.design/image/90x90");  --sticker-aspect: 1; }
-.sticker-founded-2 { --sticker-image: url("https://bydefault.design/image/90x90");  --sticker-aspect: 1; }
-.sticker-slot      { --sticker-image: url("https://bydefault.design/image/120x90"); --sticker-aspect: 4 / 3; }
-.sticker-social    { --sticker-image: url("https://bydefault.design/image/180x108"); --sticker-aspect: 5 / 3; }
-.sticker-speaker   { --sticker-image: url("https://bydefault.design/image/180x108"); --sticker-aspect: 5 / 3; }
-.sticker-out       { --sticker-image: url("https://bydefault.design/image/180x108"); --sticker-aspect: 5 / 3; }
-.sticker-l {
-  --sticker-image: url("../images/stickers/sticker_L.svg");
-  --sticker-aspect: 248 / 82;
-  padding-inline: 0 0.8em;
+/* -- Swap-mode sticker(s): image lives on the element itself, not a pseudo. -- */
+.sticker-swap.sticker-l {
+  background-image: url("../images/stickers/sticker_L.svg");
+  padding-inline: 0 2.9em;
   margin-inline: .1em;
+  margin-right: -1.5em;
 }
+
+/* -- Legacy placeholder combos (prototype). Swap to artwork classes above in HTML, then remove. -- */
+.sticker-add.sticker-about::before     { background-image: url("https://bydefault.design/image/120x90");  aspect-ratio: 4 / 3; }
+.sticker-add.sticker-founded-1::before { background-image: url("https://bydefault.design/image/90x90"); }
+.sticker-add.sticker-founded-2::before { background-image: url("https://bydefault.design/image/90x90"); }
+.sticker-add.sticker-slot::before      { background-image: url("https://bydefault.design/image/120x90");  aspect-ratio: 4 / 3; }
+.sticker-add.sticker-social::before    { background-image: url("https://bydefault.design/image/180x108"); aspect-ratio: 5 / 3; }
+.sticker-add.sticker-speaker::before   { background-image: url("https://bydefault.design/image/180x108"); aspect-ratio: 5 / 3; }
+.sticker-add.sticker-out::before       { background-image: url("https://bydefault.design/image/180x108"); aspect-ratio: 5 / 3; }
 
 /* -- Page sections (homepage) -- */
 .hero-section {
@@ -1590,6 +1611,8 @@ body.is-intro-loading {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding-top: var(--section-xl);
+  padding-bottom: var(--section-xl);
 }
 
 .about-headline {
@@ -1611,6 +1634,7 @@ a.hero-ms-link:hover {
 .about-body {
   width: 40%;
   margin-left: 60%;
+  padding-top: var(--section-xl);
 }
 
 .founded-section {
@@ -1618,6 +1642,8 @@ a.hero-ms-link:hover {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding-top: var(--section-xl);
+  padding-bottom: var(--section-xl);
 }
 
 .define-section {
@@ -1627,6 +1653,8 @@ a.hero-ms-link:hover {
   justify-content: center;
   background-color: var(--background-primary);
   color: var(--text-primary);
+  padding-top: var(--section-l);
+  padding-bottom: var(--section-l);
 }
 
 .define-headline {
@@ -1647,6 +1675,8 @@ a.hero-ms-link:hover {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding-top: var(--section-xl);
+  padding-bottom: var(--section-xl);
 }
 
 .slot-headline {
@@ -1660,12 +1690,15 @@ a.hero-ms-link:hover {
 .slot-body {
   width: 45%;
   margin-left: 55%;
+  padding-top: var(--section-xl);
 }
 
 /* -- Ticker (CSS-only marquee; track holds two identical runs so the loop is seamless) -- */
 .ticker {
   overflow: hidden;
   white-space: nowrap;
+  padding-top: var(--section-s);
+  padding-bottom: var(--section-s);
 }
 
 .ticker-track {
@@ -1748,6 +1781,8 @@ a.hero-ms-link:hover {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding-top: var(--section-xl);
+  padding-bottom: var(--section-xl);
 }
 
 .team-container {
@@ -1779,7 +1814,7 @@ a.hero-ms-link:hover {
 }
 
 .team-intro {
-  font-size: 1.3vw;
+  font-size: var(--font-l);
   color: var(--text-accent);
 }
 
@@ -1928,8 +1963,8 @@ a.hero-ms-link:hover {
   padding: 0;
   border: 0;
   border-radius: var(--radius-pill);
-  background: var(--background-dark, var(--text-primary));
-  color: var(--background-primary);
+  background: var(--background-accent);
+  color: var(--text-primary);
   font-size: var(--font-l);
   line-height: 1;
   cursor: pointer;
@@ -1967,10 +2002,12 @@ a.hero-ms-link:hover {
 /* -- CTA -- */
 .cta-section {
   background-color: var(--background-green);
+  padding-top: var(--section-xl);
+  padding-bottom: var(--section-xl);
 }
 
 .cta-text {
-  font-size: var(--font-body-l);
+  font-size: var(--font-l);
   font-weight: var(--font-weight-medium);
   max-width: 35ch;
 }
@@ -1995,6 +2032,8 @@ a.hero-ms-link:hover {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding-top: var(--section-xl);
+  padding-bottom: var(--section-xl);
 }
 
 .science-hero-container {
@@ -2052,6 +2091,13 @@ a.hero-ms-link:hover {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding-top: var(--section-xl);
+  padding-bottom: var(--section-xl);
+}
+
+.science-body {
+  padding-top: var(--section-xl);
+  padding-bottom: var(--section-xl);
 }
 
 .science-intro-headline {
@@ -2101,7 +2147,7 @@ a.hero-ms-link:hover {
 }
 
 .science-six-body {
-  font-size: var(--font-body-l);
+  font-size: var(--font-l);
   letter-spacing: -0.03em;
 }
 
@@ -2222,6 +2268,8 @@ a.hero-ms-link:hover {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  padding-top: var(--section-xl);
+  padding-bottom: var(--section-xl);
 }
 
 .science-longgame-intro {
@@ -2229,12 +2277,14 @@ a.hero-ms-link:hover {
 }
 
 /* Per-page sticker assets — wire real artwork here when ready. */
-.sticker-science       { --sticker-image: url("https://bydefault.design/image/180x108?text=Book"); }
-.sticker-science-coffee { --sticker-image: url("https://bydefault.design/image/100x120?text=Coffee"); }
+.sticker-add.sticker-science::before        { background-image: url("https://bydefault.design/image/180x108?text=Book");   aspect-ratio: 5 / 3; }
+.sticker-add.sticker-science-coffee::before { background-image: url("https://bydefault.design/image/100x120?text=Coffee"); aspect-ratio: 5 / 6; }
 
 /* -- Footer -- */
 .site-footer {
   --footer-accent: var(--brand-green);
+  padding-top: var(--section-l);
+  padding-bottom: var(--section-l);
 }
 
 .footer-top {
@@ -2543,15 +2593,26 @@ a.hero-ms-link:hover {
 /* Tablet */
 @media (max-width: 991px) {
   :root {
+    /* -- Base font sizes (drop vw, lock to standard rem at tablet) -- */
+    --font-2xs: 12px;
+    --font-xs:  14px;
+    --font-s:   16px;
+    --font-m:   18px;
+    --font-l:   24px;
+    --font-xl:  28px;
+    --font-2xl: 32px;
+    --font-3xl: 38px;
+    --font-4xl: 46px;
+    --font-5xl: 52px;
+    --font-6xl: 60px;
+    --font-7xl: 64px;
+
     /* -- Headline sizes (fluid → fixed rem) -- */
     --font-headline-xs: 1.5rem;  /* 24px */
-    --font-headline-s: 2.25rem;  /* 36px */
+    --font-headline-s: 3.5rem;   /* 56px */
     --font-headline-m: 3rem;     /* 48px */
     --font-headline-l: 4rem;     /* 64px */
     --font-headline-xl: 4.75rem; /* 76px */
-
-    /* -- Body size (drop vw, follow the type scale) -- */
-    --font-body: var(--font-m);
 
     /* -- Section spacing (smoother ladder desktop → mobile) -- */
     --section-xs: var(--space-l);    /* 16px */
@@ -2561,13 +2622,83 @@ a.hero-ms-link:hover {
     --section-xl: var(--space-12xl); /* 112px */
 
     /* -- Container (stop scaling; padding-global handles gutters) -- */
-    --container-xl: 100%;
+    --container-m: 84vw;
+    --container-xl: 95%;
   }
 
   /* -- Project layout overrides -- */
+  .brand-wordmark {
+    width: 240px;
+  }
+
+  .about-section,
+  .founded-section,
+  .define-section,
+  .slot-section {
+    min-height: 70vh;
+  }
+
   .footer-top {
     grid-template-columns: 1fr;
     gap: var(--space-2xl);
+  }
+
+  .hero-container {
+    max-width: var(--container-m);
+  }
+
+  .about-headline {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  .about-body {
+    width: 100%;
+    margin-left: 0;
+    padding-top: var(--section-s);
+  }
+
+  .define-headline {
+    width: 90%;
+    margin-right: 0;
+  }
+
+  .slot-headline {
+    width: 95%;
+    margin-right: 0;
+  }
+
+  .slot-body {
+    width: 100%;
+    margin-left: 0;
+    padding-top: var(--section-s);
+  }
+
+  .service-title {
+    font-size: var(--font-xl);
+  }
+
+  .team-section {
+    padding-top: 12rem;
+    padding-bottom: 12rem;
+  }
+
+  .team-container {
+    width: 90%;
+  }
+
+  .team-content {
+    flex-direction: column;
+  }
+
+  .team-info {
+    width: 100%;
+  }
+
+  .team-body {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .science-intro-headline {
@@ -2587,16 +2718,7 @@ a.hero-ms-link:hover {
     grid-template-columns: 1fr;
   }
 
-  /* -- Team grid: 3x2 → 2x3. TEAM_LAYOUTS positions re-flow into the narrower grid. -- */
-  .team-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .team-cell[data-position="1"] .team-face-back { align-items: start;  text-align: left;  }
-  .team-cell[data-position="2"] .team-face-back { align-items: start;  text-align: right; }
-  .team-cell[data-position="3"] .team-face-back { align-items: center; text-align: left;  }
-  .team-cell[data-position="4"] .team-face-back { align-items: center; text-align: right; }
-  .team-cell[data-position="5"] .team-face-back { align-items: end;    text-align: left;  }
-  .team-cell[data-position="6"] .team-face-back { align-items: end;    text-align: right; }
+  /* Team grid stays 3x2 at tablet — back-face anchors inherit desktop defaults. */
 }
 
 /* Mobile */
@@ -2642,6 +2764,10 @@ a.hero-ms-link:hover {
   }
 
   /* -- Project layout overrides -- */
+  .brand-wordmark {
+    width: 180px;
+  }
+
   .site-nav-links {
     gap: var(--space-l);
   }
@@ -2660,10 +2786,6 @@ a.hero-ms-link:hover {
     text-align: center;
   }
 
-  .service-title {
-    font-size: var(--font-xl);
-  }
-
   .cta-email {
     font-size: var(--font-3xl);
   }
@@ -2675,6 +2797,17 @@ a.hero-ms-link:hover {
   .science-orbs {
     justify-content: center;
   }
+
+  /* -- Team grid: 3x2 → 2x3 at mobile. TEAM_LAYOUTS positions re-flow into the narrower grid. -- */
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .team-cell[data-position="1"] .team-face-back { align-items: start;  text-align: left;  }
+  .team-cell[data-position="2"] .team-face-back { align-items: start;  text-align: right; }
+  .team-cell[data-position="3"] .team-face-back { align-items: center; text-align: left;  }
+  .team-cell[data-position="4"] .team-face-back { align-items: center; text-align: right; }
+  .team-cell[data-position="5"] .team-face-back { align-items: end;    text-align: left;  }
+  .team-cell[data-position="6"] .team-face-back { align-items: end;    text-align: right; }
 }
 
 /* Mobile portrait */

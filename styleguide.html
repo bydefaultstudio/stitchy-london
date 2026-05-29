@@ -33,8 +33,8 @@
             <div class="block gap-small">
               <p class="eyebrow">Design System</p>
               <h1>Design System</h1>
-              <p class="text-size-small">All design system components rendered with <strong>default tokens</strong>. Load a brand book to see branded output.</p>
-              <p class="text-size-small"><a href="brand-book/index.html">Brand Book</a> · <a href="docs/site/index.html">Documentation</a></p>
+              <p class="text-size-s">All design system components rendered with <strong>default tokens</strong>. Load a brand book to see branded output.</p>
+              <p class="text-size-s"><a href="brand-book/index.html">Brand Book</a> · <a href="docs/site/index.html">Documentation</a></p>
             </div>
           </div>
         </div>
@@ -247,19 +247,18 @@
                 This example paragraph demonstrates how hyperlinks appear within body text. When designing your
                 layout, consider how <a href="https://example.com">linked text</a> stands out from regular content.
               </p>
-              <span class="token-tag">Small Text</span>
-              <p class="text-size-small">
-                Longer paragraphs help test how body text behaves over multiple lines and paragraphs in a real layout.
-                Use them to observe spacing, line height, and visual fatigue. <strong>Bold calls attention</strong>,
-                <em>italics guide the tone</em>, and clearly formatted links or buttons can suggest interactivity.
-                Clear, consistent styling ensures your message is readable and engaging at any length.
+              <span class="token-tag">Text sizes — fluid vw on desktop, rem at ≤991px</span>
+              <p class="text-size-xl">
+                <code>.text-size-xl</code> — 2vw desktop, 28px tablet. Lead paragraph or callout-sized body.
               </p>
-              <span class="token-tag">XSmall Text</span>
-              <p class="text-size-xsmall">
-                Longer paragraphs help test how body text behaves over multiple lines and paragraphs in a real layout.
-                Use them to observe spacing, line height, and visual fatigue. <strong>Bold calls attention</strong>,
-                <em>italics guide the tone</em>, and clearly formatted links or buttons can suggest interactivity.
-                Clear, consistent styling ensures your message is readable and engaging at any length.
+              <p class="text-size-l">
+                <code>.text-size-l</code> — 1.5vw desktop, 22px tablet. Larger body copy.
+              </p>
+              <p class="text-size-m">
+                <code>.text-size-m</code> — 1.25vw desktop, 18px tablet. Body default.
+              </p>
+              <p class="text-size-s">
+                <code>.text-size-s</code> — 1.1vw desktop, 16px tablet. Captions and small print.
               </p>
               <span class="token-tag">Eyebrow</span>
               <p class="eyebrow">Eyebrow Text</p>
@@ -299,7 +298,7 @@
               <div class="block gap-large button-demo">
                 <h2 class="eyebrow">Buttons</h2>
 
-                <p class="text-size-small">Token-driven button. Variants/sizes/colours are set with <code>data-*</code> attributes; <code>--button-color</code> drives background, border, and faded fill.</p>
+                <p class="text-size-s">Token-driven button. Variants/sizes/colours are set with <code>data-*</code> attributes; <code>--button-color</code> drives background, border, and faded fill.</p>
 
                 <span class="token-tag">.button (default)</span>
                 <button class="button">Button</button>
@@ -655,7 +654,7 @@
           <div class="container-large">
             <div class="block gap-large">
               <h2 class="eyebrow">Data Grid</h2>
-              <p class="text-size-small">12-column grid via the <code>data-grid</code> attribute. Children use <code>data-col-span</code>/<code>data-col-start</code>, or the parent declares a <code>data-layout</code> preset. Collapses to one column below 992px.</p>
+              <p class="text-size-s">12-column grid via the <code>data-grid</code> attribute. Children use <code>data-col-span</code>/<code>data-col-start</code>, or the parent declares a <code>data-layout</code> preset. Collapses to one column below 992px.</p>
 
               <span class="token-tag">data-col-span (6 · 4@9 · full)</span>
               <div data-grid>

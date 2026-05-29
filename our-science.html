@@ -105,20 +105,16 @@
          Webflow's "Current" state on the Collection / static-page link adds aria-current="page"
          automatically when the prop matches. -->
     <header class="site-nav">
-      <div class="padding-global">
-        <div class="container-xl">
-          <nav class="site-nav-inner" aria-label="Primary">
-            <a href="/">
-              <img class="brand-wordmark" src="https://bydefault.design/image/180x40" alt="Stitchy London" width="180" height="40" />
-            </a>
-            <div class="site-nav-links">
-              <a href="/#about">About us</a>
-              <a href="/our-science.html" aria-current="page">Our Science</a>
-              <a href="#contact">Contact</a>
-            </div>
-          </nav>
+      <nav class="site-nav-inner" aria-label="Primary">
+        <a href="/" class="site-nav-brand">
+          <img class="brand-wordmark" src="assets/images/header-logo.svg" alt="Stitchy London" width="348" height="100" />
+        </a>
+        <div class="site-nav-links">
+          <a href="/#about">About us</a>
+          <a href="/our-science.html" aria-current="page">Our Science</a>
+          <a href="#contact">Contact</a>
         </div>
-      </div>
+      </nav>
     </header>
     <!-- /WF:COMPONENT site-nav -->
 
@@ -129,7 +125,7 @@
            PROJECT_BRIEF.md §9 signature motion: Professor Skittles is the page's
            interactive moment. Imagery dropping in late; markup will need new
            data-* hooks when the motion module lands (e.g. data-skittles-track). -->
-      <section class="science-hero background-color-dark top-huge bottom-huge">
+      <section class="science-hero background-color-dark">
         <div class="block">
           <div class="science-hero-container">
             <div class="science-hero-content">
@@ -148,7 +144,7 @@
 
       <!-- 2. Intro — nerd out on marketing science -->
       <!-- WF:STATIC -->
-      <section class="science-intro background-color-primary top-huge bottom-huge">
+      <section class="science-intro background-color-primary">
         <div class="padding-global">
           <div class="container-xl">
             <div class="block gap-2xlarge">
@@ -171,12 +167,12 @@
            swap the four <p> for a single Webflow Rich Text Element. Custom CSS that
            targets `h2`/`p`/`strong` inside this block would then need a `.w-richtext`
            parent selector — see PAIN PATTERNS in the webflow-expert agent. -->
-      <section class="science-body background-color-primary top-huge bottom-huge">
+      <section class="science-body background-color-primary">
         <div class="padding-global">
           <div class="container-xl">
             <div class="science-body-grid">
               <div class="block gap-xlarge">
-                <p class="body-text-medium" data-text-animate="words" data-bd-faded data-bd-scrub>
+                <p class="text-size-m" data-text-animate="words" data-bd-faded data-bd-scrub>
                   A brand is a collection of memories living rent-free in people&rsquo;s heads. Without attention, those memories fade and the brand withers. But with it, they compound.
                 <br><br> 
                   Most marketing gets this wrong. It chases shiny new things. Focuses too much on what&rsquo;s pretty. It shifts constantly, optimising for the moment &ndash; until ultimately nothing sticks.
@@ -287,12 +283,12 @@
 
       <!-- 5. Long game — branding is a system, built over years -->
       <!-- WF:STATIC -->
-      <section class="science-longgame background-color-secondary top-huge bottom-huge">
+      <section class="science-longgame background-color-secondary">
         <div class="padding-global">
           <div class="container-xl">
             <div class="block gap-2xlarge">
               <div class="science-longgame-intro">
-                <p class="text-size-xlarge" data-bd-animate="slide-up" data-bd-scrub>
+                <p class="text-size-xl" data-bd-animate="slide-up" data-bd-scrub>
                   Ultimately it&rsquo;s about building a system. More than a set of assets. One that works at scale, over years.
                 </p>
               </div>
@@ -313,7 +309,7 @@
       <!-- 6. CTA — chat to the GOAT -->
       <!-- WF:COMPONENT name="cta-email" props="theme=green, lead-text, email-address"
            Same Component as the homepage CTA (#contact). Theme prop drives bg-* class. -->
-      <section id="contact" class="cta-section background-color-primary top-huge bottom-huge">
+      <section id="contact" class="cta-section background-color-primary">
         <div class="padding-global">
           <div class="container-xl">
             <div class="block align-center text-align-center gap-2xlarge">
@@ -331,7 +327,7 @@
     </main>
 
     <!-- WF:COMPONENT name="site-footer" — same instance as the homepage. -->
-    <footer class="site-footer background-color-dark top-large bottom-large">
+    <footer class="site-footer background-color-dark">
       <div class="padding-global">
         <div class="container-xl">
           <div class="block gap-2xlarge footer-stack">

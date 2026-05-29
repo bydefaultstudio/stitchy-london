@@ -125,20 +125,16 @@
                 When the hand-drawn-logo→nav motion module lands, the <img>
                 becomes an inline <svg> with data-bd-logo-draw." -->
     <header class="site-nav">
-      <div class="padding-global">
-        <div class="container-xl">
-          <nav class="site-nav-inner" aria-label="Primary">
-            <a href="/">
-              <img class="brand-wordmark" src="https://bydefault.design/image/180x40" alt="Stitchy London" width="180" height="40" />
-            </a>
-            <div class="site-nav-links">
-              <a href="#about">About us</a>
-              <a href="/our-science.html">Our Science</a>
-              <a href="#contact">Contact</a>
-            </div>
-          </nav>
+      <nav class="site-nav-inner" aria-label="Primary">
+        <a href="/" class="site-nav-brand">
+          <img class="brand-wordmark" src="assets/images/header-logo.svg" alt="Stitchy London" width="348" height="100" />
+        </a>
+        <div class="site-nav-links">
+          <a href="#about">About us</a>
+          <a href="/our-science.html">Our Science</a>
+          <a href="#contact">Contact</a>
         </div>
-      </div>
+      </nav>
     </header>
     <!-- /WF:COMPONENT site-nav -->
 
@@ -147,12 +143,12 @@
       <!-- 1. Hero -->
       <!-- WF:STATIC | JS-HOOK module="bd-animations" attrs="data-text-animate, data-bd-animate, data-bd-delay"
            Future signature-motion candidate: cursor-following smiley overlay (PROJECT_BRIEF.md §9). -->
-      <section class="background-color-green hero-section top-huge bottom-huge">
+      <section class="background-color-green hero-section">
         <div class="padding-global">
           <div class="hero-container">
             <div class="block align-center text-align-center gap-xlarge">
               <h1 class="headline-xlarge" data-text-animate="headline-reveal">We are a strategy <span class="sticker-add sticker-smiley">led</span><span class="sticker-add sticker-post-social">agency!</span></h1>
-              <p class="text-size-large" data-bd-animate="fade" data-bd-delay="1.4">
+              <p class="text-size-l" data-bd-animate="fade" data-bd-delay="1.4">
                 Shaped by social and grounded in <a class="hero-ms-link" href="/our-science.html">marketing science</a>.
               </p>
             </div>
@@ -162,7 +158,7 @@
 
       <!-- 2. About -->
       <!-- WF:STATIC | nav anchor target #about -->
-      <section id="about" class="about-section background-color-primary top-huge bottom-huge">
+      <section id="about" class="about-section background-color-primary">
         <div class="padding-global">
           <div class="container-xl">
             <div class="block">
@@ -171,14 +167,14 @@
             <div class="block gap-2xlarge">
               <div class="about-headline">
                 <h2 class="headline-small" data-text-animate="headline-reveal" data-bd-scrub>
-                  Social <span class="sticker-add sticker-smiley-up">isn't</span> a channel anymore.<br><br> It's where brands are bui<span class="sticker-swap sticker-l">l</span>t.
+                  Social <span class="sticker-add sticker-smiley-up">isn't</span> a channel anymore.<br><br> It's where brands are built.
                 </h2>
               </div>
-              <div class="about-body top-huge gap-xlarge">
-                <p class="body-text-large" data-bd-animate="slide-up" data-bd-scrub>
+              <div class="about-body gap-xlarge">
+                <p class="text-size-l" data-bd-animate="slide-up" data-bd-scrub>
                   We don't separate social and strategy. We build them together. Because social doesn't sit on the edge of a brand. It shapes it.
                 </p> <br>
-                <p class="body-text-large" data-bd-animate="slide-up" data-bd-delay="0.15" data-bd-scrub>
+                <p class="text-size-l" data-bd-animate="slide-up" data-bd-delay="0.15" data-bd-scrub>
                   Everything we do is grounded in marketing science and built for how platforms actually work. The result is work that's distinctive, consistent and designed to be remembered.
                 </p>
               </div>
@@ -189,12 +185,12 @@
 
       <!-- 3. Founded in East London -->
       <!-- WF:STATIC -->
-      <section class="founded-section background-color-secondary top-huge bottom-huge">
+      <section class="founded-section background-color-secondary">
         <div class="padding-global">
           <div class="container-medium">
             <div class="block align-center text-align-center">
               <h2 class="headline-small" data-text-animate="headline-reveal" data-bd-scrub>
-                Founded in East London, a <span class="sticker-add sticker-smiley-side">scrappy</span> team of strategists, <span class="sticker-add sticker-sparkle">creatives</span> &amp; <span class="sticker-add sticker-founded-2">social</span> experts.
+                Founded in East London, a <span class="sticker-add sticker-smiley-side">scrappy</span> team of strategists, <span class="sticker-add sticker-sparkle">creatives</span> &amp; <span class="sticker-add sticker-heart">social</span> experts.
               </h2>
             </div>
           </div>
@@ -205,7 +201,7 @@
       <!-- WF:STATIC | CMS-ATTACHABLE collection="ticker-copy" note="phase-2 — if Stitchy want to rotate the line"
            Currently aria-hidden as pure decoration. If repurposed as content,
            remove aria-hidden and prefer CSS ::after duplication over a doubled DOM node. -->
-      <section class="ticker background-color-orange top-small bottom-small" aria-hidden="true">
+      <section class="ticker background-color-orange" aria-hidden="true">
         <div class="ticker-track">
           <span class="ticker-item ticker-headline">No egos, just high standards.</span>
           <span class="ticker-item ticker-headline">No egos, just high standards.</span>
@@ -214,7 +210,7 @@
 
       <!-- 5. What a brand stands for -->
       <!-- WF:STATIC -->
-      <section class="define-section top-large bottom-large">
+      <section class="define-section">
         <div class="padding-global">
           <div class="container-xl">
             <div class="block">
@@ -222,7 +218,7 @@
             </div>
             <div class="define-headline">
               <h2 class="headline-small" data-text-animate="headline-reveal" data-bd-scrub>
-                What a brand stands <span class="sticker-add sticker-speaker">for</span>, how it shows up, and how it reaches the people that matter on the platforms that matter.
+                What a brand stands <span class="sticker-add sticker-megaphone">for</span>, how it shows up, and how it reaches the people that matter on the platforms that matter.
               </h2>
             </div>
           </div>
@@ -328,11 +324,11 @@
              data-name, data-role, data-fact, data-sticker"
            A11Y: the .team-cell-close button needs `inert` (or display:none)
            when the cell is closed — add to the Webflow Designer interaction state. -->
-      <section class="team-section background-color-dark top-huge bottom-huge">
+      <section class="team-section background-color-dark">
 
           <div class="team-container">
             <div class="block padding-global">
-              <p class="eyebrow" data-bd-animate="fade">Meet the team</p>
+              <p class="eyebrow text-accent" data-bd-animate="fade">Meet the team</p>
             </div>
             <div class="team-content">
               <div class="team-info padding-global">
@@ -443,18 +439,18 @@
 
       <!-- 9. Slot seamlessly -->
       <!-- WF:STATIC -->
-      <section class="slot-section top-huge bottom-huge">
+      <section class="slot-section">
         <div class="padding-global">
           <div class="container-xl">
             <div class="block gap-2xlarge">
               <div class="slot-headline">
                 <h2 class="headline-small" data-text-animate="headline-reveal" data-bd-scrub>
-                  We <span class="sticker-add sticker-slot">slot</span> seamlessly into your team, bringing a <span class="sticker-add sticker-slot">bespoke</span> approach to the challenges that matter.
+                  We <span class="sticker-add sticker-slot-machine">slot</span> seamlessly into your team, bringing a <span class="sticker-add sticker-disco-ball">bespoke</span> approach to the challenges that matter.
                 </h2>
               </div>
-              <div class="slot-body top-huge gap-xlarge">
-                <p class="body-text-large" data-bd-animate="slide-up" data-bd-scrub>Our team becomes an extension of yours, built to solve real problems and drive meaningful impact.</p><br>
-                <p class="body-text-large" data-bd-animate="slide-up" data-bd-delay="0.15" data-bd-scrub>Less like an add-on and more like part of the furniture – in the best way.</p>
+              <div class="slot-body gap-xlarge">
+                <p class="text-size-l" data-bd-animate="slide-up" data-bd-scrub>Our team becomes an extension of yours, built to solve real problems and drive meaningful impact.</p><br>
+                <p class="text-size-l" data-bd-animate="slide-up" data-bd-delay="0.15" data-bd-scrub>Less like an add-on and more like part of the furniture – in the best way.</p>
               </div>
             </div>
           </div>
@@ -467,7 +463,7 @@
            Same shape on our-science.html (different lead + email + theme).
            nav anchor target #contact — id changed from "email-us" so the
            Contact link in the nav resolves on the homepage. -->
-      <section id="contact" class="cta-section background-color-primary top-huge bottom-huge">
+      <section id="contact" class="cta-section background-color-primary">
         <div class="padding-global">
           <div class="container-xl">
             <div class="block align-center text-align-center gap-medium">
@@ -485,7 +481,7 @@
          notes="Reused on every page. Single Webflow Component → one <label for>/<input id>
                 pair per page (avoids the duplicate-id risk the a11y audit flagged).
                 Newsletter form below is a separate sub-component / Webflow Form Block." -->
-    <footer class="site-footer background-color-dark top-large bottom-large">
+    <footer class="site-footer background-color-dark">
       <div class="padding-global">
         <div class="container-xl">
           <div class="block gap-2xlarge footer-stack">
