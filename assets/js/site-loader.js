@@ -127,20 +127,32 @@
   function hideLoader() {
     if (hidden) return;
     hidden = true;
-    loaderEl.classList.add("is-hidden");
-    window.setTimeout(function () {
-      document.body.classList.remove("is-intro-loading");
-      // Resume GSAP THEN dispatch the curtain-complete events. The paused
-      // above-fold tweens start playing on the next rAF, and bd-animations'
-      // own listeners (refresh, in-view reveals) fire in the same tick — so
-      // every reveal lands together once the curtain is gone.
-      if (pausedGsap && typeof gsap !== "undefined" && gsap.globalTimeline) {
-        gsap.globalTimeline.resume();
-      }
+
+    // Phase 1 (under opaque curtain): lift the scroll lock so any browser
+    // scroll-restoration deferred by overflow:hidden can apply, and resume the
+    // global timeline so queued tweens can advance. Curtain is still opaque.
+    document.body.classList.remove("is-intro-loading");
+    if (pausedGsap && typeof gsap !== "undefined" && gsap.globalTimeline) {
+      gsap.globalTimeline.resume();
+    }
+
+    // Phase 2 (still opaque): defer one frame so the browser settles its
+    // restored scroll position, then dispatch intro-complete. bd-animations'
+    // handler synchronously rebuilds its triggers (full reinit when the page
+    // booted scrolled) against the settled scroll. All of this lands under
+    // the opaque curtain — the user never sees the rebuild flash.
+    requestAnimationFrame(function () {
       dispatchIntroComplete();
-      scrollToInitialHash();
-      if (loaderEl.parentNode) loaderEl.parentNode.removeChild(loaderEl);
-    }, fadeMs);
+
+      // Phase 3: now start the curtain fade. Reveals are already correctly
+      // positioned behind it; their tweens animate up to the fade duration
+      // and finish smoothly as the curtain disappears.
+      loaderEl.classList.add("is-hidden");
+      window.setTimeout(function () {
+        scrollToInitialHash();
+        if (loaderEl.parentNode) loaderEl.parentNode.removeChild(loaderEl);
+      }, fadeMs);
+    });
   }
 
   function maybeHide() {

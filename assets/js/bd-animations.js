@@ -1314,7 +1314,20 @@
   // the layout is correct and we can re-measure. Fires once per document
   // load (whether full curtain, reduced-motion skip, or bfcache recovery).
   document.addEventListener("bd:intro-complete", function onIntroDismissed() {
-    if (typeof ScrollTrigger !== "undefined" && typeof ScrollTrigger.refresh === "function") {
+    if (typeof ScrollTrigger === "undefined" || typeof ScrollTrigger.refresh !== "function") return;
+
+    // If the page landed scrolled, do a FULL reinit — same op handleResize()
+    // runs on a width-cross. Revert the gsap.context, kill SplitText +
+    // triggers, rebuild from scratch against the settled scroll. Plain
+    // ScrollTrigger.refresh() updates trigger math but doesn't re-arm
+    // `once: true` triggers whose start the browser already crossed during
+    // restoration, leaving above-scroll reveals stuck. (Empirically: resizing
+    // the browser unsticks them — same op.) At the top of the page, just
+    // refresh. site-loader.js controls when this fires (under opaque curtain),
+    // so this runs synchronously — no rAF defer here.
+    if (window.scrollY > 0 && typeof window.bdAnimationsInit === "function") {
+      window.bdAnimationsInit(currentContainer);
+    } else {
       ScrollTrigger.refresh();
     }
   }, { once: true });

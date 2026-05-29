@@ -35,7 +35,6 @@
               <h1>Design System</h1>
               <p class="text-size-small">All design system components rendered with <strong>default tokens</strong>. Load a brand book to see branded output.</p>
               <p class="text-size-small"><a href="brand-book/index.html">Brand Book</a> · <a href="docs/site/index.html">Documentation</a></p>
-              <button class="button is-outline is-small" id="theme-toggle" type="button" aria-pressed="false">Toggle dark mode</button>
             </div>
           </div>
         </div>
@@ -403,82 +402,6 @@
                 </div>
               </div>
 
-              <div class="block gap-small">
-                <span class="token-tag">.form-check (checkbox)</span>
-                <div class="form-check">
-                  <input type="checkbox" id="demo-check">
-                  <label for="demo-check">Checkbox label</label>
-                </div>
-              </div>
-
-              <div class="block gap-small">
-                <span class="token-tag">.form-check (radio)</span>
-                <div class="form-check">
-                  <input type="radio" name="demo-radio" id="demo-radio-1">
-                  <label for="demo-radio-1">Radio option 1</label>
-                </div>
-                <div class="form-check">
-                  <input type="radio" name="demo-radio" id="demo-radio-2">
-                  <label for="demo-radio-2">Radio option 2</label>
-                </div>
-              </div>
-
-              <div class="block gap-small">
-                <span class="token-tag">fieldset + legend</span>
-                <fieldset>
-                  <legend>Fieldset legend</legend>
-                  <div class="form-group">
-                    <label for="demo-fieldset-input">Input inside fieldset</label>
-                    <input type="text" id="demo-fieldset-input" placeholder="Grouped input">
-                  </div>
-                </fieldset>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Callouts & Alerts -->
-      <section class="top-medium bottom-medium border-bottom border-secondary">
-        <div class="padding-global">
-          <div class="container-medium">
-            <div class="block gap-large">
-              <h2 class="eyebrow">Callouts & Alerts</h2>
-
-              <span class="token-tag">.callout</span>
-              <div class="callout">
-                <p>This is a base callout with no variant. Use it for general-purpose highlighted content.</p>
-              </div>
-
-              <span class="token-tag">.callout .callout-note</span>
-              <div class="callout callout-note">
-                <div class="callout-title">Note</div>
-                <p>Useful information that users should know, even when skimming content.</p>
-              </div>
-
-              <span class="token-tag">.callout .callout-tip</span>
-              <div class="callout callout-tip">
-                <div class="callout-title">Tip</div>
-                <p>Helpful advice for doing things better or more easily.</p>
-              </div>
-
-              <span class="token-tag">.callout .callout-warning</span>
-              <div class="callout callout-warning">
-                <div class="callout-title">Warning</div>
-                <p>Urgent information that needs immediate attention to avoid problems.</p>
-              </div>
-
-              <span class="token-tag">.callout .callout-caution</span>
-              <div class="callout callout-caution">
-                <div class="callout-title">Caution</div>
-                <p>Advises about risks or negative outcomes of certain actions.</p>
-              </div>
-
-              <span class="token-tag">.callout .callout-important</span>
-              <div class="callout callout-important">
-                <div class="callout-title">Important</div>
-                <p>Key information users need to know to achieve their goal.</p>
-              </div>
             </div>
           </div>
         </div>
@@ -732,7 +655,7 @@
           <div class="container-large">
             <div class="block gap-large">
               <h2 class="eyebrow">Data Grid</h2>
-              <p class="text-size-small">12-column grid via the <code>data-grid</code> attribute. Children use <code>data-col-span</code>/<code>data-col-start</code>, or the parent declares a <code>data-layout</code> preset. Collapses to one column below 960px.</p>
+              <p class="text-size-small">12-column grid via the <code>data-grid</code> attribute. Children use <code>data-col-span</code>/<code>data-col-start</code>, or the parent declares a <code>data-layout</code> preset. Collapses to one column below 992px.</p>
 
               <span class="token-tag">data-col-span (6 · 4@9 · full)</span>
               <div data-grid>
@@ -764,189 +687,8 @@
         </div>
       </section>
 
-      <!-- Components -->
-      <section class="top-medium bottom-medium border-bottom border-secondary">
-        <div class="padding-global">
-          <div class="container-medium">
-            <div class="block gap-xlarge">
-              <h2 class="eyebrow">Components</h2>
-
-              <span class="token-tag">Badges</span>
-              <div class="block gap-small" style="flex-direction: row; flex-wrap: wrap;">
-                <span class="badge">Default</span>
-                <span class="badge" data-color="success">Success</span>
-                <span class="badge" data-color="warning">Warning</span>
-                <span class="badge" data-color="danger">Danger</span>
-                <span class="badge" data-color="info">Info</span>
-              </div>
-
-              <span class="token-tag">Tags</span>
-              <div class="tag-group">
-                <span class="tag">Strategy</span>
-                <span class="tag" data-color="success">Live</span>
-                <span class="tag" data-color="danger">Archived</span>
-              </div>
-
-              <span class="token-tag">Card</span>
-              <div data-grid data-layout="split">
-                <div class="card">
-                  <h3 class="card-title">Card title</h3>
-                  <p class="card-description">A simple content card using semantic tokens, with a subtle border.</p>
-                </div>
-                <a class="card card--interactive" href="javascript:void(0)">
-                  <h3 class="card-title">Interactive card</h3>
-                  <p class="card-description">Hover for the lift + shadow; focusable with a visible ring.</p>
-                </a>
-              </div>
-
-              <span class="token-tag">Disclosure (details / summary)</span>
-              <details>
-                <summary>What is the post-social thesis?</summary>
-                <div class="disclosure-content">Native to the platform: full-stack marketing for a post-social world — systems, not slogans.</div>
-              </details>
-
-              <span class="token-tag">Accordion</span>
-              <div class="accordion js-accordion">
-                <div class="accordion-item">
-                  <button class="accordion-header" type="button">First item
-                    <span class="svg-icn"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" fill="none"/></svg></span>
-                  </button>
-                  <div class="accordion-content"><div class="accordion-inner"><div class="accordion-body">First panel content.</div></div></div>
-                </div>
-                <div class="accordion-item">
-                  <button class="accordion-header" type="button">Second item
-                    <span class="svg-icn"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" fill="none"/></svg></span>
-                  </button>
-                  <div class="accordion-content"><div class="accordion-inner"><div class="accordion-body">Second panel content.</div></div></div>
-                </div>
-              </div>
-
-              <span class="token-tag">Tabs</span>
-              <div class="js-tabs">
-                <div class="tabs" role="tablist">
-                  <button class="tab is-active" type="button">Overview</button>
-                  <button class="tab" type="button">Details</button>
-                  <button class="tab" type="button">Pricing</button>
-                </div>
-                <div class="tab-panel">Overview panel.</div>
-                <div class="tab-panel" hidden>Details panel.</div>
-                <div class="tab-panel" hidden>Pricing panel.</div>
-              </div>
-
-              <span class="token-tag">Table</span>
-              <div class="table-scroll">
-                <table class="table table-hover">
-                  <thead><tr><th>Client</th><th>Sector</th><th>Status</th></tr></thead>
-                  <tbody>
-                    <tr><td>Meta</td><td>Tech</td><td><span class="badge" data-color="success">Active</span></td></tr>
-                    <tr><td>Heal's</td><td>Retail</td><td><span class="badge" data-color="info">Pitch</span></td></tr>
-                  </tbody>
-                </table>
-              </div>
-
-              <span class="token-tag">Toggle / switch</span>
-              <div class="form-toggle">
-                <input type="checkbox" id="demo-toggle" checked>
-                <label for="demo-toggle">Enable feature</label>
-              </div>
-
-              <span class="token-tag">Tooltip</span>
-              <p><span data-tooltip="Earn attention today, compound memory tomorrow">Hover this phrase</span>.</p>
-
-              <span class="token-tag">Dropdown</span>
-              <div class="dropdown js-dropdown">
-                <button class="dropdown-trigger" type="button">Menu
-                  <span class="dropdown-chevron"><svg viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" fill="none"/></svg></span>
-                </button>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" href="javascript:void(0)">Edit</a>
-                  <a class="dropdown-item" href="javascript:void(0)">Duplicate</a>
-                  <hr class="dropdown-divider">
-                  <a class="dropdown-item dropdown-item--danger" href="javascript:void(0)">Delete</a>
-                </div>
-              </div>
-
-              <span class="token-tag">Dialog + Toast</span>
-              <div class="button-group">
-                <button class="button" type="button" id="demo-dialog-open">Open dialog</button>
-                <button class="button" data-variant="outline" type="button" id="demo-toast-show">Show toast</button>
-              </div>
-              <dialog class="dialog" id="demo-dialog">
-                <div class="dialog-header">
-                  <h3 class="dialog-title">Dialog title</h3>
-                  <button class="button" data-variant="text" type="button" id="demo-dialog-close" aria-label="Close">✕</button>
-                </div>
-                <div class="dialog-body"><p>A native &lt;dialog&gt; with a blurred backdrop.</p></div>
-                <div class="dialog-footer">
-                  <button class="button" data-variant="faded" type="button" id="demo-dialog-cancel">Cancel</button>
-                  <button class="button" type="button" id="demo-dialog-confirm">Confirm</button>
-                </div>
-              </dialog>
-              <div class="toast-container" id="demo-toast-container"></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
     </div>
   </div>
-
-  <!-- Styleguide demo interactions (not part of the design system) -->
-  <script>
-    // Theme toggle
-    var themeBtn = document.getElementById("theme-toggle");
-    themeBtn.addEventListener("click", function () {
-      var dark = document.documentElement.getAttribute("data-theme") === "dark";
-      document.documentElement.setAttribute("data-theme", dark ? "light" : "dark");
-      themeBtn.setAttribute("aria-pressed", String(!dark));
-    });
-
-    // Accordion
-    document.querySelectorAll(".js-accordion .accordion-header").forEach(function (header) {
-      header.addEventListener("click", function () {
-        header.closest(".accordion-item").classList.toggle("is-open");
-      });
-    });
-
-    // Tabs
-    document.querySelectorAll(".js-tabs").forEach(function (group) {
-      var tabs = group.querySelectorAll(".tab");
-      var panels = group.querySelectorAll(".tab-panel");
-      tabs.forEach(function (tab, i) {
-        tab.addEventListener("click", function () {
-          tabs.forEach(function (t) { t.classList.remove("is-active"); });
-          panels.forEach(function (p) { p.hidden = true; });
-          tab.classList.add("is-active");
-          if (panels[i]) panels[i].hidden = false;
-        });
-      });
-    });
-
-    // Dropdown
-    document.querySelectorAll(".js-dropdown .dropdown-trigger").forEach(function (trigger) {
-      trigger.addEventListener("click", function () {
-        trigger.closest(".dropdown").classList.toggle("is-open");
-      });
-    });
-
-    // Dialog
-    var dialog = document.getElementById("demo-dialog");
-    document.getElementById("demo-dialog-open").addEventListener("click", function () { dialog.showModal(); });
-    ["demo-dialog-close", "demo-dialog-cancel", "demo-dialog-confirm"].forEach(function (id) {
-      document.getElementById(id).addEventListener("click", function () { dialog.close(); });
-    });
-
-    // Toast
-    document.getElementById("demo-toast-show").addEventListener("click", function () {
-      var container = document.getElementById("demo-toast-container");
-      var toast = document.createElement("div");
-      toast.className = "toast";
-      toast.setAttribute("data-type", "success");
-      toast.innerHTML = '<span class="toast-message">Saved successfully</span>';
-      container.appendChild(toast);
-      setTimeout(function () { toast.remove(); }, 3000);
-    });
-  </script>
 
 </body>
 
