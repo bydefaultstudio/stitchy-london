@@ -1,13 +1,12 @@
 /**
- * Script Purpose: ByDefault Animations (Studio)
+ * Script Purpose: ByDefault Studio scroll-reveal engine. Reads [data-bd-*] /
+ *                 [data-text-animate] attributes; drives GSAP + ScrollTrigger
+ *                 + SplitText. All work is scoped to a container via
+ *                 gsap.context for clean teardown on Barba page transitions.
  * Author: Erlen Masson
  * Version: 3.2.3
  * Created: 5 Feb 2025
  * Last Updated: 27 May 2026
- *
- * Refactored for Barba.js integration using gsap.context().
- * All animations are scoped to a container and cleaned up
- * automatically between page transitions via ctx.revert().
  */
 
 (function () {
@@ -33,7 +32,9 @@
   // mobile resizes (it still refreshes on genuine width/orientation changes).
   ScrollTrigger.config({ ignoreMobileResize: true });
 
-  // ------- Module State ------- //
+  //
+  //------- Module State -------//
+  //
 
   var ctx = null;
   var currentContainer = null;
@@ -41,12 +42,12 @@
   var lastViewportWidth = typeof window !== "undefined" ? window.innerWidth : 0;
   var activeObserver = null;
 
-  // ------- Configurable Parameters ------- //
+  //
+  //------- Configurable Parameters -------//
+  //
 
   var animationStagger = { chars: 0.05, words: 0.1, lines: 0.15 };
   var FADED_FROM_OPACITY = 0.2;
-
-
 
   function getFadeStart() {
     return window.innerWidth < 768 ? "top 100%" : "top 100%";
@@ -111,7 +112,9 @@
     return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   }
 
-  // ------- Helpers ------- //
+  //
+  //------- Helpers -------//
+  //
 
   function getScrubValue(element) {
     if (!element.hasAttribute("data-bd-scrub")) return undefined;
@@ -215,7 +218,8 @@
     });
   }
 
-  // ------- Scrub Groups -------
+  //
+  //------- Scrub Groups -------//
   //
   // Pattern: a parent declares data-bd-scrub-group and owns ONE ScrollTrigger.
   // Each child with data-bd-animate joins a shared gsap.timeline scrubbed by
@@ -370,11 +374,12 @@
     shakeText(self);
     flashText(self);
     tiltText(self);
-    // Note: neonText removed — uses hardcoded colors, not suitable for studio
     fadeInViewport(self);
   }
 
-  // ------- Base Animations (fade/slide) ------- //
+  //
+  //------- Base Animations (fade/slide) -------//
+  //
 
   function baseTextAnimations(self) {
     // Legacy shim: convert data-text-animate="element" to data-bd-animate="fade"
@@ -415,7 +420,9 @@
     );
   }
 
-  // ------- In-Viewport (above-fold on load) ------- //
+  //
+  //------- In-Viewport (above-fold on load) -------//
+  //
 
   function fadeInViewport(self) {
     var introLoading = document.body.classList.contains("is-intro-loading");
@@ -459,8 +466,10 @@
     });
   }
 
-  // ------- SplitText Animations ------- //
-  // Context tracks SplitText instances automatically in GSAP 3.12+
+  //
+  //------- SplitText Animations -------//
+  //
+  // GSAP 3.12+ context auto-tracks SplitText instances — no manual revert needed.
 
   // Helper for SplitText scroll config — handles scrub vs once consistently.
   // startFn is optional; defaults to the shared getFadeStart so existing
@@ -656,7 +665,9 @@
     });
   }
 
-  // ------- Specialized Scroll Animations ------- //
+  //
+  //------- Specialized Scroll Animations -------//
+  //
 
   function slideUp(self) {
     createScrollAnimation(
@@ -955,7 +966,7 @@
       observer.observe(el);
     });
 
-    // Store observer so bdAnimationsCleanup can disconnect it
+    // Stash so bdAnimationsCleanup can disconnect on Barba leave.
     activeObserver = observer;
   }
 
@@ -1005,7 +1016,6 @@
    * Creates a gsap.context() — all GSAP work inside is auto-tracked.
    */
   window.bdAnimationsInit = function bdAnimationsInit(container) {
-    // Clean up any existing context first
     if (ctx) {
       ctx.revert();
       ctx = null;
