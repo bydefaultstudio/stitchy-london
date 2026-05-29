@@ -634,35 +634,35 @@ hr {
 }
 
 /* -- Padding utilities -- */
-.padding-s {
+.padding-small {
   padding: var(--space-s);
 }
 
-.padding-m {
+.padding-medium {
   padding: var(--space-m);
 }
 
-.padding-l {
+.padding-large {
   padding: var(--space-l);
 }
 
-.padding-xl {
+.padding-xlarge {
   padding: var(--space-xl);
 }
 
-.padding-2xl {
+.padding-xxlarge {
   padding: var(--space-2xl);
 }
 
-.padding-3xl {
+.padding-huge {
   padding: var(--space-3xl);
 }
 
 /* -- Containers (5-size scale; word-named aliases kept for compatibility) -- */
 .container-xs,
-.container-s,
-.container-m,
-.container-l,
+.container-small,
+.container-medium,
+.container-large,
 .container-xl,
 .container-small,
 .container-medium,
@@ -674,23 +674,23 @@ hr {
 }
 
 .container-xs { max-width: var(--container-xs); }
-.container-s,
+.container-small,
 .container-small { max-width: var(--container-s); }
-.container-m,
+.container-medium,
 .container-medium { max-width: var(--container-m); }
-.container-l,
+.container-large,
 .container-large { max-width: var(--container-l); }
 .container-xl { max-width: var(--container-xl); }
 
 /* -- Max-width utilities (5-size scale; word-named aliases kept) -- */
-.max-width-xs { max-width: var(--max-width-xs); }
-.max-width-s,
+.max-width-xsmall { max-width: var(--max-width-xs); }
+.max-width-small,
 .max-width-small { max-width: var(--max-width-s); }
-.max-width-m,
+.max-width-medium,
 .max-width-medium { max-width: var(--max-width-m); }
-.max-width-l,
+.max-width-large,
 .max-width-large { max-width: var(--max-width-l); }
-.max-width-xl { max-width: var(--max-width-xl); }
+.max-width-xlarge { max-width: var(--max-width-xl); }
 .max-width-full { max-width: 100%; }
 
 /* -- Section spacing -- */
@@ -714,7 +714,7 @@ section {
   padding-top: var(--section-l);
 }
 
-.top-xl {
+.top-huge {
   padding-top: var(--section-xl);
 }
 
@@ -730,7 +730,7 @@ section {
   padding-bottom: var(--section-l);
 }
 
-.bottom-xl {
+.bottom-huge {
   padding-bottom: var(--section-xl);
 }
 
@@ -747,31 +747,31 @@ section {
   gap: var(--space-none);
 }
 
-.gap-xs {
+.gap-xsmall {
   gap: var(--space-xs) !important;
 }
 
-.gap-s {
+.gap-small {
   gap: var(--space-s) !important;
 }
 
-.gap-m {
+.gap-medium {
   gap: var(--space-m) !important;
 }
 
-.gap-l {
+.gap-large {
   gap: var(--space-l) !important;
 }
 
-.gap-xl {
+.gap-xlarge {
   gap: var(--space-xl) !important;
 }
 
-.gap-2xl {
+.gap-2xlarge {
   gap: var(--space-2xl) !important;
 }
 
-.gap-3xl {
+.gap-2xlarge {
   gap: var(--space-3xl) !important;
 }
 
@@ -948,15 +948,15 @@ section {
 }
 
 /* -- Width combos -- */
-.border-s {
+.border-small {
   --border-width: var(--border-s);
 }
 
-.border-m {
+.border-medium {
   --border-width: var(--border-m);
 }
 
-.border-l {
+.border-large {
   --border-width: var(--border-l);
 }
 
@@ -989,86 +989,86 @@ section {
 /* ------ TYPOGRAPHY UTILITIES ------ */
 
 /* -- Font sizes -- */
-.font-2xs {
+.text-size-tiny {
   font-size: var(--font-2xs);
 }
 
-.font-xs {
+.text-size-xsmall {
   font-size: var(--font-xs);
 }
 
-.font-s {
+.text-size-small {
   font-size: var(--font-s);
 }
 
-.font-m {
+.text-size-regular {
   font-size: var(--font-m);
 }
 
-.font-l {
+.text-size-medium {
   font-size: var(--font-l);
 }
 
-.font-xl {
+.text-size-large {
   font-size: var(--font-xl);
 }
 
-.font-2xl {
+.text-size-xlarge {
   font-size: var(--font-2xl);
 }
 
-.font-3xl {
+.text-size-2xlarge {
   font-size: var(--font-3xl);
 }
 
-.font-4xl {
+.text-size-3xlarge {
   font-size: var(--font-4xl);
 }
 
-.font-5xl {
+.text-size-4xlarge {
   font-size: var(--font-5xl);
 }
 
-.font-6xl {
+.text-size-5xlarge {
   font-size: var(--font-6xl);
 }
 
 /* -- Headlines (oversized; uppercase, tight, heavy) -- */
-.headline-l {
+.headline-large {
   font-weight: var(--font-weight-black);
   line-height: var(--line-height-s);
   letter-spacing: -0.02em;
   text-transform: uppercase;
 }
 
-.headline-xl,
-.headline-l,
-.headline-m,
-.headline-s,
-.headline-xs {
+.headline-xlarge,
+.headline-large,
+.headline-medium,
+.headline-small,
+.headline-xsmall {
   font-weight: var(--font-weight-extra-bold);
   line-height: var(--line-height-s);
   letter-spacing: -0.02em;
   text-transform: uppercase;
 }
 
-.headline-xl {
+.headline-xlarge {
   font-size: var(--font-headline-xl);
 }
 
-.headline-l {
+.headline-large {
   font-size: var(--font-headline-l);
 }
 
-.headline-m {
+.headline-medium {
   font-size: var(--font-headline-m);
 }
 
-.headline-s {
+.headline-small {
   font-size: var(--font-headline-s);
 }
 
-.headline-xs {
+.headline-xsmall {
   font-size: var(--font-headline-xs);
 }
 
@@ -1105,12 +1105,12 @@ section {
   line-height: var(--line-height-l);
 }
 
-.body-text-m {
+.body-text-medium {
   font-size: var(--font-body-m);
   line-height: var(--line-height-l);
 }
 
-.body-text-l {
+.body-text-large {
   font-size: var(--font-body-l);
   line-height: var(--line-height-l);
 }
@@ -1143,15 +1143,15 @@ section {
 }
 
 /* -- Text alignment -- */
-.text-left {
+.text-align-left {
   text-align: left;
 }
 
-.text-center {
+.text-align-center {
   text-align: center;
 }
 
-.text-right {
+.text-align-right {
   text-align: right;
 }
 
@@ -1404,39 +1404,39 @@ button.button {
 
 /* ------ BACKGROUND UTILITIES ------ */
 
-.bg-primary {
+.background-color-primary {
   background-color: var(--background-primary);
 }
 
-.bg-secondary {
+.background-color-secondary {
   background-color: var(--background-secondary);
 }
 
-.bg-plain {
+.background-color-white {
   background-color: var(--background-plain);
 }
 
-.bg-faded {
+.background-color-faded {
   background-color: var(--background-faded);
 }
 
 /* -- Brand surfaces -- */
-.bg-green {
+.background-color-green {
   background-color: var(--background-green);
   color: var(--text-primary);
 }
 
-.bg-orange {
+.background-color-orange {
   background-color: var(--background-orange);
   color: var(--text-primary);
 }
 
-.bg-blue {
+.background-color-blue {
   background-color: var(--background-blue);
   color: var(--text-primary);
 }
 
-.bg-dark {
+.background-color-dark {
   background-color: var(--background-dark);
   color: var(--text-inverted);
 }
@@ -3044,7 +3044,7 @@ a[data-tooltip],
 }
 
 /* Larger eyebrow used for the byline — same casing + tracking as .eyebrow at one step up. */
-.eyebrow-l {
+.eyebrow-large {
   font-family: var(--font-primary);
   font-size: var(--font-xl);
   line-height: var(--line-height-m);
