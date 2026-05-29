@@ -28,6 +28,17 @@
   opacity: 0;
 }
 
+/* Reduced-motion safety net: bd-animations.js sets opacity:1 under
+   prefers-reduced-motion, but if the GSAP CDN fails to load the reveals would
+   stay permanently invisible. Force opacity:1 in CSS under reduce so content
+   is never hidden when motion is suppressed. */
+@media (prefers-reduced-motion: reduce) {
+  .js [data-bd-animate],
+  .js [data-text-animate] {
+    opacity: 1;
+  }
+}
+
 /* Standout reveal — scene 1 is revealed by the balls parting (stays visible).
    Scene 2+ start hidden so they don't flash before homepage.js cross-fades them
    in. Class-based (not data-attr) so the section rebuilds cleanly in Webflow. */
