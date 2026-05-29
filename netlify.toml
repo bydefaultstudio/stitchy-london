@@ -1,0 +1,32 @@
+# Stitchy London — Netlify config
+# Static prototype hosted while the Webflow build is in progress.
+
+# Pretty URLs: serve /our-science.html at /our-science, etc.
+# status = 200 rewrites the URL silently (no redirect roundtrip).
+
+[[redirects]]
+  from = "/our-science"
+  to = "/our-science.html"
+  status = 200
+
+[[redirects]]
+  from = "/styleguide"
+  to = "/styleguide.html"
+  status = 200
+
+# Bounce the .html versions to the clean URL so there's one canonical path.
+[[redirects]]
+  from = "/our-science.html"
+  to = "/our-science"
+  status = 301
+
+[[redirects]]
+  from = "/styleguide.html"
+  to = "/styleguide"
+  status = 301
+
+# Block search indexing while this is a client testing link.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
