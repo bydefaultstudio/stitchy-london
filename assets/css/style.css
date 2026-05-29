@@ -1,35 +1,7 @@
-/* ─────────────────────────────
-   STITCHY LONDON — STYLESHEET
-   ─────────────────────────────
-
-   Single combined stylesheet for this project:
-     • Part 1 — DESIGN SYSTEM FRAMEWORK (tokens, primitives, utilities, components)
-     • Part 2 — PROJECT STYLES (section-specific styles; see header further down)
-
-   Brand identity tokens live separately in brand-book/brand-book.css and are
-   read here via var(--brand-*, fallback). Token source of truth is the Webflow
-   project; values are mirrored here for the local preview.
-   ───────────────────────────── */
+/* Stitchy London — design system + project styles. Tokens mirror Webflow; brand tokens read via var(--brand-*, fallback) from brand-book.css. */
 
 
-/* ─────────────────────────────
-   PART 1 — DESIGN SYSTEM FRAMEWORK
-   ───────────────────────────── */
-
-
-/* ------ 1. BRAND MAPPING ------ */
-
-/*
- * This section maps brand book tokens into the design system.
- * The brand book (brand-book/brand-book.css) defines --brand-* tokens.
- * The DS reads them here with fallback defaults.
- *
- * If no brand book is loaded, the defaults below are used.
- * Load order does not matter — CSS custom property fallbacks handle it.
- *
- *   <link rel="stylesheet" href="brand-book/brand-book.css">
- *   <link rel="stylesheet" href="assets/css/style.css">
- */
+/* ------ BRAND MAPPING ------ */
 
 :root {
   /* -- Fonts (from brand book) -- */
@@ -60,16 +32,14 @@
   --font-6xl: 60px;
   --font-7xl: 64px;
 
-  /* -- Headline sizes (oversized headlines beyond Webflow's scale;
-        fluid on desktop, fixed rem on tablet/mobile;
-        mirror in Webflow Typography → Font Size as font-headline-* when built) -- */
+  /* -- Headline sizes (fluid vw on desktop; fixed rem at tablet/mobile — see Responsive. Mirror in Webflow Typography → Font Size.) -- */
   --font-headline-xs: 3vw;
   --font-headline-s: 3.8vw;
   --font-headline-m: 4.5vw;
   --font-headline-l: 6.5vw;
   --font-headline-xl: 8vw;
 
-  /* -- Body size (fluid vw on desktop; reverts to the type scale below — see Responsive) -- */
+  /* -- Body size (fluid vw on desktop; reverts to the type scale at tablet/mobile) -- */
   --font-body: 1vw;
   --font-body-m: 1.25vw;
   --font-body-l: 1.5vw;
@@ -94,17 +64,17 @@
   --font-weight-extra-bold: 800;
   --font-weight-black: 900;
 
-  /* -- Letter spacing tokens (em-based for proportional scaling) -- */
+  /* -- Letter spacing tokens (em-based) -- */
   --letter-spacing-s: 0.03em;
   --letter-spacing-m: 0.06em;
   --letter-spacing-l: 0.08em;
   --letter-spacing-xl: 0.11em;
 }
 
-/* ------ 2. SYSTEM TOKENS - COLORS ------ */
+/* ------ SYSTEM TOKENS — COLORS ------ */
 
 :root {
-  /* -- Neutrals (green-tinted ramp, mirrors Webflow Color → Neutral/*) -- */
+  /* -- Neutrals (mirrors Webflow Color → Neutral/*) -- */
   --neutral-50: #f9fbfb;
   --neutral-100: #f4f6f6;
   --neutral-150: #ebefed;
@@ -118,7 +88,7 @@
   --neutral-900: #171c17;
   --neutral-950: #090c09;
 
-  /* -- Black & White Alpha Tokens -- */
+  /* -- Black & White alpha tokens -- */
   --black: #000000;
   --black-alpha-3: #00000008;
   --black-alpha-5: #0000000d;
@@ -153,9 +123,7 @@
 
   --transparent: transparent;
 
-  /* -- Color-Mix Alpha Scale -- */
-  /* Used as the second argument in color-mix() to tint any colour to N% opacity,
-     e.g. color-mix(in srgb, var(--text-accent), var(--alpha-10)) → 10% accent. */
+  /* -- Color-mix alpha scale (second arg to color-mix() — e.g. tint to N% opacity) -- */
   --alpha-5: transparent 95%;
   --alpha-10: transparent 90%;
   --alpha-15: transparent 85%;
@@ -176,7 +144,7 @@
   --alpha-90: transparent 10%;
   --alpha-95: transparent 5%;
 
-  /* -- Semantic colours (mirror Webflow Semantic collection) -- */
+  /* -- Semantic text (mirror Webflow Semantic collection) -- */
   --text-primary: var(--brand-dark);
   --text-secondary: var(--neutral-800);
   --text-plain: var(--black);
@@ -194,6 +162,7 @@
   --text-alpha-40: color-mix(in srgb, var(--text-primary), var(--alpha-40));
   --text-alpha-50: color-mix(in srgb, var(--text-primary), var(--alpha-50));
 
+  /* -- Backgrounds -- */
   --background-primary: var(--neutral-50);
   --background-secondary: var(--neutral-150);
   --background-plain: var(--white);
@@ -218,10 +187,12 @@
   --background-blue: var(--brand-blue);
   --background-dark: var(--brand-dark);
 
+  /* -- Borders -- */
   --border-primary: var(--black);
   --border-secondary: var(--neutral-300);
   --border-faded: var(--black-alpha-15);
 
+  /* -- Buttons -- */
   --button-primary: var(--text-link);
   --button-text: var(--white);
   --button-faded: color-mix(in srgb, var(--button-primary), transparent 80%);
@@ -233,13 +204,13 @@
   --status-danger: var(--brand-color-danger, #cf222e);
   --status-accent: var(--brand-color-accent-alt, #8250df);
 
-  /* -- Status background tints (status colour at ~10% opacity) -- */
+  /* -- Status background tints (~10% opacity) -- */
   --status-info-bg: color-mix(in srgb, var(--status-info), var(--alpha-90));
   --status-success-bg: color-mix(in srgb, var(--status-success), var(--alpha-90));
   --status-warning-bg: color-mix(in srgb, var(--status-warning), var(--alpha-90));
   --status-danger-bg: color-mix(in srgb, var(--status-danger), var(--alpha-90));
 
-  /* -- Callout semantic tokens -- */
+  /* -- Callouts -- */
   --callout-info: var(--status-info);
   --callout-info-bg: color-mix(in srgb, var(--status-info), transparent 90%);
   --callout-success: var(--status-success);
@@ -251,7 +222,7 @@
   --callout-accent: var(--status-accent);
   --callout-accent-bg: color-mix(in srgb, var(--status-accent), transparent 90%);
 
-  /* -- Form semantic tokens -- */
+  /* -- Form -- */
   --input-border: var(--border-secondary);
   --input-background: var(--background-primary);
   --input-text: var(--text-plain);
@@ -268,24 +239,15 @@
   --selection-text: var(--background-primary);
   --selection-background: var(--text-primary);
 
-  /* -- Component tokens -- */
+  /* -- Component -- */
   --divider-color: var(--border-faded);
   --dropdown-background: var(--background-primary);
   --dropdown-border: var(--border-faded);
   --dropdown-item-hover: var(--background-faded);
   --dialog-max-width: 560px;
-
 }
 
-/* ------ 2b. THEME TOKENS - DARK MODE ------ */
-
-/*
- * Set data-theme="dark" on <html> for page-level theming, or on any element
- * for a scoped dark region. Only the tokens that need different values in the
- * dark theme are overridden; accent and status colours inherit the light
- * values (brand tokens read fine on dark). Reference-only for now — the
- * styleguide exposes a toggle to exercise it.
- */
+/* ------ THEME TOKENS — DARK MODE ------ */
 
 [data-theme="dark"] {
   /* -- Text -- */
@@ -331,9 +293,8 @@
   color-scheme: dark;
 }
 
-/* ------ 2c. SYSTEM PREFERENCE FALLBACK (no-JS) ------ */
+/* ------ SYSTEM PREFERENCE FALLBACK (NO-JS) ------ */
 
-/* Applies the dark tokens when the OS prefers dark and no data-theme is set. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
     --text-primary: #e8e6e3;
@@ -381,49 +342,30 @@
   background-color: var(--selection-background);
 }
 
-/* ------ 3. SYSTEM TOKENS - SPACING & TYPOGRAPHY ------ */
+/* ------ SYSTEM TOKENS — SPACING & TYPOGRAPHY ------ */
 
 :root {
   /* -- Unit tokens -- */
   --none: 0;
-  --2xs: 0.125rem;
-  /* 2px */
-  --xs: 0.25rem;
-  /* 4px */
-  --s: 0.5rem;
-  /* 8px */
-  --m: 0.75rem;
-  /* 12px */
-  --l: 1rem;
-  /* 16px */
-  --xl: 1.5rem;
-  /* 24px */
-  --2xl: 2rem;
-  /* 32px */
-  --3xl: 2.5rem;
-  /* 40px */
-  --4xl: 3rem;
-  /* 48px */
-  --5xl: 3.5rem;
-  /* 56px */
-  --6xl: 4rem;
-  /* 64px */
-  --7xl: 4.5rem;
-  /* 72px */
-  --8xl: 5rem;
-  /* 80px */
-  --9xl: 5.5rem;
-  /* 88px */
-  --10xl: 6rem;
-  /* 96px */
-  --11xl: 6.5rem;
-  /* 104px */
-  --12xl: 7rem;
-  /* 112px */
-  --13xl: 7.5rem;
-  /* 120px */
-  --14xl: 10rem;
-  /* 160px */
+  --2xs: 0.125rem; /* 2px */
+  --xs: 0.25rem;   /* 4px */
+  --s: 0.5rem;     /* 8px */
+  --m: 0.75rem;    /* 12px */
+  --l: 1rem;       /* 16px */
+  --xl: 1.5rem;    /* 24px */
+  --2xl: 2rem;     /* 32px */
+  --3xl: 2.5rem;   /* 40px */
+  --4xl: 3rem;     /* 48px */
+  --5xl: 3.5rem;   /* 56px */
+  --6xl: 4rem;     /* 64px */
+  --7xl: 4.5rem;   /* 72px */
+  --8xl: 5rem;     /* 80px */
+  --9xl: 5.5rem;   /* 88px */
+  --10xl: 6rem;    /* 96px */
+  --11xl: 6.5rem;  /* 104px */
+  --12xl: 7rem;    /* 112px */
+  --13xl: 7.5rem;  /* 120px */
+  --14xl: 10rem;   /* 160px */
 
   /* -- Spacing scale -- */
   --space-none: var(--none);
@@ -447,7 +389,7 @@
   --space-13xl: var(--13xl);
   --space-14xl: var(--14xl);
 
-  /* -- Section spacing variables -- */
+  /* -- Section spacing -- */
   --section-xs: var(--space-xl);
   --section-s: var(--space-2xl);
   --section-m: var(--space-6xl);
@@ -459,7 +401,6 @@
   --container-s: 640px;
   --container-m: 56vw;
   --container-l: 60vw;
-  /* --container-xl: 1440px; */
   --container-xl: 90vw;
 
   /* -- Max-widths -- */
@@ -477,21 +418,21 @@
   --line-length-medium: 65ch;
   --line-length-wide: 75ch;
 
-  /* -- Accordion spacing variables -- */
+  /* -- Accordion spacing -- */
   --accordion-padding-x: var(--space-l);
   --accordion-padding-y: var(--space-l);
 
-  /* -- Border width tokens -- */
+  /* -- Border widths -- */
   --border-s: 1px;
   --border-m: 2px;
   --border-l: 4px;
 
-  /* -- Border composition variables -- */
+  /* -- Border composition -- */
   --border-width: var(--border-s);
   --border-style: solid;
   --border-color: var(--border-primary);
 
-  /* -- Border radius tokens -- */
+  /* -- Border radius -- */
   --radius-2xs: 2px;
   --radius-xs: 4px;
   --radius-s: 6px;
@@ -499,20 +440,9 @@
   --radius-l: 16px;
   --radius-xl: 24px;
   --radius-pill: 999px;
-
-
 }
 
-/* ------ 3b. SYSTEM TOKENS - MOTION ------ */
-
-/*
- * Two layers, same model as colour and spacing:
- *   1. Primitives (--ease-*, --duration-*) — raw building blocks. Easing names
- *      match the CSS keywords (in / out / in-out); the cubic-beziers are refined
- *      replacements for the browser defaults.
- *   2. Semantic tokens (--motion-*) — named by intent; compose the primitives.
- *      Components and JS read the semantic layer.
- */
+/* ------ SYSTEM TOKENS — MOTION ------ */
 
 :root {
   /* -- Easing primitives -- */
@@ -540,7 +470,7 @@
   --motion-page-fade-easing: var(--ease-in-out);
 }
 
-/* ------ 4. BASE STYLES ------ */
+/* ------ BASE STYLES ------ */
 
 *,
 *::before,
@@ -561,7 +491,7 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* -- Page layout structure -- */
+/* -- Page layout -- */
 .page-wrapper {
   width: 100%;
 }
@@ -651,7 +581,6 @@ li:first-child {
   margin-top: 0;
 }
 
-/* Nested lists */
 ul ul,
 ul ol,
 ol ul,
@@ -660,7 +589,6 @@ ol ol {
   margin-bottom: 0;
 }
 
-/* List items with paragraphs */
 li > p {
   margin-top: var(--space-l);
   margin-bottom: 0;
@@ -697,7 +625,7 @@ hr {
   height: 0;
 }
 
-/* ------ 5. LAYOUT PRIMITIVES ------ */
+/* ------ LAYOUT PRIMITIVES ------ */
 
 /* -- Global horizontal padding -- */
 .padding-global {
@@ -766,7 +694,6 @@ hr {
 .max-width-full { max-width: 100%; }
 
 /* -- Section spacing -- */
-
 section {
   display: block;
 }
@@ -775,7 +702,6 @@ section {
   display: block;
 }
 
-/* -- Top spacing combo classes -- */
 .top-small {
   padding-top: var(--section-s);
 }
@@ -792,7 +718,6 @@ section {
   padding-top: var(--section-xl);
 }
 
-/* -- Bottom spacing combo classes -- */
 .bottom-small {
   padding-bottom: var(--section-s);
 }
@@ -809,7 +734,7 @@ section {
   padding-bottom: var(--section-xl);
 }
 
-/* ------ 6. BLOCKS ------ */
+/* ------ BLOCKS ------ */
 
 .block {
   display: flex;
@@ -849,7 +774,6 @@ section {
 .gap-3xl {
   gap: var(--space-3xl) !important;
 }
-
 
 /* -- Layout modifiers -- */
 .row {
@@ -896,7 +820,7 @@ section {
   max-height: 100px;
 }
 
-/* ------ 7. GRID ------ */
+/* ------ GRID ------ */
 
 /* -- Grid -- */
 .grid {
@@ -906,7 +830,6 @@ section {
   grid-auto-columns: 1fr;
 }
 
-/* -- Grid column modifiers -- */
 .cols-3 {
   grid-template-columns: 1fr 1fr 1fr;
 }
@@ -920,22 +843,11 @@ section {
   padding: var(--space-m);
 }
 
-/* -- Grid item width modifiers -- */
 .fit-content {
   width: fit-content;
 }
 
 /* -- 12-column data-grid (opt-in via the data-grid attribute) -- */
-
-/*
- * Add `data-grid` to any container for a 12-column grid. Children declare
- * `data-col-span` / `data-col-start`, or the parent declares a `data-layout`
- * preset and children get positions via :nth-child. `container-type` lets
- * `--col-unit` (one column's width) resolve against the grid's own width, so
- * children can compose padding/margin equal to a grid column. Collapses to a
- * single column below 960px. Adapted from the By Default studio system —
- * uses plain media queries (no sidebar/content container on this site).
- */
 [data-grid] {
   display: grid;
   container-type: inline-size;
@@ -976,30 +888,23 @@ section {
 [data-grid] > [data-col-start="11"] { grid-column-start: 11; }
 [data-grid] > [data-col-start="12"] { grid-column-start: 12; }
 
-/* Named layout patterns — :nth-child column placement on a data-grid.
-   Apply data-layout="split|feature|feature-alt|headline|thirds|masthead|spotlight"
-   to the parent; children stay content-agnostic. */
+/* -- Named layouts: split | feature | feature-alt | headline | thirds | masthead | spotlight -- */
 @media (min-width: 960px) {
-  /* split: 6 · 6 — two equal halves */
   [data-grid][data-layout="split"]       > :nth-child(1) { grid-column: 1 / span 6; }
   [data-grid][data-layout="split"]       > :nth-child(2) { grid-column: 7 / span 6; }
 
-  /* feature: 4 · 8 — minor left, major right */
   [data-grid][data-layout="feature"]     > :nth-child(1) { grid-column: 1 / span 4; }
   [data-grid][data-layout="feature"]     > :nth-child(2) { grid-column: 5 / span 8; }
 
-  /* feature-alt / headline: 8 · 4 — major left, minor right */
   [data-grid][data-layout="feature-alt"] > :nth-child(1),
   [data-grid][data-layout="headline"]    > :nth-child(1) { grid-column: 1 / span 8; }
   [data-grid][data-layout="feature-alt"] > :nth-child(2),
   [data-grid][data-layout="headline"]    > :nth-child(2) { grid-column: 9 / span 4; }
 
-  /* thirds: 4 · 4 · 4 — three equal columns */
   [data-grid][data-layout="thirds"]      > :nth-child(1) { grid-column: 1 / span 4; }
   [data-grid][data-layout="thirds"]      > :nth-child(2) { grid-column: 5 / span 4; }
   [data-grid][data-layout="thirds"]      > :nth-child(3) { grid-column: 9 / span 4; }
 
-  /* masthead / spotlight: 3 · 6 · 3 — centre-dominant with symmetric flankers */
   [data-grid][data-layout="masthead"]    > :nth-child(1),
   [data-grid][data-layout="spotlight"]   > :nth-child(1) { grid-column: 1 / span 3; }
   [data-grid][data-layout="masthead"]    > :nth-child(2),
@@ -1008,11 +913,7 @@ section {
   [data-grid][data-layout="spotlight"]   > :nth-child(3) { grid-column: 10 / span 3; }
 }
 
-/* Mobile collapse: below 960px every data-grid becomes a single column.
-   Spans, starts, and named layouts all stack in source order; --col-unit
-   resets to 0 so column-derived padding/margin goes away. data-stack-order
-   optionally promotes a child earlier (visual only — apply only to children
-   with no interactive elements; DOM/tab order is unchanged). */
+/* -- Mobile collapse: every data-grid → single column < 960px. data-stack-order promotes a child earlier (visual only). -- */
 @media (max-width: 959.98px) {
   [data-grid] {
     grid-template-columns: 1fr;
@@ -1023,7 +924,7 @@ section {
   [data-grid] > [data-stack-order="3"] { order: -1; }
 }
 
-/* ------ 8. BORDER UTILITIES ------ */
+/* ------ BORDER UTILITIES ------ */
 
 /* -- Structural classes -- */
 .border {
@@ -1046,7 +947,7 @@ section {
   border-right: var(--border-width) var(--border-style) var(--border-color);
 }
 
-/* -- Width combo classes -- */
+/* -- Width combos -- */
 .border-s {
   --border-width: var(--border-s);
 }
@@ -1059,7 +960,7 @@ section {
   --border-width: var(--border-l);
 }
 
-/* -- Style combo classes -- */
+/* -- Style combos -- */
 .border-solid {
   --border-style: solid;
 }
@@ -1072,7 +973,7 @@ section {
   --border-style: dotted;
 }
 
-/* -- Color combo classes -- */
+/* -- Color combos -- */
 .border-primary {
   --border-color: var(--border-primary);
 }
@@ -1085,9 +986,9 @@ section {
   --border-color: var(--border-faded);
 }
 
-/* ------ 9. TYPOGRAPHY UTILITIES ------ */
+/* ------ TYPOGRAPHY UTILITIES ------ */
 
-/* -- Font size utilities -- */
+/* -- Font sizes -- */
 .font-2xs {
   font-size: var(--font-2xs);
 }
@@ -1132,7 +1033,7 @@ section {
   font-size: var(--font-6xl);
 }
 
-/* -- Headline utilities (oversized headlines; uppercase, tight, heavy) -- */
+/* -- Headlines (oversized; uppercase, tight, heavy) -- */
 .headline-l {
   font-weight: var(--font-weight-black);
   line-height: var(--line-height-s);
@@ -1179,7 +1080,7 @@ section {
   text-transform: uppercase;
 }
 
-/* -- Text size utilities -- */
+/* -- Text sizes -- */
 .text-size-large {
   font-size: var(--font-l);
 }
@@ -1230,7 +1131,7 @@ section {
   padding: var(--space-s) 0;
 }
 
-/* -- Eyebrow text -- */
+/* -- Eyebrow -- */
 .eyebrow {
   font-family: var(--font-primary);
   font-size: var(--font-l);
@@ -1254,7 +1155,7 @@ section {
   text-align: right;
 }
 
-/* -- Visually hidden (accessible; screen-reader only) -- */
+/* -- Visually hidden (screen-reader only; reveals on focus, e.g. skip link) -- */
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -1267,7 +1168,6 @@ section {
   border: 0;
 }
 
-/* Reveal a visually-hidden element when it receives focus (e.g. skip link). */
 .visually-hidden:focus,
 .visually-hidden:focus-within {
   position: static;
@@ -1279,23 +1179,9 @@ section {
   white-space: normal;
 }
 
-/* -- Button -- */
-
-/*
- * Token-driven button (ported from the By Default studio system). All tokens
- * live at component level; data-* exceptions override them. --button-color
- * drives background, border, and the faded fill automatically. Scoped to
- * `.button` so bare <button> elements (accordion headers, tabs, dropdown
- * items, etc.) are NOT styled as buttons.
- *
- * API: data-variant="outline|faded|outline-faded|transparent|text"
- *      data-size="small|xsmall"  data-color="danger|success"
- *      data-icon-only  data-full-width
- * Legacy .is-* classes are aliased at the end for backward compatibility.
- */
+/* -- Button (API: data-variant | data-size | data-color | data-icon-only | data-full-width. Legacy .is-* aliased below.) -- */
 .button,
 button.button {
-  /* -- Component tokens (overridable by exceptions + role classes) -- */
   --button-color: var(--text-primary);
   --button-faded: color-mix(in srgb, var(--button-color), var(--alpha-10));
   --button-bg: var(--button-color);
@@ -1307,21 +1193,14 @@ button.button {
   --button-padding-x: var(--space-xl);
   --button-gap: var(--space-s);
 
-  /* -- Layout -- */
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--button-gap);
-
-  /* -- Box model -- */
   padding: var(--button-padding-y) var(--button-padding-x);
-
-  /* -- Visual -- */
   background-color: var(--button-bg);
   border: var(--border-s) solid var(--button-border);
   border-radius: var(--radius-s);
-
-  /* -- Typography -- */
   font-family: var(--button-font);
   font-size: var(--button-text-size);
   font-weight: var(--font-weight-regular);
@@ -1330,15 +1209,12 @@ button.button {
   text-decoration: none;
   color: var(--button-text-color);
 
-  /* -- Icon -- */
   --icon-size: 0.8em;
 
-  /* -- Other -- */
   cursor: pointer;
   transition: background-color var(--duration-m) var(--ease-out), color var(--duration-2xs) var(--ease-out), border-color var(--duration-2xs) var(--ease-out), opacity var(--duration-2xs) var(--ease-out), transform var(--duration-2xs) var(--ease-out);
 }
 
-/* -- Hover / active -- */
 .button:hover {
   --button-color: color-mix(in srgb, var(--text-primary), var(--background-primary) 10%);
 }
@@ -1347,7 +1223,7 @@ button.button {
   transform: scale(0.98);
 }
 
-/* -- Variant exceptions -- */
+/* -- Variants -- */
 .button[data-variant="outline"] {
   --button-bg: transparent;
   --button-text-color: var(--button-color);
@@ -1396,7 +1272,7 @@ button.button {
   background-color: color-mix(in srgb, var(--button-color), var(--alpha-5));
 }
 
-/* -- Size exceptions -- */
+/* -- Sizes -- */
 .button[data-size="small"] {
   --button-padding-y: var(--space-s);
   --button-padding-x: var(--space-m);
@@ -1419,7 +1295,7 @@ button.button {
   width: 100%;
 }
 
-/* -- Colour exceptions (--button-color drives bg, border, and faded) -- */
+/* -- Colour variants (--button-color drives bg, border, and faded) -- */
 .button[data-color="danger"] {
   --button-color: var(--status-danger);
   --button-text-color: var(--text-inverted);
@@ -1462,14 +1338,13 @@ button.button {
   opacity: 0.6;
 }
 
-/* -- Reduced motion -- */
 @media (prefers-reduced-motion: reduce) {
   .button:active {
     transform: none;
   }
 }
 
-/* -- Legacy class aliases (map old .is-* API onto the token model) -- */
+/* -- Legacy .is-* aliases -- */
 .button.is-faded {
   --button-bg: var(--button-faded);
   --button-border: transparent;
@@ -1506,7 +1381,7 @@ button.button {
   grid-row-gap: var(--space-m);
 }
 
-/* -- Demo specific styles -- */
+/* -- Styleguide demos -- */
 .type-demo > h1,
 .type-demo > h2,
 .type-demo > h3,
@@ -1527,10 +1402,8 @@ button.button {
   margin-bottom: var(--space-none);
 }
 
+/* ------ BACKGROUND UTILITIES ------ */
 
-/* ------ 10. BACKGROUND UTILITIES ------ */
-
-/* -- Background utilities -- */
 .bg-primary {
   background-color: var(--background-primary);
 }
@@ -1547,8 +1420,7 @@ button.button {
   background-color: var(--background-faded);
 }
 
-/* -- Brand surfaces — full-bleed coloured sections.
-      Lime/orange/off-white read on dark-green text; dark surface inverts text. -- */
+/* -- Brand surfaces -- */
 .bg-green {
   background-color: var(--background-green);
   color: var(--text-primary);
@@ -1569,9 +1441,8 @@ button.button {
   color: var(--text-inverted);
 }
 
-/* ------ 11. CALLOUTS & ALERTS ------ */
+/* ------ CALLOUTS & ALERTS ------ */
 
-/* -- Base callout -- */
 .callout {
   padding: var(--space-m) var(--space-l);
   margin-top: var(--space-l);
@@ -1588,7 +1459,6 @@ button.button {
   margin-bottom: 0;
 }
 
-/* -- Callout title -- */
 .callout-title {
   display: flex;
   align-items: center;
@@ -1599,7 +1469,7 @@ button.button {
   margin-bottom: var(--space-s);
 }
 
-/* -- Callout variants -- */
+/* -- Variants -- */
 .callout-note {
   border-left-color: var(--callout-info);
   background-color: var(--callout-info-bg);
@@ -1645,9 +1515,8 @@ button.button {
   color: var(--callout-accent);
 }
 
-/* ------ 12. FORM ELEMENTS ------ */
+/* ------ FORM ELEMENTS ------ */
 
-/* -- Labels -- */
 label {
   display: block;
   font-size: var(--font-s);
@@ -1656,7 +1525,7 @@ label {
   margin-bottom: var(--space-xs);
 }
 
-/* -- Text inputs & textarea -- */
+/* -- Text inputs, textarea, select -- */
 input[type="text"],
 input[type="email"],
 input[type="password"],
@@ -1697,13 +1566,11 @@ textarea::placeholder {
   color: var(--input-placeholder);
 }
 
-/* -- Textarea -- */
 textarea {
   min-height: 120px;
   resize: vertical;
 }
 
-/* -- Select -- */
 select {
   appearance: none;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23666' d='M1.41 0L6 4.58 10.59 0 12 1.41l-6 6-6-6z'/%3E%3C/svg%3E");
@@ -1713,7 +1580,6 @@ select {
   cursor: pointer;
 }
 
-/* -- Disabled states -- */
 input:disabled,
 textarea:disabled,
 select:disabled {
@@ -1765,16 +1631,9 @@ input[type="radio"] {
   margin-bottom: var(--space-l);
 }
 
-/* ------ 13. COMPONENTS ------ */
+/* ------ COMPONENTS ------ */
 
-/*
- * Component library ported from the By Default studio design system, scoped to
- * what this project needs. Each component composes the semantic + motion tokens
- * above; status variants reuse --status-* / --status-*-bg. Tokens that don't
- * exist here (fluid type roles) were remapped to the static --font-* scale.
- */
-
-/* -- SVG icon utility (used by several components below) -- */
+/* -- SVG icon (used by several components below) -- */
 .svg-icn {
   display: inline-flex;
   align-items: center;
@@ -2622,77 +2481,9 @@ a[data-tooltip],
   cursor: not-allowed;
 }
 
-/* ------ 14. RESPONSIVE ------ */
+/* ------ PROJECT STYLES ------ */
 
-/* Tablet */
-@media (max-width: 991px) {
-  :root {
-    /* -- Tablet headline sizes (fluid → fixed rem) -- */
-    --font-headline-s: 2.25rem;  /* 36px */
-    --font-headline-m: 3rem;     /* 48px */
-    --font-headline-l: 4rem;     /* 64px */
-    --font-headline-xl: 4.75rem; /* 76px */
-
-    /* -- Tablet body size (drop vw, follow the type scale: 18px → 16px on mobile) -- */
-    --font-body: var(--font-m);
-
-    /* -- Tablet container (stop scaling; padding-global handles gutters) -- */
-    --container-xl: 100%;
-  }
-}
-
-/* Mobile */
-@media (max-width: 767px) {
-  :root {
-    /* -- Mobile font sizes -- */
-    --font-2xs: 12px;
-    --font-xs: 12px;
-    --font-s: 14px;
-    --font-m: 16px;
-    --font-l: 18px;
-    --font-xl: 20px;
-    --font-2xl: 22px;
-    --font-3xl: 28px;
-    --font-4xl: 32px;
-    --font-5xl: 40px;
-    --font-6xl: 48px;
-
-    /* -- Mobile headline sizes -- */
-    --font-headline-s: 1.875rem; /* 30px */
-    --font-headline-m: 2.25rem;  /* 36px */
-    --font-headline-l: 3rem;     /* 48px */
-    --font-headline-xl: 3.5rem;  /* 56px */
-
-    /* -- Mobile section spacing -- */
-    --section-xs: var(--space-l);
-    --section-s: var(--space-xl);
-    --section-m: var(--space-2xl);
-    --section-l: var(--space-5xl);
-    --section-xl: var(--space-8xl);
-
-    /* -- Mobile responsive space tokens -- */
-    --space-xs: 0.25rem;
-    --space-s: 0.25rem;
-    --space-m: 0.5rem;
-    --space-l: 0.75rem;
-    --space-xl: 1rem;
-    --space-2xl: 1.5rem;
-    --space-3xl: 2rem;
-    --space-4xl: 2rem;
-    --space-6xl: 3rem;
-  }
-}/* ─────────────────────────────
-   PART 2 — PROJECT STYLES
-   ─────────────────────────────
-
-   Section-specific styles that the design system (Part 1 above) can't express
-   with existing utilities. Everything composes design system tokens — no
-   hardcoded colours, spacing, or type.
-   ───────────────────────────── */
-
-
-/* ------ NAVIGATION ------ */
-
+/* -- Navigation -- */
 .site-nav {
   position: sticky;
   top: 0;
@@ -2726,32 +2517,10 @@ a[data-tooltip],
   width: auto;
 }
 
-
-/* ------ STICKERS ------ */
-
-/* Inline stickers: decorative graphics inside a heading, authored as a <span>
-   so no <img> sits inside a Webflow Heading. Two types, one family — a
-   per-sticker combo class (.sticker-<name>) sets the image (+ size); the base
-   class decides how it renders:
-
-     ADD  → image sits BESIDE the word (::before). Needs a pseudo-element, so it
-            lives here in CSS (not Designer-native).
-              <span class="sticker-add sticker-social">agency</span>
-
-     SWAP → image REPLACES a letter/word (glyph kept transparent in the DOM so it
-            still reads for SR/SEO and reveals with the word in SplitText).
-            Fully Webflow-Designer-native — PREFERRED where text can carry the
-            graphic. Select the letter → wrap in span → text colour transparent →
-            background image (Fit: Contain, Position: Center).
-              ag<span class="sticker-swap sticker-o">e</span>ncy
-
-   Sizing is class-based: the combo class sets --sticker-image and, if needed,
-   --sticker-size (add) or padding-inline / inline-block width (swap). */
-
-/* -- Type: add (image beside the word) -- */
+/* -- Stickers (ADD: ::before beside word. SWAP: transparent glyph behind image — SR/SEO/SplitText-safe.) -- */
 .sticker-add {
   position: relative;
-  white-space: nowrap;   /* keep the word and its sticker together — never split across lines */
+  white-space: nowrap;
 }
 
 .sticker-add::before {
@@ -2769,7 +2538,6 @@ a[data-tooltip],
   background-position: center;
 }
 
-/* -- Type: swap (image replaces a letter/word) -- */
 .sticker-swap {
   color: transparent;
   background-image: var(--sticker-image);
@@ -2778,22 +2546,16 @@ a[data-tooltip],
   background-position: center;
 }
 
-/* -- Box modifier (swap only): give the swap a fixed SQUARE box instead of
-      stretching to the word's natural width — for replacing a whole/wide word
-      with a square sticker. The word stays in the DOM (transparent) for
-      SR/SEO/SplitText; overflow clips it to the box. Size with --sticker-size.
-        <span class="sticker-swap sticker-box sticker-social">post-social</span> -- */
+/* -- Box modifier (swap only): fixed square box instead of word width. Size with --sticker-size. -- */
 .sticker-swap.sticker-box {
   display: inline-block;
   width: var(--sticker-size, 1em);
-  aspect-ratio: 1;           /* square, independent of the word's width */
-  overflow: hidden;          /* clip the wider transparent word to the box */
-  vertical-align: middle;    /* overflow:hidden re-bases the baseline to the box edge — re-centre on the line */
+  aspect-ratio: 1;
+  overflow: hidden;
+  vertical-align: middle;
 }
 
-/* -- Per-sticker combo classes — each sets only the image (+ optional size).
-      One declaration = the single swap-point for the real asset later.
-      Works on either .sticker-add or .sticker-swap. -- */
+/* -- Per-sticker combos (image + optional size). Works on either .sticker-add or .sticker-swap. -- */
 .sticker-about    { --sticker-image: url("https://bydefault.design/image/120x90"); }
 .sticker-founded-1 { --sticker-image: url("https://bydefault.design/image/90x90"); }
 .sticker-founded-2 { --sticker-image: url("https://bydefault.design/image/90x90"); }
@@ -2808,6 +2570,7 @@ a[data-tooltip],
   margin-inline: .1em;
 }
 
+/* -- Page sections (homepage) -- */
 .hero-section {
   min-height: 100svh;
   display: flex;
@@ -2861,10 +2624,9 @@ a[data-tooltip],
 }
 
 .services-section {
-  overflow: clip; /* clip (not hidden) trims rotated panels without scoping the sticky stack */
+  overflow: clip;
   padding-top: var(--5xl);
 }
-
 
 .slot-section {
   min-height: 100svh;
@@ -2886,10 +2648,7 @@ a[data-tooltip],
   margin-left: 55%;
 }
 
-/* ------ TICKER ------ */
-
-/* Edge-to-edge scrolling marquee. The track holds two identical runs so the
-   loop is seamless; pure CSS, no JS. */
+/* -- Ticker (CSS-only marquee; track holds two identical runs so the loop is seamless) -- */
 .ticker {
   overflow: hidden;
   white-space: nowrap;
@@ -2920,19 +2679,14 @@ a[data-tooltip],
   }
 }
 
-
-/* ------ MEDIA ------ */
-
+/* -- Media -- */
 .media-fluid {
   display: block;
   max-width: 100%;
   height: auto;
 }
 
-
-/* ------ SERVICES ------ */
-
-/* Full-bleed numbered rows; each row is its own brand surface. */
+/* -- Services (full-bleed numbered rows; each row is its own brand surface) -- */
 .service-row {
   display: flex;
   align-items: baseline;
@@ -2941,10 +2695,6 @@ a[data-tooltip],
   padding-top: var(--space-4xl);
   padding-bottom: 200px;
   max-width: 90vw;
-}
-
-.service-row + .service-row {
-  /* rows meet edge-to-edge — colour change is the divider */
 }
 
 .service-number {
@@ -2956,7 +2706,6 @@ a[data-tooltip],
 
 .service-title {
   margin: 0;
-  /* font-size: var(--font-4xl); */
   font-size: 3vw;
   font-weight: var(--font-weight-semi-bold);
   line-height: var(--line-height-s);
@@ -2964,32 +2713,21 @@ a[data-tooltip],
 }
 
 .services-section[data-bd-stack] {
-  --bd-stack-overlap: 150px; /* resting overlap — single source of truth; JS reads this too. Tune here. */
+  --bd-stack-overlap: 150px; /* resting overlap — single source of truth; bd-animations.js reads this too */
 }
 
-/* Overlapping tilt — motion-safe, all devices. The negative margin is the REAL
-   resting overlap, so the section height is compact (no bottom gap); bd-animations.js
-   animates each panel from a non-overlapped start INTO this rest, tilting + scaling
-   in. The section uses overflow: clip so rotated/scaled corners are trimmed.
-   Reduced-motion: plain stacked blocks. */
+/* Negative margin is the resting overlap; bd-animations.js animates from non-overlapped start into this rest. Reduced-motion: stacked blocks. */
 @media (prefers-reduced-motion: no-preference) {
   .services-section[data-bd-stack] .service-block {
-    padding-bottom: 0;    /* compact: panels meet edge-to-edge before the overlap margin */
-    position: relative;   /* later DOM panel paints over the previous one */
+    padding-bottom: 0;
+    position: relative;
   }
   .services-section[data-bd-stack] .service-block:not(:first-child) {
     margin-top: calc(-1 * var(--bd-stack-overlap));
   }
 }
 
-
-/* ------ TEAM ------ */
-
-/* Polaroid grid: 3x2 cells. Each cell holds a flip card. The cell carries a
-   stable subtle CSS tilt; the inner .team-card owns the rotateY flip so the
-   tilt survives the flip state. Perspective lives on the cell so each card
-   gets its own 3D depth. */
-
+/* -- Team (polaroid grid: 3x2 flip cards. Cell holds the CSS tilt; inner .team-card owns rotateY so tilt survives flip. Perspective lives on the cell for per-card 3D depth.) -- */
 .team-section {
   background-color: var(--background-dark);
   min-height: 100vh;
@@ -3026,16 +2764,10 @@ a[data-tooltip],
   gap: var(--space-2xl);
 }
 
-
-
 .team-intro {
   font-size: 1.3vw;
   color: var(--text-accent);
-
 }
-
-
-
 
 .team-grid-container {
   display: flex;
@@ -3095,10 +2827,7 @@ a[data-tooltip],
   background: var(--background-faded);
 }
 
-/* Back face is a single-cell grid. The slot's [data-position] rule below sets
-   where that cell anchors — vertical via align-items, horizontal via
-   text-align. Same slot, same look, no matter which content lands in it.
-   Stickers opt out (margin: auto centres them in any slot). */
+/* Back face: single-cell grid; [data-position] anchors content via align-items + text-align. Stickers opt out (margin: auto). */
 .team-face-back {
   display: grid;
   padding: var(--space-l);
@@ -3129,24 +2858,19 @@ a[data-tooltip],
   transition: opacity 220ms ease;
 }
 
-/* Hover swap in browse state, AND on the active cell while open (so the
-   open card stays on its alternate-pose photo). Flipped inactive cells
-   show content, not hover photos, so the rule excludes them implicitly. */
+/* Hover swap in browse state + on the active cell while open; flipped inactive cells show content, not hover photos. */
 .team-grid:not(.is-open) .team-card:hover .team-photo-hover,
 .team-grid:not(.is-open) .team-card:focus-visible .team-photo-hover,
 .team-cell.is-active .team-photo-hover {
   opacity: 1;
 }
 
-/* Flip state — the rotateY is applied by JS via GSAP, but a CSS class is also
-   kept as a fallback / source of truth for the resting flipped state. */
+/* rotateY applied by GSAP; CSS class kept as fallback / source of truth for the resting flipped state. */
 .team-cell.is-flipped .team-card {
   transform: rotateY(180deg);
 }
 
-/* Back-face content — typography only. Each type owns its size/weight; the
-   SLOT owns where it sits. So a name in slot 1 and a name in slot 4 look
-   identical typographically but anchor to different corners. */
+/* Back-face content typography. Each type owns its size/weight; the SLOT owns where it sits. */
 .team-back-name,
 .team-back-role,
 .team-back-fact {
@@ -3173,8 +2897,7 @@ a[data-tooltip],
   line-height: var(--line-height-m, 1.3);
 }
 
-/* Stickers are slot-independent — always centered. margin: auto on a grid
-   item overrides the slot's align-items/text-align. */
+/* Stickers are slot-independent — always centered (margin: auto overrides slot anchors). */
 .team-back-sticker {
   display: block;
   width: 60%;
@@ -3183,12 +2906,7 @@ a[data-tooltip],
   aspect-ratio: auto;
 }
 
-/* ─── Slot anchors — desktop 3x2 ─────────────────────────────────────────
-   Each cell's content radiates toward its OUTER corner (away from the grid
-   centre). One line per slot; the same anchoring is applied no matter which
-   content type lands there. align-items handles vertical; text-align handles
-   horizontal (since the back face has only one child, text-align doubles as
-   horizontal block alignment via the element's content width).            */
+/* Slot anchors (desktop 3x2): each cell radiates toward its outer corner. */
 .team-cell[data-position="1"] .team-face-back { align-items: start; text-align: left;   }
 .team-cell[data-position="2"] .team-face-back { align-items: start; text-align: center; }
 .team-cell[data-position="3"] .team-face-back { align-items: start; text-align: right;  }
@@ -3196,9 +2914,7 @@ a[data-tooltip],
 .team-cell[data-position="5"] .team-face-back { align-items: end;   text-align: center; }
 .team-cell[data-position="6"] .team-face-back { align-items: end;   text-align: right;  }
 
-/* Close button — one per cell, top-right INSIDE the polaroid. Only visible
-   on the active cell; sits above the card faces (z-index) so the click lands
-   on it, not the underlying button. */
+/* Close button: one per cell, top-right INSIDE the polaroid; only shown on the active cell. */
 .team-cell-close {
   position: absolute;
   top: var(--space-s);
@@ -3226,22 +2942,6 @@ a[data-tooltip],
   outline-offset: 2px;
 }
 
-/* Tablet & mobile: drop from 3x2 to 2x3. The TEAM_LAYOUTS pattern still maps
-   positions 1-6 to cells; they just flow into the narrower grid (1-2 in
-   row 1, 3-4 in row 2, 5-6 in row 3). Same "radiate outward" anchoring
-   re-mapped to the new visual positions. Webflow's 991px tablet break-point. */
-@media (max-width: 991px) {
-  .team-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .team-cell[data-position="1"] .team-face-back { align-items: start;  text-align: left;  }
-  .team-cell[data-position="2"] .team-face-back { align-items: start;  text-align: right; }
-  .team-cell[data-position="3"] .team-face-back { align-items: center; text-align: left;  }
-  .team-cell[data-position="4"] .team-face-back { align-items: center; text-align: right; }
-  .team-cell[data-position="5"] .team-face-back { align-items: end;    text-align: left;  }
-  .team-cell[data-position="6"] .team-face-back { align-items: end;    text-align: right; }
-}
-
 /* Reduced motion: no 3D, no flip — cross-fade faces with opacity instead. */
 @media (prefers-reduced-motion: reduce) {
   .team-cell { perspective: none; }
@@ -3260,11 +2960,15 @@ a[data-tooltip],
   .team-photo-hover { transition: none; }
 }
 
-
-/* ------ CTA ------ */
-
+/* -- CTA -- */
 .cta-section {
   background-color: var(--background-green);
+}
+
+.cta-text {
+  font-size: var(--font-body-l);
+  font-weight: var(--font-weight-medium);
+  max-width: 35ch;
 }
 
 .cta-email {
@@ -3275,16 +2979,13 @@ a[data-tooltip],
   text-decoration: none;
 }
 
+
 .cta-email:hover {
-  color: var(--text-link);
+  color: var(--text-primary);
+  text-decoration: underline;
 }
 
-
-/* ------ OUR SCIENCE PAGE ------ */
-
-/* Hero — dark green, centred title + "by [portrait] Prof. Colin Skittles" byline.
-   Structure mirrors the homepage hero (full-viewport centred block); only the
-   palette flips dark and the byline introduces an inline portrait. */
+/* -- Our Science page -- */
 .science-hero {
   min-height: 100svh;
   display: flex;
@@ -3342,8 +3043,7 @@ a[data-tooltip],
   margin-right: auto;
 }
 
-/* Larger eyebrow used for the "by Prof. Colin Skittles" byline — sits above the
-   tag and below the headline. Same casing + tracking as .eyebrow at one step up. */
+/* Larger eyebrow used for the byline — same casing + tracking as .eyebrow at one step up. */
 .eyebrow-l {
   font-family: var(--font-primary);
   font-size: var(--font-xl);
@@ -3354,7 +3054,6 @@ a[data-tooltip],
   margin: 0;
 }
 
-/* Intro — half-width headline matching the homepage's .about-headline pattern. */
 .science-intro {
   min-height: 100svh;
   display: flex;
@@ -3367,7 +3066,6 @@ a[data-tooltip],
   margin-right: 45%;
 }
 
-/* Body — right-column paragraph stack, mirrors .about-body. */
 .science-body-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -3379,10 +3077,7 @@ a[data-tooltip],
   grid-column: 2;
 }
 
-/* Six things — split section: dark left (physics canvas + overlaid title),
-   green right (callout copy + giant numeral). Two-column grid that collapses
-   on tablet. Orbs are absolutely positioned inside .six-things-canvas and
-   driven by Matter.js via JS-applied transforms. */
+/* Six things: split section — dark left (physics canvas + overlaid title), green right (copy + giant numeral). Orbs are absolutely positioned inside .six-things-canvas and driven by Matter.js via JS transforms. */
 .six-things-section {
   position: relative;
   overflow: clip;
@@ -3391,8 +3086,7 @@ a[data-tooltip],
   color: var(--white);
 }
 
-/* Title overlays the canvas: sits BEHIND the balls in stacking order and
-   never intercepts pointer events so orbs remain draggable over the text. */
+/* Title overlays the canvas: BEHIND the balls in stacking order; never intercepts pointer events. */
 .six-things-left-content {
   position: absolute;
   top: 10vh;
@@ -3444,15 +3138,8 @@ a[data-tooltip],
   color: var(--brand-dark);
 }
 
-/* Physics canvas — fills the left column edge-to-edge, sits ABOVE the
-   overlaid title in stacking order, transparent background so the section's
-   dark colour shows through. JS positions each orb via transform inside
-   this bounding box; the four Matter walls match this rect.
-   touch-action stays default so the page can scroll when the cursor/finger
-   is over empty canvas space; scroll-hijack is only blocked on the orbs. */
+/* Physics canvas: fills the left column edge-to-edge, sits ABOVE the title. our-science.js positions orbs via transform inside this bounding box; Matter walls match this rect. touch-action default so page scroll works over empty canvas space. */
 .six-things-canvas {
-  /* Gap between the balls and the canvas edges (read by JS to inset the
-     Matter walls). Tweak the clamp: floor / desktop driver / ceiling. */
   --six-things-padding: clamp(var(--space-xl), 3vw, var(--space-3xl));
   list-style: none;
   margin: 0;
@@ -3463,14 +3150,12 @@ a[data-tooltip],
   z-index: 2;
 }
 
-/* Collection Item wrapper — display:contents so the <li> doesn't break the
-   absolute positioning context for the <button> child. */
+/* Collection Item wrapper: display:contents so the <li> doesn't break absolute positioning for the <button> child. */
 .six-things-orb-item {
   display: contents;
 }
 
-/* Hidden source list — Webflow Collection List #2 renders 6 nodes here
-   carrying data-fact-* attributes the JS reads. Never visible to users. */
+/* Hidden source list: Webflow Collection List #2 renders 6 nodes with data-fact-* attrs the JS reads. */
 .six-things-source {
   display: none;
 }
@@ -3509,16 +3194,13 @@ a[data-tooltip],
   outline-offset: 4px;
 }
 
-/* Active state — the lime green that the right-panel background uses.
-   Sole source of truth for the "selected fact" colour. */
+/* Active state — lime green; sole source of truth for the "selected fact" colour. */
 .science-orb[data-active="true"] {
   background-color: var(--brand-green);
   color: var(--brand-dark);
 }
 
-/* Reduced motion — physics is skipped by JS; canvas falls back to a static
-   flex row, title returns to normal flow, balls stay where they're laid
-   out by flex. Click-to-swap still works via plain DOM click handlers. */
+/* Reduced motion: physics skipped by JS; canvas falls back to flex row. Click-swap still works. */
 @media (prefers-reduced-motion: reduce) {
   .six-things-canvas {
     position: relative;
@@ -3532,7 +3214,6 @@ a[data-tooltip],
   .six-things-left-content {
     position: static;
     pointer-events: auto;
-    
   }
   .six-things-orb-item {
     display: list-item;
@@ -3543,7 +3224,6 @@ a[data-tooltip],
   }
 }
 
-/* Long game — light-grey section: intro paragraph + big headline with sticker. */
 .science-longgame {
   min-height: 100svh;
   display: flex;
@@ -3555,11 +3235,6 @@ a[data-tooltip],
   max-width: 50ch;
 }
 
-.science-longgame-headline {
-
-}
-
-/* CTA — centred lede paragraph + giant email link on lime green. */
 .science-cta {
   min-height: 60svh;
   display: flex;
@@ -3591,50 +3266,16 @@ a[data-tooltip],
   text-decoration-thickness: 0.08em;
 }
 
-/* Per-sticker assets used on this page — same swap-point pattern as the other
-   sticker combo classes. Wire the real artwork here when ready. */
+/* Per-page sticker assets — wire real artwork here when ready. */
 .sticker-science       { --sticker-image: url("https://bydefault.design/image/180x108?text=Book"); }
 .sticker-science-01    { --sticker-image: url("https://bydefault.design/image/120x120?text=01"); }
 .sticker-science-coffee { --sticker-image: url("https://bydefault.design/image/100x120?text=Coffee"); }
 
-/* Responsive — collapse the two-column sections to single column on tablet. */
-@media (max-width: 959.98px) {
-  .science-intro-headline {
-    width: 100%;
-    margin: 0;
-  }
-
-  .science-body-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .science-body-grid > .block {
-    grid-column: auto;
-  }
-
-  .science-six-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 768px) {
-  .science-hero-title {
-    max-width: 16ch;
-  }
-
-  .science-orbs {
-    justify-content: center;
-  }
-}
-
-
-/* ------ FOOTER ------ */
-
+/* -- Footer -- */
 .site-footer {
   --footer-accent: var(--brand-green);
 }
 
-/* Top row: brand+columns on the left, newsletter on the right. */
 .footer-top {
   display: grid;
   grid-template-columns: 1fr minmax(0, 480px);
@@ -3660,7 +3301,6 @@ a[data-tooltip],
   height: auto;
 }
 
-/* Three-column meta block under the wordmark. */
 .footer-cols {
   display: flex;
   flex-wrap: wrap;
@@ -3693,7 +3333,6 @@ a[data-tooltip],
   text-decoration-thickness: 2px;
 }
 
-/* Social icons row. */
 .footer-social {
   display: flex;
   gap: var(--space-s);
@@ -3725,7 +3364,6 @@ a[data-tooltip],
   display: block;
 }
 
-/* Newsletter column. */
 .footer-newsletter {
   display: flex;
   flex-direction: column;
@@ -3781,7 +3419,6 @@ a[data-tooltip],
   border-bottom-color: var(--footer-accent);
 }
 
-/* Gradient submit button — full-width pill matching the Figma. */
 .newsletter-submit {
   width: 100%;
   border: 0;
@@ -3817,7 +3454,6 @@ a[data-tooltip],
   margin: 0;
 }
 
-/* Bottom legal row — centred horizontally. */
 .footer-legal {
   display: flex;
   flex-wrap: wrap;
@@ -3843,31 +3479,11 @@ a[data-tooltip],
   text-decoration-thickness: 2px;
 }
 
-
-/* ------ STANDOUT REVEAL ------ */
-
-/*
-   Full-viewport, pinned + scroll-scrubbed reveal (assets/js/homepage.js).
-   Generic scene-wrapper architecture: the stage holds N .standout-scene divs
-   plus a sibling .standout-balls overlay. Scene 1 is revealed by the balls
-   parting; subsequent scenes cross-fade in over the previous in sequence.
-   GSAP doesn't target scene contents — drop any HTML inside a scene and it
-   cross-fades with the wrapper.
-
-   Layout strategy:
-   - Default (no JS): scenes stack in normal flow as readable blocks. No balls.
-   - With JS (.js on <html>): stage becomes a grid; scenes overlap in one cell.
-     Non-first scenes start at opacity 0 (see bd-animations.css FOUC rule).
-   - Reduced motion (.is-static added by JS): override .js back to flow.
-
-   --text-primary is locally pinned to brand-dark so this section never flips
-   dark — the stage is forced white and inherited light text would vanish.
-*/
-
+/* -- Standout reveal (pinned scroll-scrubbed reveal — homepage.js. Default: scenes flow as readable blocks. .js: stage becomes grid, scenes overlap; non-first scenes start opacity 0 (see bd-animations.css FOUC rule). .is-static: reduced-motion fallback.) -- */
 .section-standout {
   position: relative;
-  background-color: var(--background-white); /* shows through as the balls part */
-  --text-primary: var(--brand-dark);
+  background-color: var(--background-white);
+  --text-primary: var(--brand-dark); /* never flips dark — inherited light text would vanish on the forced-white stage */
   margin-top: -50px;
 }
 
@@ -3890,8 +3506,6 @@ a[data-tooltip],
   overflow: hidden;
 }
 
-/* Scenes — each is a generic wrapper holding any content. With .js they share
-   grid cell 1/1 so they stack centred; without .js they sit in flow. */
 .standout-scene {
   position: relative;
   padding-inline: var(--space-l);
@@ -3910,7 +3524,7 @@ a[data-tooltip],
   z-index: 1;
 }
 
-/* Balls overlay: between scene 1 and any later scenes (sibling combinator). */
+/* Balls overlay sits between scene 1 and any later scenes (sibling combinator). */
 .standout-balls {
   position: relative;
   width: 100%;
@@ -3924,7 +3538,6 @@ a[data-tooltip],
   z-index: 2;
 }
 
-/* Scenes after the balls (scene 2+) sit on top of the balls' layer. */
 .js .standout-balls ~ .standout-scene {
   z-index: 3;
 }
@@ -3938,8 +3551,7 @@ a[data-tooltip],
   background-color: var(--background-green);
 }
 
-/* Promote balls to their own compositor layers only while the reveal is on
-   screen (homepage.js toggles .is-active on the ball layer). */
+/* Promote balls to their own compositor layers only while the reveal is on screen (homepage.js toggles .is-active). */
 .standout-balls.is-active .standout-ball {
   will-change: transform;
 }
@@ -3965,17 +3577,101 @@ a[data-tooltip],
   display: none;
 }
 
-
 /* ------ RESPONSIVE ------ */
 
-@media (max-width: 959.98px) {
+/* Tablet */
+@media (max-width: 991px) {
+  :root {
+    /* -- Headline sizes (fluid → fixed rem) -- */
+    --font-headline-s: 2.25rem;  /* 36px */
+    --font-headline-m: 3rem;     /* 48px */
+    --font-headline-l: 4rem;     /* 64px */
+    --font-headline-xl: 4.75rem; /* 76px */
+
+    /* -- Body size (drop vw, follow the type scale) -- */
+    --font-body: var(--font-m);
+
+    /* -- Container (stop scaling; padding-global handles gutters) -- */
+    --container-xl: 100%;
+  }
+
+  /* -- Project layout overrides -- */
   .footer-top {
     grid-template-columns: 1fr;
     gap: var(--space-2xl);
   }
+
+  .science-intro-headline {
+    width: 100%;
+    margin: 0;
+  }
+
+  .science-body-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .science-body-grid > .block {
+    grid-column: auto;
+  }
+
+  .science-six-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* -- Team grid: 3x2 → 2x3. TEAM_LAYOUTS positions re-flow into the narrower grid. -- */
+  .team-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .team-cell[data-position="1"] .team-face-back { align-items: start;  text-align: left;  }
+  .team-cell[data-position="2"] .team-face-back { align-items: start;  text-align: right; }
+  .team-cell[data-position="3"] .team-face-back { align-items: center; text-align: left;  }
+  .team-cell[data-position="4"] .team-face-back { align-items: center; text-align: right; }
+  .team-cell[data-position="5"] .team-face-back { align-items: end;    text-align: left;  }
+  .team-cell[data-position="6"] .team-face-back { align-items: end;    text-align: right; }
 }
 
-@media (max-width: 768px) {
+/* Mobile */
+@media (max-width: 767px) {
+  :root {
+    /* -- Font sizes -- */
+    --font-2xs: 12px;
+    --font-xs: 12px;
+    --font-s: 14px;
+    --font-m: 16px;
+    --font-l: 18px;
+    --font-xl: 20px;
+    --font-2xl: 22px;
+    --font-3xl: 28px;
+    --font-4xl: 32px;
+    --font-5xl: 40px;
+    --font-6xl: 48px;
+
+    /* -- Headline sizes -- */
+    --font-headline-s: 1.875rem; /* 30px */
+    --font-headline-m: 2.25rem;  /* 36px */
+    --font-headline-l: 3rem;     /* 48px */
+    --font-headline-xl: 3.5rem;  /* 56px */
+
+    /* -- Section spacing -- */
+    --section-xs: var(--space-l);
+    --section-s: var(--space-xl);
+    --section-m: var(--space-2xl);
+    --section-l: var(--space-5xl);
+    --section-xl: var(--space-8xl);
+
+    /* -- Space tokens -- */
+    --space-xs: 0.25rem;
+    --space-s: 0.25rem;
+    --space-m: 0.5rem;
+    --space-l: 0.75rem;
+    --space-xl: 1rem;
+    --space-2xl: 1.5rem;
+    --space-3xl: 2rem;
+    --space-4xl: 2rem;
+    --space-6xl: 3rem;
+  }
+
+  /* -- Project layout overrides -- */
   .site-nav-links {
     gap: var(--space-l);
   }
@@ -4000,5 +3696,13 @@ a[data-tooltip],
 
   .cta-email {
     font-size: var(--font-3xl);
+  }
+
+  .science-hero-title {
+    max-width: 16ch;
+  }
+
+  .science-orbs {
+    justify-content: center;
   }
 }
