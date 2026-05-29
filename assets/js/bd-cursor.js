@@ -55,7 +55,9 @@ function initBdCursor() {
     return;
   }
 
-  // ------- Animation Configuration ------- //
+  //
+  //------- Animation Configuration -------//
+  //
   // LERP only matters during the brief moments dots are visible (label hover or click).
   // 1.0 = locked to pointer; lower = softer follow.
 
@@ -64,7 +66,9 @@ function initBdCursor() {
   const SNAP_THRESHOLD = 0.5;
   const LABEL_OFFSET_Y = 20;  // px below the cursor
 
-  // ------- State ------- //
+  //
+  //------- State -------//
+  //
 
   let mouseX = 0;
   let mouseY = 0;
@@ -81,7 +85,9 @@ function initBdCursor() {
   let phase = "idle";          // 'idle' | 'visible' | 'fading-out'
   let fadeTimeoutId = null;
 
-  // ------- Target detection + content swap ------- //
+  //
+  //------- Target detection + content swap -------//
+  //
 
   function getCursorTargetAtPoint(x, y) {
     const el = document.elementFromPoint(x, y);
@@ -151,7 +157,9 @@ function initBdCursor() {
     fadeTimeoutId = setTimeout(completeFadeOutThenIn, FADE_MS);
   }
 
-  // ------- Animation Loop ------- //
+  //
+  //------- Animation Loop -------//
+  //
 
   function animate(time) {
     if (!lastTime) lastTime = time;
@@ -191,7 +199,9 @@ function initBdCursor() {
     }
   }
 
-  // ------- Event Listeners ------- //
+  //
+  //------- Event Listeners -------//
+  //
 
   document.addEventListener("mousemove", (e) => {
     mouseX = e.clientX;
