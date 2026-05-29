@@ -12,12 +12,32 @@
 // top-level `const` declarations below. The window.__bdCursorInited guard
 // inside initBdCursor() prevents the listeners from being attached twice.
 (function () {
-console.log("Script - Cursor v4.0");
+console.log("Script - Cursor v4.1");
 
 // Path to the SVG icon sprite. On Webflow the sprite isn't served from /assets,
 // so set `window.BD_CURSOR_SPRITE` to its uploaded/jsDelivr URL in head custom
 // code before this script loads. Falls back to the repo-relative path locally.
-const SPRITE_PATH = window.BD_CURSOR_SPRITE || "/assets/images/svg-icons/_sprite.svg";
+const SPRITE_URL = window.BD_CURSOR_SPRITE || "/assets/images/svg-icons/_sprite.svg";
+
+// Cross-origin <use href="…sprite.svg#id"> is blocked by browsers regardless of
+// CORS headers, so we fetch the sprite once and inject it into the document.
+// All <use> references then resolve via bare "#id" fragments (same-doc).
+function injectSprite() {
+  if (document.querySelector("[data-bd-cursor-sprite]")) return Promise.resolve();
+  return fetch(SPRITE_URL)
+    .then(function (res) { return res.ok ? res.text() : ""; })
+    .then(function (svg) {
+      if (!svg) return;
+      const wrap = document.createElement("div");
+      wrap.setAttribute("data-bd-cursor-sprite", "");
+      wrap.style.cssText = "position:absolute;width:0;height:0;overflow:hidden";
+      wrap.innerHTML = svg;
+      document.body.insertAdjacentElement("afterbegin", wrap);
+    })
+    .catch(function (err) {
+      console.warn("Custom Cursor: sprite fetch failed", err);
+    });
+}
 // Must match the .cursor-label `transition: opacity` duration in bd-cursor.css.
 // If you tune one, tune the other.
 const FADE_MS = 150;
@@ -43,6 +63,9 @@ function initBdCursor() {
     halo.remove();
     return;
   }
+
+  // Inject the sprite once so cross-origin <use> refs aren't needed.
+  injectSprite();
 
   const text = label.querySelector(".cursor-label-text");
   const leadIcon = label.querySelector(".cursor-label-icon-lead");
@@ -103,14 +126,14 @@ function initBdCursor() {
     text.textContent = labelText;
 
     if (iconLead) {
-      leadUse.setAttribute("href", `${SPRITE_PATH}#${iconLead}`);
+      leadUse.setAttribute("href", `#${iconLead}`);
       leadIcon.classList.add("is-active");
     } else {
       leadIcon.classList.remove("is-active");
     }
 
     if (iconEnd) {
-      endUse.setAttribute("href", `${SPRITE_PATH}#${iconEnd}`);
+      endUse.setAttribute("href", `#${iconEnd}`);
       endIcon.classList.add("is-active");
     } else {
       endIcon.classList.remove("is-active");
