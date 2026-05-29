@@ -63,12 +63,16 @@
   /* -- Headline sizes (oversized headlines beyond Webflow's scale;
         fluid on desktop, fixed rem on tablet/mobile;
         mirror in Webflow Typography → Font Size as font-headline-* when built) -- */
-  --font-headline-s: 3.5vw;
-  --font-headline-m: 7vw;
-  --font-headline-l: 8vw;
+  --font-headline-xs: 3vw;
+  --font-headline-s: 3.8vw;
+  --font-headline-m: 4.5vw;
+  --font-headline-l: 6.5vw;
+  --font-headline-xl: 8vw;
 
   /* -- Body size (fluid vw on desktop; reverts to the type scale below — see Responsive) -- */
   --font-body: 1vw;
+  --font-body-m: 1.25vw;
+  --font-body-l: 1.5vw;
 
   /* -- UI font sizes -- */
   --button-font-size: var(--font-xs);
@@ -453,10 +457,10 @@
   /* -- Container widths -- */
   --container-xs: 480px;
   --container-s: 640px;
-  --container-m: 53vw;
+  --container-m: 56vw;
   --container-l: 60vw;
   /* --container-xl: 1440px; */
-  --container-xl: 80vw;
+  --container-xl: 90vw;
 
   /* -- Max-widths -- */
   --max-width-xs: 480px;
@@ -1136,14 +1140,20 @@ section {
   text-transform: uppercase;
 }
 
+.headline-xl,
+.headline-l,
 .headline-m,
-.headline-s {
+.headline-s,
+.headline-xs {
   font-weight: var(--font-weight-extra-bold);
   line-height: var(--line-height-s);
   letter-spacing: -0.02em;
   text-transform: uppercase;
 }
 
+.headline-xl {
+  font-size: var(--font-headline-xl);
+}
 
 .headline-l {
   font-size: var(--font-headline-l);
@@ -1157,8 +1167,12 @@ section {
   font-size: var(--font-headline-s);
 }
 
+.headline-xs {
+  font-size: var(--font-headline-xs);
+}
+
 .ticker-headline {
-  font-size: var(--font-headline-m);
+  font-size: var(--font-headline-l);
   font-weight: var(--font-weight-medium);
   line-height: var(--line-height-s);
   letter-spacing: -0.02em;
@@ -1190,6 +1204,16 @@ section {
   line-height: var(--line-height-l);
 }
 
+.body-text-m {
+  font-size: var(--font-body-m);
+  line-height: var(--line-height-l);
+}
+
+.body-text-l {
+  font-size: var(--font-body-l);
+  line-height: var(--line-height-l);
+}
+
 /* -- Token labels -- */
 .token-tag {
   display: inline-block;
@@ -1209,11 +1233,12 @@ section {
 /* -- Eyebrow text -- */
 .eyebrow {
   font-family: var(--font-primary);
-  font-size: var(--font-s);
+  font-size: var(--font-l);
   line-height: var(--line-height-m);
-  font-weight: var(--font-weight-extra-bold);
+  font-weight: var(--font-weight-medium);
   letter-spacing: var(--letter-spacing-xl);
   text-transform: uppercase;
+  margin-bottom: var(--space-3xl);
 }
 
 /* -- Text alignment -- */
@@ -2603,9 +2628,10 @@ a[data-tooltip],
 @media (max-width: 991px) {
   :root {
     /* -- Tablet headline sizes (fluid → fixed rem) -- */
-    --font-headline-s: 2.25rem; /* 36px */
-    --font-headline-m: 4rem;    /* 64px */
-    --font-headline-l: 4.75rem; /* 76px */
+    --font-headline-s: 2.25rem;  /* 36px */
+    --font-headline-m: 3rem;     /* 48px */
+    --font-headline-l: 4rem;     /* 64px */
+    --font-headline-xl: 4.75rem; /* 76px */
 
     /* -- Tablet body size (drop vw, follow the type scale: 18px → 16px on mobile) -- */
     --font-body: var(--font-m);
@@ -2633,8 +2659,9 @@ a[data-tooltip],
 
     /* -- Mobile headline sizes -- */
     --font-headline-s: 1.875rem; /* 30px */
-    --font-headline-m: 3rem;     /* 48px */
-    --font-headline-l: 3.5rem;   /* 56px */
+    --font-headline-m: 2.25rem;  /* 36px */
+    --font-headline-l: 3rem;     /* 48px */
+    --font-headline-xl: 3.5rem;  /* 56px */
 
     /* -- Mobile section spacing -- */
     --section-xs: var(--space-l);
@@ -2774,6 +2801,7 @@ a[data-tooltip],
 .sticker-smiley   { --sticker-image: url("https://bydefault.design/image/130x130"); }
 .sticker-social   { --sticker-image: url("https://bydefault.design/image/180x108"); }
 .sticker-speaker   { --sticker-image: url("https://bydefault.design/image/180x108"); }
+.sticker-out   { --sticker-image: url("https://bydefault.design/image/180x108"); }
 .sticker-l {
   --sticker-image: url("https://bydefault.design/image/300x150");
   padding-inline: 0 0.8em;
@@ -2785,6 +2813,7 @@ a[data-tooltip],
   display: flex;
   flex-direction: column;
   justify-content: center;
+  background-color: var(--background-green);
 }
 
 .about-section {
@@ -2808,14 +2837,14 @@ a[data-tooltip],
 }
 
 .founded-section {
-  min-height: 80svh;
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
 .define-section {
-  min-height: 80svh;
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -2838,7 +2867,7 @@ a[data-tooltip],
 
 
 .slot-section {
-  min-height: 80svh;
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -2848,13 +2877,13 @@ a[data-tooltip],
   display: flex;
   flex-direction: column;
   gap: var(--space-m);
-  width: 50%;
-  margin-right: 50%;
+  width: 55%;
+  margin-right: 45%;
 }
 
 .slot-body {
-  width: 50%;
-  margin-left: 50%;
+  width: 45%;
+  margin-left: 55%;
 }
 
 /* ------ TICKER ------ */
@@ -2962,41 +2991,51 @@ a[data-tooltip],
    gets its own 3D depth. */
 
 .team-section {
-  min-height: 80svh;
-  overflow: hidden;
-  gap: 0;
-}
-
-.team-grid {
-  position: relative;
-  margin-left: auto;
-  margin-right: auto;
-
-  width: 70%;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-xl);
-
-}
-
-.team-info {
-  background-color: var(--background-green);
-}
-
-.team-intro {
-  font-size: 1.2vw;
-
-}
-
-
-.team-info-container {
-  width: 80%;
+  background-color: var(--background-dark);
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.team-container {
+  max-width: var(--container-xl);
+  display: block;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
 }
+
+.team-content {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-8xl);
+}
+
+.team-info {
+  width: 45%;
+}
+
+.team-body {
+  width: 55%;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-2xl);
+}
+
+
+
+.team-intro {
+  font-size: 1.3vw;
+  color: var(--text-accent);
+
+}
+
+
+
 
 .team-grid-container {
   display: flex;
@@ -3224,9 +3263,13 @@ a[data-tooltip],
 
 /* ------ CTA ------ */
 
+.cta-section {
+  background-color: var(--background-green);
+}
+
 .cta-email {
   display: inline-block;
-  font-size: var(--font-5xl);
+  font-size: var(--font-headline-m);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-s);
   text-decoration: none;
@@ -3237,45 +3280,567 @@ a[data-tooltip],
 }
 
 
-/* ------ FOOTER ------ */
+/* ------ OUR SCIENCE PAGE ------ */
 
-.site-footer .brand-wordmark {
-  height: var(--space-6xl);
+/* Hero — dark green, centred title + "by [portrait] Prof. Colin Skittles" byline.
+   Structure mirrors the homepage hero (full-viewport centred block); only the
+   palette flips dark and the byline introduces an inline portrait. */
+.science-hero {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.footer-grid {
+.science-hero-container {
+  max-width: var(--container-xl);
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6xl);
+}
+
+.science-hero-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: right;
+}
+
+.science-hero-title {
+  max-width: 10ch;
+}
+
+.science-hero-byline {
+  margin: 0;
+  font-size: var(--font-headline-xs);
+  font-weight: var(--font-weight-semi-bold);
+  text-transform: uppercase;
+}
+
+.science-hero-portrait {
+  flex: 0 0 auto;
+  width: 22vw;
+  aspect-ratio: 4 / 5;
+}
+
+.science-hero-portrait img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.science-hero-tag {
+  margin-bottom: 0;
+  margin-top: var(--space-2xl);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Larger eyebrow used for the "by Prof. Colin Skittles" byline — sits above the
+   tag and below the headline. Same casing + tracking as .eyebrow at one step up. */
+.eyebrow-l {
+  font-family: var(--font-primary);
+  font-size: var(--font-xl);
+  line-height: var(--line-height-m);
+  font-weight: var(--font-weight-medium);
+  letter-spacing: var(--letter-spacing-l);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* Intro — half-width headline matching the homepage's .about-headline pattern. */
+.science-intro {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.science-intro-headline {
+  width: 55%;
+  margin-right: 45%;
+}
+
+/* Body — right-column paragraph stack, mirrors .about-body. */
+.science-body-grid {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr;
-  gap: var(--space-2xl);
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3xl);
   align-items: start;
 }
 
-.footer-col-title {
-  font-size: var(--font-s);
-  font-weight: var(--font-weight-bold);
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-l);
-  margin-bottom: var(--space-m);
+.science-body-grid > .block {
+  grid-column: 2;
 }
 
-.footer-nav {
+/* Six things — split section: dark left (physics canvas + overlaid title),
+   green right (callout copy + giant numeral). Two-column grid that collapses
+   on tablet. Orbs are absolutely positioned inside .six-things-canvas and
+   driven by Matter.js via JS-applied transforms. */
+.six-things-section {
+  position: relative;
+  overflow: clip;
+  min-height: 100vh;
+  background-color: var(--background-dark);
+  color: var(--white);
+}
+
+/* Title overlays the canvas: sits BEHIND the balls in stacking order and
+   never intercepts pointer events so orbs remain draggable over the text. */
+.six-things-left-content {
+  position: absolute;
+  top: 10vh;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.six-things-left {
+  position: relative;
+  min-height: 40svh;
+}
+
+.science-six-title {
+  max-width: 25ch;
+  font-size: var(--font-headline-xs);
+  letter-spacing: -0.03em;
+}
+
+.science-six-body {
+  font-size: var(--font-body-l);
+  letter-spacing: -0.03em;
+}
+
+.six-things-right {
+  background-color: var(--background-green);
+  color: var(--brand-dark);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.six-things-right-content {
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.six-things-number {
+  position: absolute;
+  right: 3vw;
+  bottom: 3vw;
+  font-family: var(--font-primary);
+  font-size: 6vw;
+  font-weight: var(--font-weight-medium);
+  line-height: 1;
+  color: var(--brand-dark);
+}
+
+/* Physics canvas — fills the left column edge-to-edge, sits ABOVE the
+   overlaid title in stacking order, transparent background so the section's
+   dark colour shows through. JS positions each orb via transform inside
+   this bounding box; the four Matter walls match this rect.
+   touch-action stays default so the page can scroll when the cursor/finger
+   is over empty canvas space; scroll-hijack is only blocked on the orbs. */
+.six-things-canvas {
+  /* Gap between the balls and the canvas edges (read by JS to inset the
+     Matter walls). Tweak the clamp: floor / desktop driver / ceiling. */
+  --six-things-padding: clamp(var(--space-xl), 3vw, var(--space-3xl));
+  list-style: none;
+  margin: 0;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: transparent;
+  z-index: 2;
+}
+
+/* Collection Item wrapper — display:contents so the <li> doesn't break the
+   absolute positioning context for the <button> child. */
+.six-things-orb-item {
+  display: contents;
+}
+
+/* Hidden source list — Webflow Collection List #2 renders 6 nodes here
+   carrying data-fact-* attributes the JS reads. Never visible to users. */
+.six-things-source {
+  display: none;
+}
+
+.science-orb {
+  --orb-size: clamp(3.5rem, 7vw, 6rem);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--orb-size);
+  height: var(--orb-size);
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background-color: var(--neutral-200);
+  color: var(--brand-dark);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-primary);
+  font-size: calc(var(--orb-size) * 0.55);
+  font-weight: var(--font-weight-semi-bold);
+  line-height: 1;
+  cursor: grab;
+  touch-action: none;
+  will-change: transform;
+  transition: background-color 180ms ease, color 180ms ease;
+}
+
+.science-orb:active {
+  cursor: grabbing;
+}
+
+.science-orb:focus-visible {
+  outline: 2px solid var(--brand-green);
+  outline-offset: 4px;
+}
+
+/* Active state — the lime green that the right-panel background uses.
+   Sole source of truth for the "selected fact" colour. */
+.science-orb[data-active="true"] {
+  background-color: var(--brand-green);
+  color: var(--brand-dark);
+}
+
+/* Reduced motion — physics is skipped by JS; canvas falls back to a static
+   flex row, title returns to normal flow, balls stay where they're laid
+   out by flex. Click-to-swap still works via plain DOM click handlers. */
+@media (prefers-reduced-motion: reduce) {
+  .six-things-canvas {
+    position: relative;
+    inset: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: var(--space-s);
+    padding: var(--space-l);
+  }
+  .six-things-left-content {
+    position: static;
+    pointer-events: auto;
+    
+  }
+  .six-things-orb-item {
+    display: list-item;
+  }
+  .science-orb {
+    position: static;
+    transform: none !important;
+  }
+}
+
+/* Long game — light-grey section: intro paragraph + big headline with sticker. */
+.science-longgame {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.science-longgame-intro {
+  max-width: 50ch;
+}
+
+.science-longgame-headline {
+
+}
+
+/* CTA — centred lede paragraph + giant email link on lime green. */
+.science-cta {
+  min-height: 60svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.science-cta-lead {
+  max-width: 35ch;
+  font-size: var(--font-headline-s);
+  font-weight: var(--font-weight-medium);
+  margin-inline: auto;
+}
+
+.science-cta-email {
+  font-family: var(--font-primary);
+  font-size: var(--font-headline-m);
+  font-weight: var(--font-weight-semi-bold);
+  line-height: var(--line-height-s);
+  letter-spacing: -0.02em;
+  color: var(--brand-dark);
+  text-decoration: underline;
+  text-decoration-thickness: 0.04em;
+  text-underline-offset: 0.1em;
+  word-break: break-word;
+}
+
+.science-cta-email:hover {
+  text-decoration-thickness: 0.08em;
+}
+
+/* Per-sticker assets used on this page — same swap-point pattern as the other
+   sticker combo classes. Wire the real artwork here when ready. */
+.sticker-science       { --sticker-image: url("https://bydefault.design/image/180x108?text=Book"); }
+.sticker-science-01    { --sticker-image: url("https://bydefault.design/image/120x120?text=01"); }
+.sticker-science-coffee { --sticker-image: url("https://bydefault.design/image/100x120?text=Coffee"); }
+
+/* Responsive — collapse the two-column sections to single column on tablet. */
+@media (max-width: 959.98px) {
+  .science-intro-headline {
+    width: 100%;
+    margin: 0;
+  }
+
+  .science-body-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .science-body-grid > .block {
+    grid-column: auto;
+  }
+
+  .science-six-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .science-hero-title {
+    max-width: 16ch;
+  }
+
+  .science-orbs {
+    justify-content: center;
+  }
+}
+
+
+/* ------ FOOTER ------ */
+
+.site-footer {
+  --footer-accent: var(--brand-green);
+}
+
+/* Top row: brand+columns on the left, newsletter on the right. */
+.footer-top {
+  display: grid;
+  grid-template-columns: 1fr minmax(0, 480px);
+  gap: var(--space-4xl);
+  align-items: start;
+}
+
+.footer-brand-cols {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xl);
+}
+
+.footer-brand {
+  display: inline-block;
+  line-height: 0;
+}
+
+.footer-wordmark {
+  display: block;
+  width: 100%;
+  max-width: 720px;
+  height: auto;
+}
+
+/* Three-column meta block under the wordmark. */
+.footer-cols {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3xl);
+}
+
+.footer-col {
   display: flex;
   flex-direction: column;
   gap: var(--space-s);
 }
 
-.footer-nav a {
-  text-decoration: none;
+.footer-col-title {
+  font-size: var(--font-2xs);
+  font-weight: var(--font-weight-semi-bold);
+  line-height: var(--line-height-s);
+  margin: 0;
+}
+
+.footer-link {
+  font-size: var(--font-xs);
+  color: var(--text-inverted);
+  text-decoration: underline;
+  text-decoration-color: var(--footer-accent);
+  text-underline-offset: 0.25em;
+  text-decoration-thickness: 1px;
+}
+
+.footer-link:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* Social icons row. */
+.footer-social {
+  display: flex;
+  gap: var(--space-s);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--footer-accent);
+  border-radius: var(--radius-xs);
+}
+
+.footer-social a:hover {
+  opacity: 0.8;
+}
+
+.footer-social a:focus-visible {
+  outline: 2px solid var(--footer-accent);
+  outline-offset: 4px;
+}
+
+.footer-social-icon {
+  width: 1rem;
+  height: 1rem;
+  display: block;
+}
+
+/* Newsletter column. */
+.footer-newsletter {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xl);
+  width: 100%;
+}
+
+.newsletter-title {
+  font-size: var(--font-3xl);
+  font-weight: var(--font-weight-semi-bold);
+  line-height: var(--line-height-s);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.newsletter-desc {
+  font-size: var(--font-s);
+  line-height: var(--line-height-s);
+  margin: 0;
 }
 
 .newsletter-form {
   display: flex;
-  gap: var(--space-s);
-  align-items: stretch;
+  flex-direction: column;
+  gap: var(--space-m);
+}
+
+.newsletter-field {
+  border-bottom: 1px solid var(--brand-off-grey, #d9d9d9);
+  padding: var(--space-m) 0;
 }
 
 .newsletter-form input[type="email"] {
-  flex: 1;
+  width: 100%;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  font-family: inherit;
+  font-size: var(--font-m);
+  color: var(--text-inverted);
+  letter-spacing: -0.01em;
+}
+
+.newsletter-form input[type="email"]::placeholder {
+  color: var(--white-alpha-40);
+}
+
+.newsletter-form input[type="email"]:focus {
+  outline: none;
+}
+
+.newsletter-field:focus-within {
+  border-bottom-color: var(--footer-accent);
+}
+
+/* Gradient submit button — full-width pill matching the Figma. */
+.newsletter-submit {
+  width: 100%;
+  border: 0;
+  border-radius: var(--radius-s);
+  padding: var(--space-l) var(--space-xl);
+  background: linear-gradient(90deg, var(--brand-green) 0%, #ffb169 100%);
+  color: var(--brand-dark);
+  font-family: var(--font-primary);
+  font-size: var(--font-l);
+  font-weight: var(--font-weight-semi-bold);
+  line-height: var(--line-height-s);
+  cursor: pointer;
+  transition: filter var(--duration-2xs) var(--ease-out), transform var(--duration-2xs) var(--ease-out);
+}
+
+.newsletter-submit:hover {
+  filter: brightness(1.05);
+}
+
+.newsletter-submit:active {
+  transform: scale(0.99);
+}
+
+.newsletter-submit:focus-visible {
+  outline: 2px solid var(--footer-accent);
+  outline-offset: 3px;
+}
+
+.newsletter-privacy {
+  font-size: var(--font-2xs);
+  font-weight: var(--font-weight-light);
+  line-height: var(--line-height-s);
+  margin: 0;
+}
+
+/* Bottom legal row — centred horizontally. */
+.footer-legal {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-xl);
+  font-size: var(--font-2xs);
+}
+
+.footer-legal p {
+  margin: 0;
+}
+
+.footer-legal a {
+  color: var(--text-inverted);
+  text-decoration: underline;
+  text-decoration-color: var(--footer-accent);
+  text-underline-offset: 0.25em;
+  text-decoration-thickness: 1px;
+}
+
+.footer-legal a:hover {
+  text-decoration-thickness: 2px;
 }
 
 
@@ -3403,13 +3968,30 @@ a[data-tooltip],
 
 /* ------ RESPONSIVE ------ */
 
+@media (max-width: 959.98px) {
+  .footer-top {
+    grid-template-columns: 1fr;
+    gap: var(--space-2xl);
+  }
+}
+
 @media (max-width: 768px) {
   .site-nav-links {
     gap: var(--space-l);
   }
 
-  .footer-grid {
-    grid-template-columns: 1fr;
+  .footer-cols {
+    flex-direction: column;
+    gap: var(--space-xl);
+  }
+
+  .newsletter-title {
+    font-size: var(--font-2xl);
+  }
+
+  .footer-legal {
+    gap: var(--space-m);
+    text-align: center;
   }
 
   .service-title {

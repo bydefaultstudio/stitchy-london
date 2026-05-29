@@ -35,10 +35,10 @@
   opacity: 0;
 }
 
-/* ------ WORD-HEADLINE — make spans transformable ------ */
+/* ------ HEADLINE-REVEAL — make spans transformable ------ */
 
 /*
-   SplitText word/char spans inside [data-text-animate="word-headline"] must
+   SplitText word/char spans inside [data-text-animate="headline-reveal"] must
    be inline-block so the yPercent/xPercent/rotation animations apply. Inline
    elements silently ignore CSS transforms.
 
@@ -51,14 +51,14 @@
    and ride along with the same rise/drift/tumble tween, so they need the
    same display rule to render the transforms.
 
-   Scoped to [data-text-animate="word-headline"] so we don't change the layout
+   Scoped to [data-text-animate="headline-reveal"] so we don't change the layout
    of any other SplitText animation (chars/words/lines/etc. animate opacity
    only) or any sticker that might appear outside an animated headline.
 */
-[data-text-animate="word-headline"] .split-word,
-[data-text-animate="word-headline"] .split-char,
-[data-text-animate="word-headline"] .sticker-add,
-[data-text-animate="word-headline"] .sticker-swap {
+[data-text-animate="headline-reveal"] .split-word,
+[data-text-animate="headline-reveal"] .split-char,
+[data-text-animate="headline-reveal"] .sticker-add,
+[data-text-animate="headline-reveal"] .sticker-swap {
   display: inline-block;
 }
 

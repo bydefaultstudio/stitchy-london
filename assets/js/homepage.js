@@ -68,12 +68,12 @@
   // Standout scroll triggers (the reveal is split across two so the balls get a
   // head-start: they part as the section scrolls UP into view, finishing exactly
   // as it pins at the top; the pin then runs the text payoff).
-  var ballPreRollStart = "top 65%"; // section-top position where balls START parting, before the pin. Higher % = earlier / bigger head-start.
-  var pinScrollLength = "+=100%";   // pinned scroll distance for the text payoff + hold
-  var scrubLag = 2;                 // catch-up smoothing (both triggers)
+  var ballPreRollStart = "top 35%"; // section-top position where balls START parting, before the pin. Higher % = earlier / bigger head-start.
+  var pinScrollLength = "+=80%";   // pinned scroll distance for the text payoff + hold
+  var scrubLag = 1;                 // catch-up smoothing (both triggers)
 
   // Ball grid — desktop / mobile column counts and geometry.
-  var colsDesktop = 20;
+  var colsDesktop = 15;
   var colsMobile = 6;
   var mobileBreakpoint = 768;
   var ballOverlap = 1.8;        // diameter ÷ cell — > 1 so the field reads as solid green
@@ -339,8 +339,8 @@
     var tl = gsap.timeline({
       scrollTrigger: {
         trigger: stack,
-        start: "top 85%", // just as the section enters
-        end: "top 35%",   // settled while comfortably on screen
+        start: "top 95%", // just as the section enters
+        end: "top 40%",   // settled while comfortably on screen
         scrub: 1,         // soft, smooth catch-up
         invalidateOnRefresh: true,
         onToggle: function (st) {

@@ -56,6 +56,14 @@
     return window.innerWidth < 768 ? "top 60%" : "bottom 75%";
   }
 
+  // Later end-position for animations that need more scroll distance — e.g.
+  // the [data-bd-faded] opt-in (0.2 → 1.0 ramp) used by fadeWords. Element
+  // scrolls further up the viewport before the tween completes, so the
+  // final state lands closer to viewport centre rather than the lower third.
+  function getFadeEndLate() {
+    return window.innerWidth < 768 ? "top 50%" : "bottom 65%";
+  }
+
   function getFadeEndChars() {
     return window.innerWidth < 768 ? "top 50%" : "bottom 75%";
   }
@@ -340,7 +348,7 @@
     // SplitText animations
     fadeCharacters(self);
     fadeWords(self);
-    fadeWordHeadline(self);
+    headlineReveal(self);
     fadeLines(self);
     fadeRichText(self);
     fadeList(self);
@@ -499,11 +507,16 @@
       gsap.set(split.words, { opacity: getFromOpacity(element) });
       gsap.set(element, { opacity: 1 });
 
+      // data-bd-faded extends the scroll end so the ghosted 0.2 → 1.0 ramp
+      // has room to land closer to viewport centre. Default end stays the
+      // same for plain (non-faded) word reveals.
+      var endFn = element.hasAttribute("data-bd-faded") ? getFadeEndLate : getFadeEnd;
+
       gsap.to(split.words, {
         opacity: 1,
         ease: "power1.inOut",
         stagger: animationStagger.words,
-        scrollTrigger: splitScrollConfig(element, getFadeEnd)
+        scrollTrigger: splitScrollConfig(element, endFn)
       });
     });
   }
@@ -520,11 +533,11 @@
   // assets/css/bd-animations.css that give the split spans display: inline-block.
   // Without inline-block, transforms (yPercent/xPercent/rotation) are silently
   // ignored on inline boxes and only opacity animates.
-  function fadeWordHeadline(self) {
+  function headlineReveal(self) {
     var isChars = headlineMode === "chars";
     var config = isChars ? headlineCharsConfig : headlineWordsConfig;
 
-    self.selector("[data-text-animate='word-headline']").forEach(function (element) {
+    self.selector("[data-text-animate='headline-reveal']").forEach(function (element) {
       // Chars mode also splits words — keeps chars from breaking across lines
       // mid-word at narrow viewports. We animate the chars; the word wrappers
       // just preserve typographic flow.
