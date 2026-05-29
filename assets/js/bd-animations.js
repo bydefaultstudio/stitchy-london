@@ -77,7 +77,8 @@
   var headlineMode = "words"; // "words" or "chars"
 
   var headlineWordsConfig = {
-    stagger: 0.3,
+    duration: 1.2, // per-word tween length; longer = more overlap between adjacent words
+    stagger: 0.2,
     riseMin: 10,   // yPercent — closest each unit starts below rest
     riseMax: 40,   // yPercent — furthest each unit starts below rest
     drift: 5,     // ±xPercent — subtle lateral sway. Set 0 for pure vertical.
@@ -595,13 +596,14 @@
       // Use a clean ease for the scrubbed (desktop) path, keep the bounce on mobile.
       var scrubValue = getScrubValue(element);
       var willScrub = shouldScrub() && scrubValue !== undefined;
-      var ease = willScrub ? "power1.out" : "back.out(1.2)";
+      var ease = willScrub ? "power4.out" : "back.out(1.2)";
 
       gsap.to(targets, {
         opacity: 1,
         yPercent: 0,
         xPercent: 0,
         rotation: 0,
+        duration: config.duration,
         ease: ease,
         stagger: config.stagger,
         scrollTrigger: splitScrollConfig(element, headlineEnd, headlineStart)

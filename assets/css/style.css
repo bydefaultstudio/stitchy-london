@@ -402,6 +402,7 @@
   --container-m: 56vw;
   --container-l: 60vw;
   --container-xl: 90vw;
+  --hero-container: 70vw;
 
   /* -- Max-widths -- */
   --max-width-xs: 480px;
@@ -2690,6 +2691,14 @@ body.is-intro-loading {
   justify-content: center;
   background-color: var(--background-green);
 }
+
+.hero-container {
+  max-width: var(--hero-container);
+  display: block;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto; }
+
 
 .about-section {
   min-height: 100svh;
