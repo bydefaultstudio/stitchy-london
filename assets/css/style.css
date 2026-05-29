@@ -2706,6 +2706,14 @@ body.is-intro-loading {
   margin-right: 50%;
 }
 
+.hero-ms-link {
+  font-weight: var(--font-weight-semi-bold);
+  text-decoration: underline;
+}
+
+a.hero-ms-link:hover {
+  color: var(--text-primary)
+}
 .about-body {
   width: 50%;
   margin-left: 50%;
