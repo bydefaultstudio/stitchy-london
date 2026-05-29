@@ -478,6 +478,15 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--space-2xl) + var(--space-l) * 2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
 body {
   margin: 0;
   font-family: var(--font-primary);
@@ -2504,9 +2513,10 @@ a[data-tooltip],
   z-index: 9999;
   display: grid;
   place-items: center;
-  /* Start invisible — site-loader.js adds .is-visible on next frame so the
-     opacity transition runs as a fade-IN. .is-hidden runs the fade-OUT. */
-  opacity: 0;
+  /* Fully opaque from first paint — on hard refresh the user must NEVER see
+     the page content flash before the curtain covers it. .is-hidden runs the
+     fade-OUT when site-loader.js dismisses the curtain. */
+  opacity: 1;
   transition: opacity 0.5s ease;
   --loader-warm-top: #FF9E52;
   --loader-warm-mid: #FADB6F;
@@ -2529,13 +2539,16 @@ a[data-tooltip],
     site-loader-shift 26s ease-in-out infinite;
 }
 
-.site-loader.is-visible {
-  opacity: 1;
-}
-
 .site-loader.is-hidden {
   opacity: 0;
   pointer-events: none;
+}
+
+/* Page-transition curtain: site-loader.js injects a fresh .site-loader with
+   this class when an internal link is clicked. Starts invisible so the
+   transition runs as a fade-IN over the current page; removed on next rAF. */
+.site-loader.is-fade-in {
+  opacity: 0;
 }
 
 /* Lock page scroll while the loader curtain is up. Removed by site-loader.js
