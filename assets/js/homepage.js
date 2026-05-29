@@ -1,33 +1,11 @@
 /**
- * Script Purpose: Stitchy London — Homepage animations
+ * Script Purpose: Stitchy London — Homepage animations (standout reveal,
+ *                 overlapping-tilt Services stack, team flip-card grid).
+ *                 Per-section detail lives in each builder's docstring below.
  * Author: Erlen Masson
  * Version: 1.2.0
  * Created: 27 May 2026
  * Last Updated: 28 May 2026
- *
- * Home-page-only GSAP work, kept out of the shared bd-animations engine.
- *
- * Currently:
- *   1. The "standout" reveal — a full-viewport section, two coordinated scrubbed
- *      triggers + a generic N-scene cross-fade chain. A field of uniform green
- *      balls flies radially out from the edges (corners first, centre LAST) as
- *      the section scrolls UP into view; the central clearing lands exactly as
- *      the section pins. The pin then holds while .standout-scene wrappers
- *      cross-fade in sequence. GSAP only targets scene wrappers — drop any HTML
- *      inside a scene and it cross-fades with the wrapper; adding scene 3, 4, N
- *      is pure HTML.
- *   2. The overlapping-tilt Services stack ([data-bd-stack]) — panels converge
- *      from a non-overlapped start into their real (CSS-margin) overlapped rest,
- *      tilting + scaling in. Scrubbed as the section enters; all panels visible.
- *   3. The team polaroid grid ([data-team-grid]) — six photo cells in a 3x2
- *      grid. Click a member: the OTHER five cells flip on Y to reveal that
- *      member's content cards (name, role, fun fact, sticker, blank); the
- *      clicked photo stays put. Position-driven layout pattern lives in JS
- *      (TEAM_LAYOUTS) so CMS items stay minimal (no per-item layout field).
- *      Reduced motion path skips rotateY (CSS opacity swap takes over).
- *
- * Self-contained: one gsap.context (reverted + rebuilt on a width-change
- * resize), its own reduced-motion + lifecycle. Loads AFTER gsap + ScrollTrigger.
  */
 
 (function () {
