@@ -1516,6 +1516,71 @@ body.is-intro-loading {
   height: 100px;
 }
 
+/* Mobile-nav disclosure toggle. Hidden on tablet+, shown via @media (max-width: 767px).
+   The icon morphs from three bars to an X via [aria-expanded="true"]. */
+.site-nav-toggle {
+  display: none;
+  position: relative;
+  z-index: 1001;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: 0;
+  color: var(--text-accent);
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.site-nav-toggle:focus-visible {
+  outline: 2px solid var(--text-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.site-nav-toggle-bars {
+  position: relative;
+  display: block;
+  width: 24px;
+  height: 18px;
+}
+
+.site-nav-toggle-bars span {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: currentColor;
+  border-radius: 1px;
+  transition: top 200ms ease, transform 200ms ease, opacity 150ms ease;
+}
+
+.site-nav-toggle-bars span:nth-child(1) { top: 0; }
+.site-nav-toggle-bars span:nth-child(2) { top: 8px; }
+.site-nav-toggle-bars span:nth-child(3) { top: 16px; }
+
+.site-nav-toggle[aria-expanded="true"] .site-nav-toggle-bars span:nth-child(1) {
+  top: 8px;
+  transform: rotate(45deg);
+}
+
+.site-nav-toggle[aria-expanded="true"] .site-nav-toggle-bars span:nth-child(2) {
+  opacity: 0;
+}
+
+.site-nav-toggle[aria-expanded="true"] .site-nav-toggle-bars span:nth-child(3) {
+  top: 8px;
+  transform: rotate(-45deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site-nav-toggle-bars span { transition: none; }
+}
+
 /* -- Stickers (ADD: ::before beside word. SWAP: transparent glyph behind image — SR/SEO/SplitText-safe.) -- */
 .sticker-add {
   position: relative;
@@ -1969,6 +2034,14 @@ a.hero-ms-link:hover {
   margin: auto;
   aspect-ratio: auto;
 }
+
+/* Hand-placed rotation per team member — tweak any value to retilt. */
+.team-cell[data-position="1"] .team-back-sticker { transform: rotate(8deg); }   /* Doug — burrito */
+.team-cell[data-position="2"] .team-back-sticker { transform: rotate(-5deg); }  /* Ange — margarita */
+.team-cell[data-position="3"] .team-back-sticker { transform: rotate(6deg); }   /* Stephanie — slot */
+.team-cell[data-position="4"] .team-back-sticker { transform: rotate(-10deg); } /* Natalie — coffee */
+.team-cell[data-position="5"] .team-back-sticker { transform: rotate(4deg); }   /* Ruth — eye */
+.team-cell[data-position="6"] .team-back-sticker { transform: rotate(-7deg); }  /* Colin — smiley */
 
 /* Slot anchors (desktop 3x2): each cell radiates toward its outer corner. */
 .team-cell[data-position="1"] .team-face-back { align-items: start; text-align: left;   }
@@ -2866,8 +2939,44 @@ a.hero-ms-link:hover {
     width: 180px;
   }
 
+  /* Mobile nav: toggle visible, links collapse into a full-viewport overlay. */
+  .site-nav-toggle {
+    display: inline-flex;
+  }
+
   .site-nav-links {
-    gap: var(--space-l);
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2xl);
+    background-color: var(--background-dark);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity 250ms ease, transform 250ms ease, visibility 0s linear 250ms;
+  }
+
+  .site-nav-toggle[aria-expanded="true"] ~ .site-nav-links {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: opacity 250ms ease, transform 250ms ease, visibility 0s;
+  }
+
+  .site-nav-links a {
+    font-size: var(--font-2xl);
+  }
+
+  body.is-nav-open {
+    overflow: hidden;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-nav-links { transform: none; transition: opacity 0s, visibility 0s linear 0s; }
+    .site-nav-toggle[aria-expanded="true"] ~ .site-nav-links { transform: none; transition: opacity 0s, visibility 0s; }
   }
 
   .footer-cols {

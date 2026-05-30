@@ -129,7 +129,14 @@
         <a href="/" class="site-nav-brand">
           <img class="brand-wordmark" src="assets/images/header-logo.svg" alt="Stitchy London" width="348" height="100" />
         </a>
-        <div class="site-nav-links">
+        <button class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav-links" aria-label="Open menu" data-no-transition>
+          <span class="site-nav-toggle-bars" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </button>
+        <div class="site-nav-links" id="site-nav-links">
           <a href="/" aria-current="page">Home</a>
           <a href="#about">About us</a>
           <a href="/our-science.html">Our Science</a>
@@ -351,7 +358,7 @@
                             data-name="G Douglas Kilgannon"
                             data-role="CEO"
                             data-fact="Big time NERDDD"
-                            data-sticker="https://bydefault.design/image/240x280?text=Doug%20Sticker">
+                            data-sticker="assets/images/stickers/sticker_burrito.svg">
                     <button class="team-card" type="button" aria-label="View G Douglas Kilgannon">
                       <span class="team-face team-face-front">
                         <img class="team-photo team-photo-main" src="assets/images/team/G%20Douglas%20Kilgannon@2x.png" alt="G Douglas Kilgannon" />
@@ -365,7 +372,7 @@
                             data-name="Ange D."
                             data-role="Founder"
                             data-fact="Can always be found in broadway market on a saturday afternoon"
-                            data-sticker="https://bydefault.design/image/240x280?text=Ange%20Sticker">
+                            data-sticker="assets/images/stickers/sticker_Margarita.svg">
                     <button class="team-card" type="button" aria-label="View Ange D.">
                       <span class="team-face team-face-front">
                         <img class="team-photo team-photo-main" src="assets/images/team/Ange%20D@2x.png" alt="Ange D." />
@@ -379,7 +386,7 @@
                             data-name="Stephanie Falkiner"
                             data-role="Creative Account Director"
                             data-fact="Always up for a hike!"
-                            data-sticker="https://bydefault.design/image/240x280?text=Stephanie%20Sticker">
+                            data-sticker="assets/images/stickers/sticker_slot%20machine-green.svg">
                     <button class="team-card" type="button" aria-label="View Stephanie Falkiner">
                       <span class="team-face team-face-front">
                         <img class="team-photo team-photo-main" src="assets/images/team/Stephanie%20Falkiner@2x.png" alt="Stephanie Falkiner" />
@@ -393,7 +400,7 @@
                             data-name="Natalie Clark"
                             data-role="Content Director"
                             data-fact="Brings order to our creative chaos"
-                            data-sticker="https://bydefault.design/image/240x280?text=Natalie%20Sticker">
+                            data-sticker="assets/images/stickers/sticker_coffee.svg">
                     <button class="team-card" type="button" aria-label="View Natalie Clark">
                       <span class="team-face team-face-front">
                         <img class="team-photo team-photo-main" src="assets/images/team/Natalie%20Clark@2x.png" alt="Natalie Clark" />
@@ -407,7 +414,7 @@
                             data-name="Ruth Nichols"
                             data-role="CSO &amp; Partner"
                             data-fact=""
-                            data-sticker="https://bydefault.design/image/240x280?text=Ruth%20Sticker">
+                            data-sticker="assets/images/stickers/sticker_eye.svg">
                     <button class="team-card" type="button" aria-label="View Ruth Nichols">
                       <span class="team-face team-face-front">
                         <img class="team-photo team-photo-main" src="assets/images/team/Ruth%20Nichols@2x.png" alt="Ruth Nichols" />
@@ -421,7 +428,7 @@
                             data-name="Professor Colin Skittles"
                             data-role="Professor of Marketing Science"
                             data-fact="Makes us look smart"
-                            data-sticker="https://bydefault.design/image/240x280?text=Colin%20Sticker">
+                            data-sticker="assets/images/stickers/sticker_smiley.svg">
                     <button class="team-card" type="button" aria-label="View Professor Colin Skittles">
                       <span class="team-face team-face-front">
                         <img class="team-photo team-photo-main" src="assets/images/team/Professor%20Colin%20Skittles@2x.png" alt="Professor Colin Skittles" />
@@ -565,6 +572,9 @@
        Loader CSS lives in style.css under /* -- Site Loader -- */. -->
   <script src="https://cdn.jsdelivr.net/npm/lottie-web@5.12.2/build/player/lottie_light.min.js"></script>
   <script src="assets/js/site-loader.js"></script>
+
+  <!-- Site nav: mobile burger toggle. Site-wide. -->
+  <script src="assets/js/site-nav.js"></script>
 
   <!-- WF:PAGE-FOOTER-CODE — homepage-only module. Page Settings → Custom Code
        (footer) on the Home page only. Must load AFTER GSAP. -->

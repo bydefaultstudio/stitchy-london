@@ -109,7 +109,14 @@
         <a href="/" class="site-nav-brand">
           <img class="brand-wordmark" src="assets/images/header-logo.svg" alt="Stitchy London" width="348" height="100" />
         </a>
-        <div class="site-nav-links">
+        <button class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav-links" aria-label="Open menu" data-no-transition>
+          <span class="site-nav-toggle-bars" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </button>
+        <div class="site-nav-links" id="site-nav-links">
           <a href="/">Home</a>
           <a href="/#about">About us</a>
           <a href="/our-science.html" aria-current="page">Our Science</a>
@@ -405,6 +412,9 @@
   <!-- Site loader: lottie-web + controller. Site-wide. -->
   <script src="https://cdn.jsdelivr.net/npm/lottie-web@5.12.2/build/player/lottie_light.min.js"></script>
   <script src="assets/js/site-loader.js"></script>
+
+  <!-- Site nav: mobile burger toggle. Site-wide. -->
+  <script src="assets/js/site-nav.js"></script>
 
   <!-- WF:PAGE-FOOTER-CODE — Our-Science-only modules. Page Settings → Custom
        Code (footer) on the Our Science page only. Matter.js must load BEFORE
