@@ -110,6 +110,7 @@
           <img class="brand-wordmark" src="assets/images/header-logo.svg" alt="Stitchy London" width="348" height="100" />
         </a>
         <div class="site-nav-links">
+          <a href="/">Home</a>
           <a href="/#about">About us</a>
           <a href="/our-science.html" aria-current="page">Our Science</a>
           <a href="#contact">Contact</a>
@@ -130,12 +131,13 @@
           <div class="science-hero-container">
             <div class="science-hero-content">
               <h1 class="headline-xlarge science-hero-title" data-text-animate="headline-reveal">
-                Lessons in marketing <span class="sticker-add sticker-science">science</span>
+                Lessons in marketing <span class="sticker-add sticker-book">science</span>
               </h1>
               <p class="science-hero-byline" data-bd-animate="fade" data-bd-delay="1.0">by Prof. Colin Skittles</p>
             </div>
             <div class="science-hero-portrait" data-bd-animate="fade" data-bd-delay="1.5">
-              <img src="https://bydefault.design/image/400x500" alt="Prof. Colin Skittles" width="400" height="500" />
+              <img class="skittles-img is-default" src="assets/images/skittles-default.png" alt="Prof. Colin Skittles" width="841" height="980" />
+              <img class="skittles-img is-hover" src="assets/images/skittles-hover.png" alt="" aria-hidden="true" width="841" height="980" />
             </div>
           </div>
           <p class="eyebrow science-hero-tag" data-bd-animate="fade" data-bd-delay="1.3">Marketing Science</p>
@@ -151,9 +153,9 @@
               <p class="eyebrow" data-bd-animate="fade" data-bd-scrub>Marketing Science</p>
               <div class="science-intro-headline">
                 <h2 class="headline-small" data-text-animate="headline-reveal" data-bd-scrub>
-                  If there&rsquo;s 01 thing we nerd <span class="sticker-add sticker-out">out</span> on, it&rsquo;s marketing science. Social is the other thing.
+                  If there&rsquo;s 01 thing we nerd <span class="sticker-add sticker-shine">out</span> on, it&rsquo;s marketing science. Social is the other thing.
                   <br><br>
-                  At Stitchy the two share a desk and probably a <span class="sticker-add sticker-science-coffee">coffee</span>. Let&rsquo;s dig in.
+                  At Stitchy the two share a desk and probably a <span class="sticker-add sticker-coffee">coffee</span>. Let&rsquo;s dig in.
                 </h2>
               </div>
             </div>
@@ -172,7 +174,7 @@
           <div class="container-xl">
             <div class="science-body-grid">
               <div class="block gap-xlarge">
-                <p class="text-size-m" data-text-animate="words" data-bd-faded data-bd-scrub>
+                <p class="text-size-l" data-text-animate="words" data-bd-faded data-bd-scrub>
                   A brand is a collection of memories living rent-free in people&rsquo;s heads. Without attention, those memories fade and the brand withers. But with it, they compound.
                 <br><br> 
                   Most marketing gets this wrong. It chases shiny new things. Focuses too much on what&rsquo;s pretty. It shifts constantly, optimising for the moment &ndash; until ultimately nothing sticks.
@@ -204,15 +206,11 @@
              data-six-panel-body, data-six-panel-number, data-six-source, data-fact-*"
            A11Y: orb aria-label MUST be bound to the CMS title field
              ("Fact {{id}}: {{title}}") not hardcoded — see a11y audit #20. -->
-      <section class="six-things-section" aria-labelledby="six-things-title" data-grid data-layout="split" data-six-things>
+      <section class="six-things-section"  data-grid data-layout="split" data-six-things>
+
 
         <!-- Left: physics canvas with overlaid title -->
         <div class="six-things-left">
-          <div class="six-things-left-content padding-global">
-            <h2 id="six-things-title" class="science-six-title" data-text-animate="headline-reveal" data-bd-scrub>
-              If you remember nothing else, remember these six things
-            </h2>
-          </div>
           <ul class="six-things-canvas" role="list" data-six-orbs>
             <li class="six-things-orb-item">
               <button type="button" class="science-orb" data-orb-id="1" data-active="true" aria-pressed="true" aria-controls="six-panel" aria-label="Fact 1: Most people aren&rsquo;t thinking about you.">
@@ -248,7 +246,7 @@
         </div>
 
         <!-- Right: live-region panel + giant corner numeral + hidden CMS source list -->
-        <div class="six-things-right">
+        <div class="six-things-right" data-stack-order="1">
           <div id="six-panel" class="six-things-right-content padding-global" aria-live="polite" aria-atomic="true" data-six-panel>
             <h3 class="science-six-title" data-six-panel-title>
               Most people aren&rsquo;t thinking about you.
@@ -279,6 +277,13 @@
                 data-fact-body="Placeholder description for fact 6. Copy pending from Stitchy."></li>
           </ul>
         </div>
+        
+        <div class="six-things-left-content padding-global">
+            <h2 id="six-things-title" class="six-things-title" data-text-animate="headline-reveal" data-bd-scrub>
+              If you remember nothing else, remember these six things
+            </h2>
+          </div>
+
       </section>
 
       <!-- 5. Long game — branding is a system, built over years -->
@@ -286,7 +291,7 @@
       <section class="science-longgame background-color-secondary">
         <div class="padding-global">
           <div class="container-xl">
-            <div class="block gap-2xlarge">
+            <div class="science-branding gap-2xlarge">
               <div class="science-longgame-intro">
                 <p class="text-size-xl" data-bd-animate="slide-up" data-bd-scrub>
                   Ultimately it&rsquo;s about building a system. More than a set of assets. One that works at scale, over years.
@@ -294,11 +299,7 @@
               </div>
               <div class="science-longgame-headline">
                 <h2 class="headline-small" data-text-animate="headline-reveal" data-bd-scrub>
-                  Branding is the l<span class="sticker-swap sticker-l">o</span>ng game.
-                  <br>
-                  Distinctiveness, consistency, repetition.
-                  <br>
-                  Nothing happens overnight.
+                  Branding is the l<span class="sticker-swap sticker-o">o</span>ng game. Distinctiveness, consistency, repetition. Nothing happens overnight.
                 </h2>
               </div>
             </div>
@@ -313,10 +314,10 @@
         <div class="padding-global">
           <div class="container-xl">
             <div class="block align-center text-align-center gap-2xlarge">
-              <p class="cta-text" data-bd-animate="slide-up" data-bd-scrub>
+              <p class="cta-text is-science-page" data-bd-animate="slide-up" data-bd-scrub>
                 If you want to shoot the shit and dive deeper, you can chat to the GOAT on
               </p>
-              <a class="cta-email" href="mailto:ProfessorSkittles@StitchyLondon.com" data-bd-animate="slide-up" data-bd-scrub>
+              <a class="cta-email is-science-page" href="mailto:ProfessorSkittles@StitchyLondon.com" data-bd-animate="slide-up" data-bd-scrub>
                 ProfessorSkittles@StitchyLondon.com
               </a>
             </div>

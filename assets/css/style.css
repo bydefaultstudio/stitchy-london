@@ -1537,6 +1537,7 @@ body.is-intro-loading {
 }
 
 .sticker-swap {
+  display: inline-block;
   color: transparent;
   background-size: contain;
   background-repeat: no-repeat;
@@ -1555,10 +1556,33 @@ body.is-intro-loading {
 /* -- Per-sticker artwork (.sticker-add mode). Each rule is self-contained: edit image, aspect, or any inherited property right here. -- */
 .sticker-add.sticker-book::before         { background-image: url("../images/stickers/sticker_book.svg");                 aspect-ratio: 103 / 102; }
 .sticker-add.sticker-burrito::before      { background-image: url("../images/stickers/sticker_burrito.svg");              aspect-ratio: 72 / 108; }
-.sticker-add.sticker-coffee::before       { background-image: url("../images/stickers/sticker_coffee%20cup.svg");         aspect-ratio: 67 / 80; }
+.sticker-add.sticker-coffee::before       { background-image: url("../images/stickers/sticker_coffee.svg");              aspect-ratio: 59 / 70; }
+.sticker-add.sticker-coffee-cup::before   { background-image: url("../images/stickers/sticker_coffee%20cup.svg");         aspect-ratio: 67 / 80; }
 .sticker-add.sticker-disco-ball::before   { background-image: url("../images/stickers/sticker_disco-ball.svg"); }
 .sticker-add.sticker-eye::before          { background-image: url("../images/stickers/sticker_eye.svg"); }
 .sticker-add.sticker-heart::before        { background-image: url("../images/stickers/sticker_heart.svg"); transform: translateX(0.05em) translateY(0.1em) rotate(8deg) scale(1.05); }
+
+.sticker-swap.sticker-logo {
+  background-image: url("../images/stickers/sticker_logo.svg");
+  aspect-ratio: 609 / 158;
+  transform: rotate(-5deg) scale(1.2);
+}
+
+.sticker-swap.sticker-you {
+  background-image: url("../images/stickers/sticker_you.svg");
+  aspect-ratio: 208 / 108;
+  transform: rotate(7deg) scale(1.05);
+}
+
+.sticker-swap.sticker-o {
+  background-image: url("../images/stickers/sticker_o.svg");
+  aspect-ratio: 219 / 51;
+  padding-inline: 0 2.5em;
+  /* margin-inline: .1em; */
+  margin-right: 0.1em;
+}
+
+
 .sticker-add.sticker-margarita::before    { background-image: url("../images/stickers/sticker_Margarita.svg");            aspect-ratio: 136 / 116; }
 .sticker-add.sticker-megaphone::before    { background-image: url("../images/stickers/sticker_megaphone.svg"); }
 .sticker-add.sticker-phone::before        { background-image: url("../images/stickers/sticker_phone.svg");                aspect-ratio: 87 / 107; }
@@ -1566,9 +1590,10 @@ body.is-intro-loading {
 transform: translateX(0.1em) translateY(0.1em) rotate(3deg) scale(1.05); }
 .sticker-add.sticker-slot-machine::before { background-image: url("../images/stickers/sticker_slot%20machine.svg");       aspect-ratio: 167 / 70; }
 .sticker-add.sticker-slot-green::before   { background-image: url("../images/stickers/sticker_slot%20machine-green.svg"); aspect-ratio: 152 / 63; }
-.sticker-add.sticker-smiley::before       { background-image: url("../images/stickers/sticker_smiley.svg");               aspect-ratio: 104 / 105; }
+.sticker-add.sticker-smiley::before       { background-image: url("../images/stickers/sticker_smiley.svg");               aspect-ratio: 104 / 105; transform: scale(1.07) rotate(var(--sticker-rotation, 0deg)); transform-origin: 50% 50%; will-change: transform; }
 .sticker-add.sticker-smiley-side::before  { background-image: url("../images/stickers/sticker_smiley-side.svg"); }
 .sticker-add.sticker-smiley-up::before    { background-image: url("../images/stickers/sticker_smiley-up.svg"); }
+.sticker-add.sticker-shine::before        { background-image: url("../images/stickers/sticker_shine.svg");               aspect-ratio: 100 / 54; }
 .sticker-add.sticker-sparkle::before      { background-image: url("../images/stickers/sticker_sparkle.svg");              aspect-ratio: 92 / 62; transform: translateX(0.08em) translateY(0.05em) rotate(-3deg) scale(1.05); }
 .sticker-add.sticker-speech::before       { background-image: url("../images/stickers/sticker_speech%20bubble.svg");      aspect-ratio: 37 / 33; }
 
@@ -2067,6 +2092,7 @@ a.hero-ms-link:hover {
 }
 
 .science-hero-portrait {
+  position: relative;
   flex: 0 0 auto;
   width: 22vw;
   aspect-ratio: 4 / 5;
@@ -2077,6 +2103,25 @@ a.hero-ms-link:hover {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* -- Skittles portrait: default + hover stacked; fade between on container hover. -- */
+.skittles-img {
+  position: absolute;
+  inset: 0;
+  transition: opacity 0.25s ease;
+}
+
+.skittles-img.is-hover {
+  opacity: 0;
+}
+
+.science-hero-portrait:hover .skittles-img.is-default {
+  opacity: 0;
+}
+
+.science-hero-portrait:hover .skittles-img.is-hover {
+  opacity: 1;
 }
 
 .science-hero-tag {
@@ -2128,8 +2173,8 @@ a.hero-ms-link:hover {
 /* Title overlays the canvas: BEHIND the balls in stacking order; never intercepts pointer events. */
 .six-things-left-content {
   position: absolute;
-  top: 10vh;
-  left: 0;
+  top: 3vh;
+  left: 3vh;
   right: 0;
   z-index: 1;
   pointer-events: none;
@@ -2144,6 +2189,12 @@ a.hero-ms-link:hover {
   max-width: 25ch;
   font-size: var(--font-headline-xs);
   letter-spacing: -0.03em;
+  text-wrap: pretty;
+}
+
+.six-things-title {
+  max-width: 25ch;
+  font-size: var(--font-3xl);
 }
 
 .science-six-body {
@@ -2272,8 +2323,8 @@ a.hero-ms-link:hover {
   padding-bottom: var(--section-xl);
 }
 
-.science-longgame-intro {
-  max-width: 50ch;
+.science-branding {
+  width: 70%;
 }
 
 /* Per-page sticker assets — wire real artwork here when ready. */
@@ -2540,6 +2591,7 @@ a.hero-ms-link:hover {
   position: relative;
   width: 100%;
   height: 100%;
+  pointer-events: none;
 }
 
 .js .standout-balls {
@@ -2628,7 +2680,15 @@ a.hero-ms-link:hover {
 
   /* -- Project layout overrides -- */
   .brand-wordmark {
-    width: 240px;
+    height: 80px;
+  }
+
+  .site-nav-inner {
+    height: 56px;
+  }
+
+  .site-nav-links a {
+    font-size: 1.2rem;
   }
 
   .about-section,
@@ -2701,9 +2761,21 @@ a.hero-ms-link:hover {
     margin-right: auto;
   }
 
+  .science-hero-container {
+    gap: var(--space-2xl);
+  }
+
+  .science-intro {
+    min-height: 70vh;
+  }
+
   .science-intro-headline {
     width: 100%;
     margin: 0;
+  }
+
+  .science-body {
+    padding-top: 0;
   }
 
   .science-body-grid {
@@ -2714,8 +2786,34 @@ a.hero-ms-link:hover {
     grid-column: auto;
   }
 
+  .science-branding {
+    width: 100%;
+  }
+
   .science-six-grid {
     grid-template-columns: 1fr;
+  }
+
+  .six-things-right-content {
+    width: 90%;
+    padding-top: var(--space-8xl);
+  }
+
+  .science-longgame {
+    min-height: 70vh;
+  }
+
+  .science-six-title {
+    font-size: var(--font-3xl);
+    color: var(--text-primary);
+  }
+
+  .six-things-title {
+    color: var(--text-primary);
+  }
+
+  .cta-email.is-science-page {
+    font-size: var(--font-3xl);
   }
 
   /* Team grid stays 3x2 at tablet — back-face anchors inherit desktop defaults. */

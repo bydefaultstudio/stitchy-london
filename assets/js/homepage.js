@@ -1,11 +1,12 @@
 /**
  * Script Purpose: Stitchy London — Homepage animations (standout reveal,
- *                 overlapping-tilt Services stack, team flip-card grid).
+ *                 overlapping-tilt Services stack, team flip-card grid,
+ *                 cursor-follow rotation on the H1 smiley sticker).
  *                 Per-section detail lives in each builder's docstring below.
  * Author: Erlen Masson
- * Version: 1.2.0
+ * Version: 1.3.0
  * Created: 27 May 2026
- * Last Updated: 28 May 2026
+ * Last Updated: 29 May 2026
  */
 
 (function () {
@@ -20,7 +21,7 @@
     return;
   }
 
-  console.log("Script - Homepage v1.2.0 (Stitchy)");
+  console.log("Script - Homepage v1.3.0 (Stitchy)");
 
   gsap.registerPlugin(ScrollTrigger); // idempotent — safe if bd-animations already registered it
 
@@ -566,6 +567,42 @@
     ScrollTrigger.refresh();
   }
 
+  // Desktop-only: rotate the H1 smiley sticker so its "top" points toward the
+  // cursor. Lives outside the gsap.context above — it's a one-shot mousemove
+  // wiring, not part of the rebuild cycle.
+  function initStickerCursorFollow() {
+    var sticker = document.querySelector(".sticker-add.sticker-smiley");
+    if (!sticker) return;
+    if (!window.matchMedia("(min-width: " + mobileBreakpoint + "px)").matches) return;
+    if (!window.matchMedia("(pointer: fine)").matches) return;
+    if (prefersReducedMotion()) return;
+
+    var targetAngle = 0;
+    var currentAngle = 0;
+    var rafId = null;
+
+    function tick() {
+      // Shortest-path angular lerp: normalize the diff into [-180, +180] so the
+      // smiley sweeps across the ±180° seam (e.g. bottom-left → bottom-right)
+      // the short way, through upside-down — not the long way back through 0°.
+      var diff = ((targetAngle - currentAngle + 540) % 360) - 180;
+      currentAngle += diff * 0.15;
+      sticker.style.setProperty("--sticker-rotation", currentAngle.toFixed(2) + "deg");
+      rafId = Math.abs(diff) > 0.1 ? requestAnimationFrame(tick) : null;
+    }
+
+    function onMouseMove(event) {
+      var dx = event.clientX - window.innerWidth / 2;
+      var dy = event.clientY - window.innerHeight / 2;
+      // +90° offset so the smiley's natural top (up at 0°) ends up pointing
+      // toward the cursor instead of to the right.
+      targetAngle = (Math.atan2(dy, dx) * 180) / Math.PI + 90;
+      if (rafId === null) rafId = requestAnimationFrame(tick);
+    }
+
+    window.addEventListener("mousemove", onMouseMove, { passive: true });
+  }
+
   //
   //------- Event Listeners -------//
   //
@@ -597,10 +634,12 @@
     .then(function () {
       initHomepage();
       setupEventListeners();
+      initStickerCursorFollow();
     })
     .catch(function () {
       console.error("homepage: font loading error, initializing anyway");
       initHomepage();
       setupEventListeners();
+      initStickerCursorFollow();
     });
 })();
