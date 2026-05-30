@@ -281,10 +281,41 @@
     });
 
     var mouse = Mouse.create(canvas);
-    // Matter 0.20 preventDefaults wheel events — detach so the page can scroll over the canvas.
+    // Matter 0.20 binds wheel + touch with { passive: false } and preventDefaults
+    // unconditionally. Wheel detached entirely. Touch detached and replaced with
+    // hit-test wrappers below: empty-canvas touches return without preventDefault so
+    // the browser scrolls; orb-hit touches engage Matter's drag (orbs have
+    // touch-action: none so dragging works in any direction once engaged).
     canvas.removeEventListener("wheel", mouse.mousewheel);
     canvas.removeEventListener("mousewheel", mouse.mousewheel);
     canvas.removeEventListener("DOMMouseScroll", mouse.mousewheel);
+    canvas.removeEventListener("touchmove", mouse.mousemove);
+    canvas.removeEventListener("touchstart", mouse.mousedown);
+    canvas.removeEventListener("touchend", mouse.mouseup);
+
+    function touchStartConditional(e) {
+      if (!e.changedTouches || !e.changedTouches.length) return;
+      var t = e.changedTouches[0];
+      var rect = canvas.getBoundingClientRect();
+      var x = t.clientX - rect.left;
+      var y = t.clientY - rect.top;
+      if (!Query.point(orbBodies, { x: x, y: y }).length) return;
+      e.preventDefault();
+      mouse.mousedown(e);
+    }
+    function touchMoveConditional(e) {
+      if (mouse.button !== 0) return;
+      e.preventDefault();
+      mouse.mousemove(e);
+    }
+    function touchEndConditional(e) {
+      if (mouse.button !== 0) return;
+      mouse.mouseup(e);
+    }
+    canvas.addEventListener("touchstart", touchStartConditional, { passive: false });
+    canvas.addEventListener("touchmove", touchMoveConditional, { passive: false });
+    canvas.addEventListener("touchend", touchEndConditional, { passive: false });
+    canvas.addEventListener("touchcancel", touchEndConditional, { passive: false });
     var mc = MouseConstraint.create(engine, {
       mouse: mouse,
       constraint: { stiffness: 0.2, render: { visible: false } },
@@ -377,6 +408,10 @@
       canvas.removeEventListener("pointerdown", onPointerDown);
       canvas.removeEventListener("pointerup", onPointerUp);
       canvas.removeEventListener("pointercancel", onPointerUp);
+      canvas.removeEventListener("touchstart", touchStartConditional);
+      canvas.removeEventListener("touchmove", touchMoveConditional);
+      canvas.removeEventListener("touchend", touchEndConditional);
+      canvas.removeEventListener("touchcancel", touchEndConditional);
       keyHandlers.forEach(function (entry) {
         entry.orb.removeEventListener("click", entry.handler);
       });
